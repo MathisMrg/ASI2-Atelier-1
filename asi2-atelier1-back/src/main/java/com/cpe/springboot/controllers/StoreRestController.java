@@ -2,7 +2,7 @@ package com.cpe.springboot.controllers;
 
 import com.cpe.springboot.dto.CardDTO;
 import com.cpe.springboot.services.StoreService;
-import com.cpe.springboot.bo.StoreOrder;
+import com.cpe.springboot.dto.StoreOrder;
 import com.cpe.springboot.bo.StoreTransaction;
 
 import java.util.List;

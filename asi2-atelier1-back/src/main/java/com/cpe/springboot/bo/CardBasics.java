@@ -1,7 +1,9 @@
 package com.cpe.springboot.bo;
 
 import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
 
+@Getter
 @MappedSuperclass
 public class CardBasics {
 	private String name;
@@ -30,51 +32,27 @@ public class CardBasics {
 		this.smallImgUrl = smallImgUrl;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
+    public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
+    public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public String getFamily() {
-		return family;
-	}
-
-	public void setFamily(String family) {
+    public void setFamily(String family) {
 		this.family = family;
 	}
 
-	public String getAffinity() {
-		return affinity;
-	}
-
-	public void setAffinity(String affinity) {
+    public void setAffinity(String affinity) {
 		this.affinity = affinity;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
-	}
-
-	public void setImgUrl(String imgUrl) {
+    public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
 
-	public String getSmallImgUrl() {
-		return smallImgUrl;
-	}
-
-	public void setSmallImgUrl(String smallImgUrl) {
+    public void setSmallImgUrl(String smallImgUrl) {
 		this.smallImgUrl = smallImgUrl;
 	}
 

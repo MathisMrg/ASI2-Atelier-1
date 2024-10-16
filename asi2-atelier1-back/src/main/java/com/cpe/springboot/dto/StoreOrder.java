@@ -1,4 +1,4 @@
-package com.cpe.springboot.bo;
+package com.cpe.springboot.dto;
 
 public class StoreOrder {
 	private int user_id;

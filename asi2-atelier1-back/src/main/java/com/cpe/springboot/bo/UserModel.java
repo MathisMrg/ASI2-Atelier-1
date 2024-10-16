@@ -22,7 +22,7 @@ public class UserModel implements Serializable {
 
 	private static final long serialVersionUID = 2733795832476568049L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String login;
 	private String pwd;

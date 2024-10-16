@@ -1,6 +1,4 @@
 ---
-version: "3.9"
-
 
 services:
   amq:
@@ -18,4 +16,4 @@ services:
       POSTGRES_PASSWORD: 'asibackend1'
       POSTGRES_DB: 'asibackend1'
     ports:
-        - '5432:5432'
+      - '5432:5432'

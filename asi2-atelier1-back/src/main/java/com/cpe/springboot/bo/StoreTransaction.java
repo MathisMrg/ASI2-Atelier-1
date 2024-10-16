@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 public class StoreTransaction {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Integer userId;
 	private Integer cardId;
