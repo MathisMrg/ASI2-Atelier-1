@@ -5,6 +5,7 @@ import LoginPage from "./page/LoginPage";
 import ShopPage from "./page/BuyPage";
 import { Routes, Route } from "react-router-dom";
 import { User } from "./model/userModel";
+import UserFormPage from "./page/UserFormPage";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
       <Header user={null} title={title}></Header>
       <Routes>
         <Route path="/" element={<LoginPage setTitle={setTitle}/>} />
+          <Route path="/signup" element={<UserFormPage/>} />
         <Route path="/shop" element={<ShopPage setTitle={setTitle}/>} />
       </Routes>
     </div>
