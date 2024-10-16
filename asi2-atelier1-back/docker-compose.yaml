@@ -1,0 +1,13 @@
+---
+version: "3.9"
+
+
+services:
+  amq:
+    image: apache/activemq-artemis:2.37.0
+    environment:
+      ARTEMIS_USER: 'asibackend1'
+      ARTEMIS_PASSWORD: 'asibackend1'
+    ports:
+      - '61616:61616'
+      - '8161:8161'
