@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./UserCreationForm.css";
+import { Link } from "react-router-dom";
 const UserCreationForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
     firstName: "",
@@ -84,10 +85,15 @@ const UserCreationForm: React.FC = () => {
         </label>
       </div>
 
-      <button type="submit" className="submit-btn">
-        Submit
-      </button>
-      <a href="/login">Se connecter</a>
+      <div className="submit-and-login">
+        <button type="submit" className="submit-btn">
+          Submit
+        </button>
+        <div>or</div>
+        <Link to="/login" className="home-link">
+          login
+        </Link>
+      </div>
     </form>
   );
 };
