@@ -2,6 +2,7 @@ import React from "react";
 import "./IconButton.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { Link } from "react-router-dom";
 
 interface IconButtonProps {
   iconName: IconProp;
@@ -10,12 +11,13 @@ interface IconButtonProps {
 
 const IconButton: React.FC<IconButtonProps> = ({ iconName, title }) => {
   return (
-    <button className="Icone-button">
+    <Link to={"/" + title} className="Icone-button">
       <FontAwesomeIcon
         icon={iconName}
       />
       {title}
-    </button>
+    </Link>
+    
   );
 };
 

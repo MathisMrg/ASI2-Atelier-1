@@ -1,5 +1,10 @@
 export interface User {
-  name: string;
+  id: Number,
+  login: string,
+  pwd: string,
+  lastName: string;
+  surName: string;
   email: string;
-  balance: Number;
+  account: number;
+  cardList: number[];
 }

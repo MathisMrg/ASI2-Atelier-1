@@ -1,6 +1,12 @@
 .Icone-button{
+    text-decoration: none;
+    background: lightgray;
+    display: flex;
     width: 100px;
     height: 50px;
     border: unset;
     border-radius: 10px;
+    align-items: center;
+    justify-content: space-evenly;
+    color: black;
 }

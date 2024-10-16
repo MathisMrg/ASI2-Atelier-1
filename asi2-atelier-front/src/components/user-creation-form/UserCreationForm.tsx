@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./UserCreationForm.css";
+import { Link } from "react-router-dom";
+import { createUser } from "../../service/UserService" ;
+
 const UserCreationForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
     firstName: "",
@@ -8,6 +11,9 @@ const UserCreationForm: React.FC = () => {
     rePassword: "",
     agreed: false,
   });
+  
+  const [message, setMessage] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -17,9 +23,48 @@ const UserCreationForm: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted", formValues);
+
+    if (formValues.password !== formValues.rePassword) {
+      setMessage("Passwords do not match.");
+      return;
+    }
+
+    if (!formValues.agreed) {
+      setMessage("You must agree to the terms and conditions.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setMessage(null);
+
+    const userToCreate = {
+      login: formValues.firstName,
+      pwd: formValues.password,
+      lastName: formValues.lastName,
+      surName: formValues.firstName,
+      email: "",
+      account: 0,
+      cardList: [],
+    };
+
+    const createdUser = await createUser(userToCreate);
+
+    setIsSubmitting(false);
+
+    if (createdUser) {
+      setMessage("User created successfully!");
+      setFormValues({
+        firstName: "",
+        lastName: "",
+        password: "",
+        rePassword: "",
+        agreed: false,
+      });
+    } else {
+      setMessage("Failed to create user. Please try again.");
+    }
   };
 
   return (
@@ -33,6 +78,7 @@ const UserCreationForm: React.FC = () => {
           onChange={handleChange}
           placeholder="First Name"
           className="input"
+          required
         />
       </div>
 
@@ -45,6 +91,7 @@ const UserCreationForm: React.FC = () => {
           onChange={handleChange}
           placeholder="Last Name"
           className="input"
+          required
         />
       </div>
 
@@ -57,6 +104,7 @@ const UserCreationForm: React.FC = () => {
           onChange={handleChange}
           placeholder="Your Password"
           className="input"
+          required
         />
       </div>
 
@@ -69,6 +117,7 @@ const UserCreationForm: React.FC = () => {
           onChange={handleChange}
           placeholder="Your Password Again"
           className="input"
+          required
         />
       </div>
 
@@ -79,15 +128,23 @@ const UserCreationForm: React.FC = () => {
             name="agreed"
             checked={formValues.agreed}
             onChange={handleChange}
+            required
           />
           I agree to the Terms and Conditions
         </label>
       </div>
 
-      <button type="submit" className="submit-btn">
-        Submit
-      </button>
-      <a href="/login">Se connecter</a>
+      <div className="submit-and-login">
+        <button type="submit" className="submit-btn" disabled={isSubmitting}>
+          {isSubmitting ? "Submitting..." : "Submit"}
+        </button>
+        <div>or</div>
+        <Link to="/login" className="home-link">
+          login
+        </Link>
+      </div>
+
+      {message && <div className="message">{message}</div>} {/* Affichage du message */}
     </form>
   );
 };
