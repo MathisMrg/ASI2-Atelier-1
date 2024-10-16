@@ -11,3 +11,11 @@ services:
     ports:
       - '61616:61616'
       - '8161:8161'
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: 'asibackend1'
+      POSTGRES_PASSWORD: 'asibackend1'
+      POSTGRES_DB: 'asibackend1'
+    ports:
+        - '5432:5432'
