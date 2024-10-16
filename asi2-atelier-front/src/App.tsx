@@ -5,6 +5,7 @@ import LoginPage from "./page/LoginPage";
 import ShopPage from "./page/BuyPage";
 import { Routes, Route } from "react-router-dom";
 import { User } from "./model/userModel";
+import UserFormPage from "./page/UserFormPage";
 import LoggedHome from "./page/LoggedHomePage";
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
     <div className="App">
       <Header user={user} title={title}></Header>
       <Routes>
+        <Route path="/" element={<LoginPage setTitle={setTitle}/>} />
+          <Route path="/signup" element={<UserFormPage/>} />
         <Route path="/" element={user ? <LoggedHome setTitle={setTitle} /> : <LoginPage setTitle={setTitle} /> } />
         <Route path="/shop" element={<ShopPage setTitle={setTitle}/>} />
 
