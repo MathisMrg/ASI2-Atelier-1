@@ -7,9 +7,10 @@ import { User } from "../../model/userModel";
 
 interface HeaderProps {
   user: User | null;
+  title : String;
 }
 
-const Header: React.FC<HeaderProps> = ({ user }) => {
+const Header: React.FC<HeaderProps> = ({ user, title }) => {
   return (
     <header className="header">
       <div className="left-side">
@@ -21,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
           <Link to="/" className="home-link">
             Home
           </Link>
-          <div>Add a user</div>
+          <div>{title}</div>
         </div>
       </div>
       <div className="profile-icon">

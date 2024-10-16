@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import UserCreationForm from '../components/user-creation-form/UserCreationForm';
 
-const LoginPage: React.FC = () => {
+interface LoginPageProps {
+  setTitle: Dispatch<SetStateAction<string>>
+}
+
+const LoginPage: React.FC<LoginPageProps> = ( {setTitle} ) => {
+
+  const title = "Add a user";
+  setTitle(title);
+
   return (
     <div className='page'>
       <UserCreationForm ></UserCreationForm>
