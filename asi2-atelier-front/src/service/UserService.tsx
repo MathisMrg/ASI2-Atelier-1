@@ -2,9 +2,9 @@ import { User } from "../model/userModel";
 
 const API_URL = "http://tp.cpe.fr:8083/user";
 
-export const getUserById = async (id: number): Promise<User | null> => {
+export const getUsers = async (): Promise<User[] | null> => {
   try {
-    const response = await fetch(`${API_URL}/${id}`, {
+    const response = await fetch(`${API_URL}s`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -12,10 +12,10 @@ export const getUserById = async (id: number): Promise<User | null> => {
     });
 
     if (!response.ok) {
-      throw new Error(`Error fetching user with id ${id}: ${response.statusText}`);
+      throw new Error(`Error fetching users : ${response.statusText}`);
     }
 
-    const data: User = await response.json();
+    const data: User[] = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching user:", error);

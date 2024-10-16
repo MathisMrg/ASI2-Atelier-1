@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       <Header user={user} title={title}></Header>
       <Routes>
-        <Route path="/login" element={<LoginPage setTitle={setTitle} user={user} />} />
+        <Route path="/login" element={<LoginPage setTitle={setTitle} user={user} setUser={setUser} />} />
         <Route path="/" element={user ? <LoggedHome setTitle={setTitle} /> : <UserFormPage setTitle={setTitle} /> } />
         <Route path="/shop" element={<ShopPage setTitle={setTitle}/>} />
         <Route path="/create" element={<CreateCardPage setTitle={setTitle}/>} />

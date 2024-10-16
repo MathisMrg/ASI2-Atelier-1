@@ -5,10 +5,11 @@ import { Navigate } from 'react-router-dom';
 
 interface LoginPageProps {
     setTitle: Dispatch<SetStateAction<string>>,
+    setUser: Dispatch<SetStateAction<User|null>>,
     user: User | null
 }
 
-const LoginPage: React.FC<LoginPageProps> = ( {setTitle, user} ) => {
+const LoginPage: React.FC<LoginPageProps> = ( {setTitle, user, setUser} ) => {
 
   if (user) {
     return <Navigate to="/" />;
@@ -19,7 +20,7 @@ const LoginPage: React.FC<LoginPageProps> = ( {setTitle, user} ) => {
 
   return (
     <div className='page'>
-      <LoginForm ></LoginForm>
+      <LoginForm setUser={setUser}></LoginForm>
     </div>
   );
 };
