@@ -14,21 +14,7 @@ import java.util.UUID;
 public class Asi2BackendmarketMsTextGenApplication {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext ctx = SpringApplication.run(Asi2BackendmarketMsTextGenApplication.class, args);
-
-		JmsTemplate jmsTemplate = ctx.getBean(JmsTemplate.class);
-
-		jmsTemplate.setPubSubDomain(false);
-
-		// Send a message with a POJO - the template reuse the message converter
-		System.out.println("Sending a new text generation prompt");
-		jmsTemplate.convertAndSend("textgen", new TextGenerationRequestDTO(
-				UUID.randomUUID(),
-				"https://callback.deez/textgen/callback",
-				"Mathis tout nu"
-			)
-		);
-
+		SpringApplication.run(Asi2BackendmarketMsTextGenApplication.class, args);
 	}
 
 }
