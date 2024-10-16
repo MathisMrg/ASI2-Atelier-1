@@ -34,7 +34,7 @@ const LoginForm: React.FC = () => {
                     value={formValues.firstName}
                     onChange={handleChange}
                     placeholder="First Name"
-                    className="input"
+                    className="login-input"
                 />
             </div>
 
@@ -46,12 +46,12 @@ const LoginForm: React.FC = () => {
                     value={formValues.password}
                     onChange={handleChange}
                     placeholder="Your Password"
-                    className="input"
+                    className="login-input"
                 />
             </div>
 
 
-            <button type="submit" className="submit-btn">Submit</button>
+            <button type="submit" className="login-submit-btn">Submit</button>
         </form>
     );
 };
