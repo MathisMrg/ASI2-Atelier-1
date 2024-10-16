@@ -1,17 +1,19 @@
-import React from 'react';
-import './App.css';
-import Header from './components/header/Header';
-import UserCreationForm from './components/user-creation-form/UserCreationForm';
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import "./App.css";
+import Header from "./components/header/Header";
+import LoginPage from "./page/LoginPage";
+import ShopPage from "./page/ShopPage";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Header></Header>
-        <UserCreationForm></UserCreationForm>
-      </div>
-    </BrowserRouter>
+    <div className="App">
+      <Header></Header>
+      <Routes>
+        <Route path="/" element={<LoginPage/>} />
+        <Route path="/shop" element={<ShopPage/>} />
+      </Routes>
+    </div>
   );
 }
 
