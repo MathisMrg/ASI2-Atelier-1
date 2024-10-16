@@ -24,8 +24,8 @@ function App() {
     <div className="App">
       <Header user={user} title={title}></Header>
       <Routes>
-        <Route path="/" element={<LoginPage setTitle={setTitle}/>} />
-          <Route path="/signup" element={<UserFormPage/>} />
+        <Route path="/login" element={<LoginPage setTitle={setTitle}/>} />
+        <Route path="/signup" element={<UserFormPage/>} />
         <Route path="/" element={user ? <LoggedHome setTitle={setTitle} /> : <LoginPage setTitle={setTitle} /> } />
         <Route path="/shop" element={<ShopPage setTitle={setTitle}/>} />
 

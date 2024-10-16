@@ -6,9 +6,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="asi2-backendmarket-monolithic-student" />
-        <module name="asi2-backendmarket-ms-text-gen" />
-        <module name="asi2-atelier1-common" />
       </profile>
     </annotationProcessing>
   </component>
