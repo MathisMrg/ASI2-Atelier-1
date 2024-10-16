@@ -5,10 +5,10 @@ import com.cpe.springboot.bo.TransactionModel;
 import com.cpe.springboot.common.TextGenerationRequestDTO;
 import com.cpe.springboot.common.TextGenerationResponseDTO;
 import com.cpe.springboot.dto.GenerateCardDTO;
-import com.cpe.springboot.repositories.CardModelRepository;
 import com.cpe.springboot.utils.CallbackUrlParser;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,6 @@ public class CardGeneratorService {
 
 
     private final TransactionService transactionService;
-    private final CardModelRepository cardModelRepository;
     private final JmsTemplate jmsTemplate;
     private final CardModelService cardModelService;
     @Value("${queue.description}")
@@ -27,9 +26,8 @@ public class CardGeneratorService {
     @Value("${callback.description.url")
     private String descriptionCallbackUrl;
 
-    public CardGeneratorService(TransactionService transactionService, CardModelRepository cardModelRepository, JmsTemplate jmsTemplate, CardModelService cardModelService) {
+    public CardGeneratorService(TransactionService transactionService, JmsTemplate jmsTemplate, @Lazy CardModelService cardModelService) {
         this.transactionService = transactionService;
-        this.cardModelRepository = cardModelRepository;
         this.jmsTemplate = jmsTemplate;
         this.cardModelService = cardModelService;
     }
