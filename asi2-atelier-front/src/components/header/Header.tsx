@@ -30,8 +30,8 @@ const Header: React.FC<HeaderProps> = ({ user, title }) => {
         <div className="user-info">
           {user ? (
             <div>
-              <p>{user.name}</p>
-              <p>{user.balance.toString()}</p>
+              <p>{user.surName} {user.lastName}</p>
+              <p>{user.account.toString()}</p>
             </div>
           ) : (
             <span></span>

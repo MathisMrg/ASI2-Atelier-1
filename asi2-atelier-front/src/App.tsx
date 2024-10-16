@@ -11,14 +11,7 @@ import CreateCardPage from "./page/CreateCardPage";
 
 function App() {
 
-  
-  const userTmp: User = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    balance: 5000,
-  };
-
-  const [user, setUser] = useState<null | User>(userTmp);
+  const [user, setUser] = useState<null | User>(null);
   const [title, setTitle] = useState("Add a user");
 
   return (
