@@ -6,24 +6,29 @@ import ShopPage from "./page/BuyPage";
 import { Routes, Route } from "react-router-dom";
 import { User } from "./model/userModel";
 import UserFormPage from "./page/UserFormPage";
+import LoggedHome from "./page/LoggedHomePage";
 
 function App() {
 
-  const [title, setTitle] = useState("Add a user");
-
-  const user: User = {
+  
+  const userTmp: User = {
     name: "John Doe",
     email: "john.doe@example.com",
     balance: 5000,
   };
 
+  const [user, setUser] = useState<null | User>(userTmp);
+  const [title, setTitle] = useState("Add a user");
+
   return (
     <div className="App">
-      <Header user={null} title={title}></Header>
+      <Header user={user} title={title}></Header>
       <Routes>
         <Route path="/" element={<LoginPage setTitle={setTitle}/>} />
           <Route path="/signup" element={<UserFormPage/>} />
+        <Route path="/" element={user ? <LoggedHome setTitle={setTitle} /> : <LoginPage setTitle={setTitle} /> } />
         <Route path="/shop" element={<ShopPage setTitle={setTitle}/>} />
+
       </Routes>
     </div>
   );
