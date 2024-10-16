@@ -1,4 +1,6 @@
 package com.cpe.springboot.common;
 
-public record TextGenerationResponseDTO() {
+import java.util.UUID;
+
+public record TextGenerationResponseDTO(UUID transaction_id, String description) {
 }

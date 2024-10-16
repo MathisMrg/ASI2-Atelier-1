@@ -21,7 +21,6 @@ import com.cpe.springboot.mappers.DTOMapper;
 //ONLY FOR TEST NEED ALSO TO ALLOW CROOS ORIGIN ON WEB BROWSER SIDE
 @CrossOrigin
 @RestController
-
 public class CardRestController {
 
 	private final CardModelService cardModelService;

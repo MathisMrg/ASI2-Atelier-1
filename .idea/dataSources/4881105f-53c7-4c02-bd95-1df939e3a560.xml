@@ -3,15 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <Grants>1||-9223372036854775808|c|G
-1||10|c|G
-1||10|C|G
-1||10|T|G
-4||-9223372036854775808|c|G
-4||10|c|G
-4||10|C|G
-4||10|T|G</Grants>
-      <IntrospectionStateNumber>905</IntrospectionStateNumber>
+      <IntrospectionStateNumber>938</IntrospectionStateNumber>
       <ServerVersion>17.0</ServerVersion>
       <StartupTime>1729070853</StartupTime>
       <TimeZones>true ACDT
@@ -806,7 +798,7 @@ true posixrules
 13262||10|C|G
 13262||-9223372036854775808|U|G
 13262||10|U|G</Grants>
-      <IntrospectionStateNumber>905</IntrospectionStateNumber>
+      <IntrospectionStateNumber>938</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>asibackend1</OwnerName>
     </database>
@@ -4237,469 +4229,532 @@ true posixrules
     </schema>
     <schema id="266" parent="2" name="public">
       <Current>1</Current>
-      <IntrospectionStateNumber>905</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-10-16.12:55:05</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>938</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2024-10-16.14:32:36</LastIntrospectionLocalTimestamp>
       <ObjectId>16522</ObjectId>
       <StateNumber>828</StateNumber>
       <OwnerName>asibackend1</OwnerName>
     </schema>
     <sequence id="267" parent="266" name="card_model_id_seq">
-      <ObjectId>16730</ObjectId>
+      <ObjectId>16799</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>890</StateNumber>
-      <StoredType>bigint|0s</StoredType>
+      <StateNumber>929</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <OwnerName>asibackend1</OwnerName>
     </sequence>
     <sequence id="268" parent="266" name="card_reference_id_seq">
-      <ObjectId>16739</ObjectId>
+      <ObjectId>16807</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>890</StateNumber>
-      <StoredType>bigint|0s</StoredType>
+      <StateNumber>929</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <OwnerName>asibackend1</OwnerName>
     </sequence>
     <sequence id="269" parent="266" name="store_transaction_id_seq">
-      <ObjectId>16748</ObjectId>
+      <ObjectId>16815</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>890</StateNumber>
-      <StoredType>bigint|0s</StoredType>
+      <StateNumber>929</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <OwnerName>asibackend1</OwnerName>
     </sequence>
     <sequence id="270" parent="266" name="user_model_id_seq">
-      <ObjectId>16755</ObjectId>
+      <ObjectId>16826</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>890</StateNumber>
-      <StoredType>bigint|0s</StoredType>
+      <StateNumber>929</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <OwnerName>asibackend1</OwnerName>
     </sequence>
     <table id="271" parent="266" name="card_model">
-      <ObjectId>16731</ObjectId>
-      <StateNumber>890</StateNumber>
+      <ObjectId>16800</ObjectId>
+      <StateNumber>929</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>asibackend1</OwnerName>
     </table>
     <table id="272" parent="266" name="card_reference">
-      <ObjectId>16740</ObjectId>
-      <StateNumber>890</StateNumber>
+      <ObjectId>16808</ObjectId>
+      <StateNumber>929</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>asibackend1</OwnerName>
     </table>
     <table id="273" parent="266" name="flyway_schema_history">
-      <ObjectId>16721</ObjectId>
-      <StateNumber>889</StateNumber>
+      <ObjectId>16790</ObjectId>
+      <StateNumber>928</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>asibackend1</OwnerName>
     </table>
     <table id="274" parent="266" name="store_transaction">
-      <ObjectId>16749</ObjectId>
-      <StateNumber>890</StateNumber>
+      <ObjectId>16816</ObjectId>
+      <StateNumber>929</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>asibackend1</OwnerName>
     </table>
-    <table id="275" parent="266" name="user_model">
-      <ObjectId>16756</ObjectId>
-      <StateNumber>890</StateNumber>
+    <table id="275" parent="266" name="transaction_model">
+      <ObjectId>16821</ObjectId>
+      <StateNumber>929</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>asibackend1</OwnerName>
     </table>
-    <column id="276" parent="271" name="id">
-      <DefaultExpression>nextval(&apos;card_model_id_seq&apos;::regclass)</DefaultExpression>
+    <table id="276" parent="266" name="user_model">
+      <ObjectId>16827</ObjectId>
+      <StateNumber>929</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>asibackend1</OwnerName>
+    </table>
+    <column id="277" parent="271" name="id">
+      <IdentityKind>by-default</IdentityKind>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>890</StateNumber>
-      <StoredType>bigint|0s</StoredType>
-      <SequenceId>16730</SequenceId>
-      <TypeId>20</TypeId>
+      <StateNumber>929</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <SequenceId>16799</SequenceId>
+      <TypeId>23</TypeId>
     </column>
-    <column id="277" parent="271" name="name">
+    <column id="278" parent="271" name="name">
       <Position>2</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="278" parent="271" name="description">
+    <column id="279" parent="271" name="description">
       <Position>3</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="279" parent="271" name="family">
+    <column id="280" parent="271" name="family">
       <Position>4</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="280" parent="271" name="affinity">
+    <column id="281" parent="271" name="affinity">
       <Position>5</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="281" parent="271" name="img_url">
+    <column id="282" parent="271" name="img_url">
       <Position>6</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="282" parent="271" name="small_img_url">
+    <column id="283" parent="271" name="small_img_url">
       <Position>7</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="283" parent="271" name="energy">
+    <column id="284" parent="271" name="energy">
       <NotNull>1</NotNull>
       <Position>8</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>double precision|0s</StoredType>
       <TypeId>701</TypeId>
     </column>
-    <column id="284" parent="271" name="hp">
+    <column id="285" parent="271" name="hp">
       <NotNull>1</NotNull>
       <Position>9</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>double precision|0s</StoredType>
       <TypeId>701</TypeId>
     </column>
-    <column id="285" parent="271" name="defence">
+    <column id="286" parent="271" name="defence">
       <NotNull>1</NotNull>
       <Position>10</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>double precision|0s</StoredType>
       <TypeId>701</TypeId>
     </column>
-    <column id="286" parent="271" name="attack">
+    <column id="287" parent="271" name="attack">
       <NotNull>1</NotNull>
       <Position>11</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>double precision|0s</StoredType>
       <TypeId>701</TypeId>
     </column>
-    <column id="287" parent="271" name="price">
+    <column id="288" parent="271" name="price">
       <NotNull>1</NotNull>
       <Position>12</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>double precision|0s</StoredType>
       <TypeId>701</TypeId>
     </column>
-    <column id="288" parent="271" name="user_id">
+    <column id="289" parent="271" name="user_id">
       <Position>13</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="289" parent="271" name="store_id">
+    <column id="290" parent="271" name="store_id">
       <Position>14</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="290" parent="271" name="fk_cardmodel_on_user">
+    <foreign-key id="291" parent="271" name="fk_cardmodel_on_user">
       <ColNames>user_id</ColNames>
-      <ObjectId>16769</ObjectId>
-      <StateNumber>890</StateNumber>
+      <ObjectId>16839</ObjectId>
+      <StateNumber>929</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>16756</RefTableId>
+      <RefTableId>16827</RefTableId>
     </foreign-key>
-    <foreign-key id="291" parent="271" name="fk_cardmodel_on_store">
+    <foreign-key id="292" parent="271" name="fk_cardmodel_on_store">
       <ColNames>store_id</ColNames>
-      <ObjectId>16764</ObjectId>
-      <StateNumber>890</StateNumber>
+      <ObjectId>16834</ObjectId>
+      <StateNumber>929</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>16749</RefTableId>
+      <RefTableId>16816</RefTableId>
     </foreign-key>
-    <index id="292" parent="271" name="card_model_pkey">
+    <index id="293" parent="271" name="pk_cardmodel">
       <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16737</ObjectId>
+      <ObjectId>16805</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="293" parent="271" name="card_model_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16738</ObjectId>
+    <key id="294" parent="271" name="pk_cardmodel">
+      <ObjectId>16806</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>890</StateNumber>
-      <UnderlyingIndexId>16737</UnderlyingIndexId>
+      <StateNumber>929</StateNumber>
+      <UnderlyingIndexId>16805</UnderlyingIndexId>
     </key>
-    <column id="294" parent="272" name="id">
-      <DefaultExpression>nextval(&apos;card_reference_id_seq&apos;::regclass)</DefaultExpression>
+    <column id="295" parent="272" name="id">
+      <IdentityKind>by-default</IdentityKind>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>890</StateNumber>
-      <StoredType>bigint|0s</StoredType>
-      <SequenceId>16739</SequenceId>
-      <TypeId>20</TypeId>
+      <StateNumber>929</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <SequenceId>16807</SequenceId>
+      <TypeId>23</TypeId>
     </column>
-    <column id="295" parent="272" name="name">
+    <column id="296" parent="272" name="name">
       <Position>2</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="296" parent="272" name="description">
+    <column id="297" parent="272" name="description">
       <Position>3</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="297" parent="272" name="family">
+    <column id="298" parent="272" name="family">
       <Position>4</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="298" parent="272" name="affinity">
+    <column id="299" parent="272" name="affinity">
       <Position>5</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="299" parent="272" name="img_url">
+    <column id="300" parent="272" name="img_url">
       <Position>6</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="300" parent="272" name="small_img_url">
+    <column id="301" parent="272" name="small_img_url">
       <Position>7</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="301" parent="272" name="card_reference_pkey">
+    <index id="302" parent="272" name="pk_cardreference">
       <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16746</ObjectId>
+      <ObjectId>16813</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="302" parent="272" name="card_reference_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16747</ObjectId>
+    <key id="303" parent="272" name="pk_cardreference">
+      <ObjectId>16814</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>890</StateNumber>
-      <UnderlyingIndexId>16746</UnderlyingIndexId>
+      <StateNumber>929</StateNumber>
+      <UnderlyingIndexId>16813</UnderlyingIndexId>
     </key>
-    <column id="303" parent="273" name="installed_rank">
+    <column id="304" parent="273" name="installed_rank">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="304" parent="273" name="version">
+    <column id="305" parent="273" name="version">
       <Position>2</Position>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <StoredType>varchar(50)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="305" parent="273" name="description">
+    <column id="306" parent="273" name="description">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <StoredType>varchar(200)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="306" parent="273" name="type">
+    <column id="307" parent="273" name="type">
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <StoredType>varchar(20)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="307" parent="273" name="script">
+    <column id="308" parent="273" name="script">
       <NotNull>1</NotNull>
       <Position>5</Position>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <StoredType>varchar(1000)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="308" parent="273" name="checksum">
+    <column id="309" parent="273" name="checksum">
       <Position>6</Position>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="309" parent="273" name="installed_by">
+    <column id="310" parent="273" name="installed_by">
       <NotNull>1</NotNull>
       <Position>7</Position>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <StoredType>varchar(100)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="310" parent="273" name="installed_on">
+    <column id="311" parent="273" name="installed_on">
       <DefaultExpression>now()</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <StoredType>timestamp|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="311" parent="273" name="execution_time">
+    <column id="312" parent="273" name="execution_time">
       <NotNull>1</NotNull>
       <Position>9</Position>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="312" parent="273" name="success">
+    <column id="313" parent="273" name="success">
       <NotNull>1</NotNull>
       <Position>10</Position>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <index id="313" parent="273" name="flyway_schema_history_pk">
+    <index id="314" parent="273" name="flyway_schema_history_pk">
       <ColNames>installed_rank</ColNames>
-      <ObjectId>16727</ObjectId>
+      <ObjectId>16796</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>889</StateNumber>
+      <StateNumber>928</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="314" parent="273" name="flyway_schema_history_s_idx">
+    <index id="315" parent="273" name="flyway_schema_history_s_idx">
       <ColNames>success</ColNames>
-      <ObjectId>16729</ObjectId>
-      <StateNumber>889</StateNumber>
+      <ObjectId>16798</ObjectId>
+      <StateNumber>928</StateNumber>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="315" parent="273" name="flyway_schema_history_pk">
-      <ObjectId>16728</ObjectId>
+    <key id="316" parent="273" name="flyway_schema_history_pk">
+      <ObjectId>16797</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>889</StateNumber>
-      <UnderlyingIndexId>16727</UnderlyingIndexId>
+      <StateNumber>928</StateNumber>
+      <UnderlyingIndexId>16796</UnderlyingIndexId>
     </key>
-    <column id="316" parent="274" name="id">
-      <DefaultExpression>nextval(&apos;store_transaction_id_seq&apos;::regclass)</DefaultExpression>
+    <column id="317" parent="274" name="id">
+      <IdentityKind>by-default</IdentityKind>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>890</StateNumber>
-      <StoredType>bigint|0s</StoredType>
-      <SequenceId>16748</SequenceId>
-      <TypeId>20</TypeId>
+      <StateNumber>929</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <SequenceId>16815</SequenceId>
+      <TypeId>23</TypeId>
     </column>
-    <column id="317" parent="274" name="user_id">
+    <column id="318" parent="274" name="user_id">
       <Position>2</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="318" parent="274" name="card_id">
+    <column id="319" parent="274" name="card_id">
       <Position>3</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="319" parent="274" name="store_id">
+    <column id="320" parent="274" name="store_id">
       <Position>4</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="320" parent="274" name="amount">
+    <column id="321" parent="274" name="amount">
       <NotNull>1</NotNull>
       <Position>5</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>double precision|0s</StoredType>
       <TypeId>701</TypeId>
     </column>
-    <column id="321" parent="274" name="action">
+    <column id="322" parent="274" name="action">
       <Position>6</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>smallint|0s</StoredType>
       <TypeId>21</TypeId>
     </column>
-    <column id="322" parent="274" name="time_st">
+    <column id="323" parent="274" name="time_st">
       <Position>7</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>timestamp|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <index id="323" parent="274" name="store_transaction_pkey">
+    <index id="324" parent="274" name="pk_storetransaction">
       <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16753</ObjectId>
+      <ObjectId>16819</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="324" parent="274" name="store_transaction_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16754</ObjectId>
+    <key id="325" parent="274" name="pk_storetransaction">
+      <ObjectId>16820</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>890</StateNumber>
-      <UnderlyingIndexId>16753</UnderlyingIndexId>
+      <StateNumber>929</StateNumber>
+      <UnderlyingIndexId>16819</UnderlyingIndexId>
     </key>
-    <column id="325" parent="275" name="id">
-      <DefaultExpression>nextval(&apos;user_model_id_seq&apos;::regclass)</DefaultExpression>
+    <column id="326" parent="275" name="uuid">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>890</StateNumber>
-      <StoredType>bigint|0s</StoredType>
-      <SequenceId>16755</SequenceId>
-      <TypeId>20</TypeId>
+      <StateNumber>929</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
     </column>
-    <column id="326" parent="275" name="login">
+    <column id="327" parent="275" name="author_id">
       <Position>2</Position>
-      <StateNumber>890</StateNumber>
-      <StoredType>varchar(255)|0s</StoredType>
-      <TypeId>1043</TypeId>
+      <StateNumber>929</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
     </column>
-    <column id="327" parent="275" name="pwd">
+    <column id="328" parent="275" name="card_id">
       <Position>3</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="329" parent="275" name="image_generated_at">
+      <Position>4</Position>
+      <StateNumber>929</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="330" parent="275" name="description_generated_at">
+      <Position>5</Position>
+      <StateNumber>929</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="331" parent="275" name="stats_generated_at">
+      <Position>6</Position>
+      <StateNumber>929</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <foreign-key id="332" parent="275" name="fk_transactionmodel_on_author">
+      <ColNames>author_id</ColNames>
+      <ObjectId>16844</ObjectId>
+      <StateNumber>929</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>16827</RefTableId>
+    </foreign-key>
+    <foreign-key id="333" parent="275" name="fk_transactionmodel_on_card">
+      <ColNames>card_id</ColNames>
+      <ObjectId>16849</ObjectId>
+      <StateNumber>929</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>16800</RefTableId>
+    </foreign-key>
+    <index id="334" parent="275" name="pk_transactionmodel">
+      <ColNames>uuid</ColNames>
+      <ObjectId>16824</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>929</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="335" parent="275" name="pk_transactionmodel">
+      <ObjectId>16825</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>929</StateNumber>
+      <UnderlyingIndexId>16824</UnderlyingIndexId>
+    </key>
+    <column id="336" parent="276" name="id">
+      <IdentityKind>by-default</IdentityKind>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>929</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <SequenceId>16826</SequenceId>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="337" parent="276" name="login">
+      <Position>2</Position>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="328" parent="275" name="account">
+    <column id="338" parent="276" name="pwd">
+      <Position>3</Position>
+      <StateNumber>929</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="339" parent="276" name="account">
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>double precision|0s</StoredType>
       <TypeId>701</TypeId>
     </column>
-    <column id="329" parent="275" name="last_name">
+    <column id="340" parent="276" name="last_name">
       <Position>5</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="330" parent="275" name="sur_name">
+    <column id="341" parent="276" name="sur_name">
       <Position>6</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="331" parent="275" name="email">
+    <column id="342" parent="276" name="email">
       <Position>7</Position>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="332" parent="275" name="user_model_pkey">
+    <index id="343" parent="276" name="pk_usermodel">
       <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16762</ObjectId>
+      <ObjectId>16832</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>890</StateNumber>
+      <StateNumber>929</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="333" parent="275" name="user_model_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16763</ObjectId>
+    <key id="344" parent="276" name="pk_usermodel">
+      <ObjectId>16833</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>890</StateNumber>
-      <UnderlyingIndexId>16762</UnderlyingIndexId>
+      <StateNumber>929</StateNumber>
+      <UnderlyingIndexId>16832</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

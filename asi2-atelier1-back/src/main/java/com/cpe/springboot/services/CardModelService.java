@@ -1,10 +1,12 @@
 package com.cpe.springboot.services;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import com.cpe.springboot.dto.GenerateCardDTO;
 import com.cpe.springboot.repositories.CardModelRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ import com.cpe.springboot.mappers.DTOMapper;
 public class CardModelService {
 	private final CardModelRepository cardRepository;
 	private final CardReferenceService cardRefService;
+	private final CardGeneratorService cardGeneratorService;
 	private Random rand;
 
-	public CardModelService(CardModelRepository cardRepository,CardReferenceService cardRefService) {
-		this.rand=new Random();
+	public CardModelService(CardModelRepository cardRepository, CardReferenceService cardRefService, CardGeneratorService cardGeneratorService) {
+        this.cardGeneratorService = cardGeneratorService;
+        this.rand=new Random();
 		// Dependencies injection by constructor
 		this.cardRepository=cardRepository;
 		this.cardRefService=cardRefService;
@@ -36,6 +40,17 @@ public class CardModelService {
 		CardModel cDb=cardRepository.save(cardModel);
 		return DTOMapper.fromCardModelToCardDTO(cDb);
 	}
+
+	public void generateCard(GenerateCardDTO generateCardDTO) {
+		CardModel cardModel = DTOMapper.fromGenerateCardDTOToCardModel(generateCardDTO);
+
+		//TODO: set user
+		cardModel.setUser(null);
+
+		cardModel = cardRepository.save(cardModel);
+		cardGeneratorService.generateCard(cardModel, generateCardDTO);
+	}
+
 
 	public void updateCardRef(CardModel cardModel) {
 		cardRepository.save(cardModel);
@@ -73,6 +88,20 @@ public class CardModelService {
 
 	public List<CardModel> getAllCardToSell(){
 		return this.cardRepository.findByUser(null);
+	}
+
+	public boolean setGeneratedCard(Integer id) {
+		Optional<CardModel> card = this.getCard(id);
+		if(card.isPresent()){
+
+			CardModel c = card.get();
+			if(c.getGeneratedAt() == null) {
+				c.setGeneratedAt(LocalDateTime.now());
+				this.updateCard(c);
+			}
+			return true;
+		}
+		return false;
 	}
 }
 

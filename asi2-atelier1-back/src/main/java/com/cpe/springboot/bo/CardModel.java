@@ -5,9 +5,13 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@Setter
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class CardModel extends CardBasics{
 	@Id
@@ -18,6 +22,7 @@ public class CardModel extends CardBasics{
 	private float defence;
 	private float attack;
 	private float price;
+	private LocalDateTime generatedAt;
 
 	@ManyToOne
 	@JoinColumn
@@ -55,40 +60,8 @@ public class CardModel extends CardBasics{
 		this.price=this.computePrice();
 	}
 
-    public void setEnergy(float energy) {
-		this.energy = energy;
-	}
-
-    public void setHp(float hp) {
-		this.hp = hp;
-	}
-
-    public void setDefence(float defence) {
-		this.defence = defence;
-	}
-
-    public void setAttack(float attack) {
-		this.attack = attack;
-	}
-
-    public void setPrice(float price) {
-		this.price = price;
-	}
-
-    public void setUser(UserModel user) {
-		this.user = user;
-	}
-
-	public void setStore(StoreTransaction storeModel) {
-		this.store=storeModel;
-	}
-
     public float computePrice() {
 		return this.hp * 20 + this.defence*20 + this.energy*20 + this.attack*20;
-	}
-
-    public void setId(Integer id) {
-		this.id = id;
 	}
 
 }

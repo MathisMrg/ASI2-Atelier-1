@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="HttpClientEndpointsTabState">
+    <option name="requestToText" value="&lt;CachedHttpClientTabRequests&gt;&#10;  &lt;entry key=&quot;0f3da61667790bcec4f1f87c6353f8c37c66ef9e&quot; value=&quot;###&amp;#10;POST http://localhost:8083/finish/image/{{id}}&quot; /&gt;&#10;  &lt;entry key=&quot;dc16d2855201e0f53eed1f8911b7841c74854b22&quot; value=&quot;###&amp;#10;POST http://localhost:8083/api/finish/image/{{id}}&quot; /&gt;&#10;  &lt;entry key=&quot;12cb7b30276d39d117148a2bee8a9512c59f5c53&quot; value=&quot;###&amp;#10;POST http://localhost:8083/generator/finish/image/{{id}}&quot; /&gt;&#10;  &lt;entry key=&quot;451a0001b66222bf1afdedbf3c07e745aa94bd9c&quot; value=&quot;###&amp;#10;POST http://localhost:8083/generat/finish/image/{{id}}&quot; /&gt;&#10;  &lt;entry key=&quot;d38b9184a18da0513233340908723bd2d700de86&quot; value=&quot;###&amp;#10;POST http://localhost:8083/generator/card&quot; /&gt;&#10;&lt;/CachedHttpClientTabRequests&gt;" />
+  </component>
+</project>
