@@ -3,8 +3,8 @@ import UserCreationForm from '../components/user-creation-form/UserCreationForm'
 
 const LoginPage: React.FC = () => {
   return (
-    <div>
-      <UserCreationForm></UserCreationForm>
+    <div className='page'>
+      <UserCreationForm ></UserCreationForm>
     </div>
   );
 };

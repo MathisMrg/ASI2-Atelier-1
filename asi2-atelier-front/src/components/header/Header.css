@@ -5,6 +5,7 @@
     padding: 10px 20px;
     background-color: #f8f9fa;
     border-bottom: 1px solid #ddd;
+    margin-bottom: 2rem;
   }
   
   .home-link {
@@ -12,8 +13,19 @@
     color: #007bff;
     font-size: 20px;
   }
+
+  .left-side{
+    display: flex;
+  }
   
   .profile-icon img {
     border-radius: 50%;
+    margin-right: 0.5rem;
+    width: 60px;
+  }
+
+  .profile-icon{
+    display: flex;
+    align-items: center;
   }
   
