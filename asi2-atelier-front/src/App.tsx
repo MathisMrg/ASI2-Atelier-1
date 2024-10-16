@@ -17,18 +17,16 @@ function App() {
     balance: 5000,
   };
 
-  const [user, setUser] = useState<null | User>(userTmp);
+  const [user, setUser] = useState<null | User>(null);
   const [title, setTitle] = useState("Add a user");
 
   return (
     <div className="App">
       <Header user={user} title={title}></Header>
       <Routes>
-        <Route path="/login" element={<LoginPage setTitle={setTitle}/>} />
-        <Route path="/signup" element={<UserFormPage/>} />
-        <Route path="/" element={user ? <LoggedHome setTitle={setTitle} /> : <LoginPage setTitle={setTitle} /> } />
+        <Route path="/login" element={<LoginPage setTitle={setTitle} user={user} />} />
+        <Route path="/" element={user ? <LoggedHome setTitle={setTitle} /> : <UserFormPage setTitle={setTitle} /> } />
         <Route path="/shop" element={<ShopPage setTitle={setTitle}/>} />
-
       </Routes>
     </div>
   );

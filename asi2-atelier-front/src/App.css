@@ -40,3 +40,8 @@
 .page{
   padding-inline: 1rem;
 }
+
+.LoggedHome-content{
+  display: flex;
+  justify-content: space-evenly;
+}

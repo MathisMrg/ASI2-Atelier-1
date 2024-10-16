@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import './UserCreationForm.css';
+import React, { useState } from "react";
+import "./UserCreationForm.css";
 const UserCreationForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
-    firstName: '',
-    lastName: '',
-    password: '',
-    rePassword: '',
+    firstName: "",
+    lastName: "",
+    password: "",
+    rePassword: "",
     agreed: false,
   });
 
@@ -13,13 +13,13 @@ const UserCreationForm: React.FC = () => {
     const { name, value, type, checked } = e.target;
     setFormValues({
       ...formValues,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted', formValues);
+    console.log("Form submitted", formValues);
   };
 
   return (
@@ -84,7 +84,10 @@ const UserCreationForm: React.FC = () => {
         </label>
       </div>
 
-      <button type="submit" className="submit-btn">Submit</button>
+      <button type="submit" className="submit-btn">
+        Submit
+      </button>
+      <a href="/login">Se connecter</a>
     </form>
   );
 };
