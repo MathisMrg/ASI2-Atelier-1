@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: asi2-atelier1-prop-gen
+  main:
+    web-application-type: none
+  artemis:
+    broker-url: "tcp://localhost:61616"
+    user: asibackend1
+    password: asibackend1
+    mode: native
