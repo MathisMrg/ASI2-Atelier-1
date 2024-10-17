@@ -1,8 +1,8 @@
 import React from 'react';
-import CardHeader from './CardHeader';
-import CardDescription from './CardDescription';
-import CardStatistics from './CardStatistics';
-import CardPrice from './CardPrice';
+import CardHeader from './card-header/CardHeader';
+import CardDescription from './card-description/CardDescription';
+import CardStatistics from './card-statistics/CardStatistics';
+import CardPrice from './card-price/CardPrice';
 import './Card.css'
 
 const Card: React.FC = () => {
