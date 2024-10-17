@@ -1,17 +1,18 @@
 import LoginForm from "../components/login-form/LoginForm";
 import React, { Dispatch, SetStateAction } from 'react';
-import { User } from "../model/userModel";
 import { Navigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 interface LoginPageProps {
     setTitle: Dispatch<SetStateAction<string>>,
-    setUser: Dispatch<SetStateAction<User|null>>,
-    user: User | null
 }
 
-const LoginPage: React.FC<LoginPageProps> = ( {setTitle, user, setUser} ) => {
+const LoginPage: React.FC<LoginPageProps> = ( {setTitle} ) => {
 
-  if (user) {
+  const selectedUser = useSelector((state : any) => state.userReducer.selectedUser);
+
+
+  if (selectedUser) {
     return <Navigate to="/" />;
   }
 
@@ -20,7 +21,7 @@ const LoginPage: React.FC<LoginPageProps> = ( {setTitle, user, setUser} ) => {
 
   return (
     <div className='page'>
-      <LoginForm setUser={setUser}></LoginForm>
+      <LoginForm></LoginForm>
     </div>
   );
 };

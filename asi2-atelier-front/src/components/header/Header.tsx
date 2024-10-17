@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { User } from "../../model/userModel";
+import { useSelector } from "react-redux";
 
 interface HeaderProps {
-  user: User | null;
   title : String;
 }
 
-const Header: React.FC<HeaderProps> = ({ user, title }) => {
+const Header: React.FC<HeaderProps> = ({ title }) => {
+  const selectedUser = useSelector((state : any) => state.userReducer.selectedUser);
+
   return (
     <header className="header">
       <div className="left-side">
@@ -28,10 +29,10 @@ const Header: React.FC<HeaderProps> = ({ user, title }) => {
       <div className="profile-icon">
         <img src="/compte-icone.jpg" alt="User-icon" />
         <div className="user-info">
-          {user ? (
+          {selectedUser ? (
             <div>
-              <p>{user.surName} {user.lastName}</p>
-              <p>{user.account.toString()}</p>
+              <p>{selectedUser.surName} {selectedUser.lastName}</p>
+              <p>{selectedUser.account.toString()}</p>
             </div>
           ) : (
             <span></span>
