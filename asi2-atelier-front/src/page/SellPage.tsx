@@ -1,17 +1,16 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import CardGenerationForm from '../components/card-generation-form/CardGenerationForm';
-import Card from '../components/card/Card';
+import CardList from "../components/buy/CardList";
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-interface CreateCardPageProps {
+interface BuyPageProps {
   setTitle: Dispatch<SetStateAction<string>>
 }
 
-const CreateCardPage: React.FC<CreateCardPageProps> = ({setTitle}) => {
+const SellPage: React.FC<BuyPageProps> = ({setTitle}) => {
 
   useEffect(() => {
-    let title="Generate a card"
+    let title="Sell your cards to get money"
     setTitle(title);
   }, [setTitle]);
 
@@ -19,12 +18,12 @@ const CreateCardPage: React.FC<CreateCardPageProps> = ({setTitle}) => {
   if (selectedUser) {
     return <Navigate to="/login" />;
   }
-  
+
   return (
     <div>
-        <CardGenerationForm/>
+        <CardList ></CardList>
     </div>
   );
 };
 
-export default CreateCardPage;
+export default SellPage;

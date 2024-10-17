@@ -9,6 +9,7 @@ import LoggedHome from "./page/LoggedHomePage";
 import CreateCardPage from "./page/CreateCardPage";
 import { useDispatch, useSelector } from "react-redux";
 import { User } from "./model/userModel";
+import SellPage from "./page/SellPage";
 
 function App() {
 
@@ -35,8 +36,9 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage setTitle={setTitle} />} />
         <Route path="/" element={selectedUser ? <LoggedHome setTitle={setTitle} /> : <UserFormPage setTitle={setTitle} /> } />
-        <Route path="/buy" element={<ShopPage setTitle={setTitle}/>} />
-        <Route path="/create" element={<CreateCardPage setTitle={setTitle}/>} />
+        <Route path="/buy" element={ <ShopPage setTitle={setTitle}/> } />
+        <Route path="/sell" element={ <SellPage setTitle={setTitle}/> } />
+        <Route path="/create" element={ <CreateCardPage setTitle={setTitle}/> } />
       </Routes>
     </div>
   );
