@@ -2,7 +2,9 @@ package com.cpe.springboot.bo;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 @MappedSuperclass
 public class CardBasics {
@@ -29,30 +31,6 @@ public class CardBasics {
 		this.family = family;
 		this.affinity = affinity;
 		this.imgUrl = imgUrl;
-		this.smallImgUrl = smallImgUrl;
-	}
-
-    public void setName(String name) {
-		this.name = name;
-	}
-
-    public void setDescription(String description) {
-		this.description = description;
-	}
-
-    public void setFamily(String family) {
-		this.family = family;
-	}
-
-    public void setAffinity(String affinity) {
-		this.affinity = affinity;
-	}
-
-    public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
-
-    public void setSmallImgUrl(String smallImgUrl) {
 		this.smallImgUrl = smallImgUrl;
 	}
 

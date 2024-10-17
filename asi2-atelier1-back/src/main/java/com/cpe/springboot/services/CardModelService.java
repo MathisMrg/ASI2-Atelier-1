@@ -20,7 +20,7 @@ public class CardModelService {
 	private final CardModelRepository cardRepository;
 	private final CardReferenceService cardRefService;
 	private final CardGeneratorService cardGeneratorService;
-	private Random rand;
+	private final Random rand;
 
 	public CardModelService(CardModelRepository cardRepository, CardReferenceService cardRefService, CardGeneratorService cardGeneratorService) {
         this.cardGeneratorService = cardGeneratorService;

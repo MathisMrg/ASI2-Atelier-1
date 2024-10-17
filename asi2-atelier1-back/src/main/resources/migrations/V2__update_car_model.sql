@@ -1,0 +1,2 @@
+ALTER TABLE card_model
+    ADD generated_at TIMESTAMP WITHOUT TIME ZONE;
