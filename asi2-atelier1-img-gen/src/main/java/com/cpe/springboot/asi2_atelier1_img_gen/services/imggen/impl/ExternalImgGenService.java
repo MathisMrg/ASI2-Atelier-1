@@ -3,25 +3,24 @@ package com.cpe.springboot.asi2_atelier1_img_gen.services.imggen.impl;
 import com.cpe.springboot.asi2_atelier1_img_gen.services.imggen.IImgGenService;
 import com.cpe.springboot.asi2_atelier1_img_gen.services.imggen.exceptions.ImageGenerationException;
 import com.cpe.springboot.asi2_atelier1_img_gen.services.imggen.impl.dto.NeuralLoveResponseDTO;
+import com.cpe.springboot.asi2_atelier1_img_gen.services.imggen.impl.exceptions.NeuralLoveRequestFailedException;
 import com.cpe.springboot.common.ImageGenerationRequestDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import com.cpe.springboot.asi2_atelier1_img_gen.services.imggen.impl.exceptions.NeuralLoveRequestFailedException;
 
 import java.util.Objects;
 
 @Service
 @Primary
+@Slf4j
 public class ExternalImgGenService implements IImgGenService {
 
-    private static final Logger log = LoggerFactory.getLogger(ExternalImgGenService.class);
     public static String IMG_URL = "http://localhost:8080";
     public static String IMG_API_PATH = "/prompt/req";
 
