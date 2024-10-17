@@ -1,6 +1,6 @@
 import { User } from "../model/userModel";
 
-const API_URL = "http://tp.cpe.fr:8083/user";
+const API_URL = "http://localhost:8083/user";
 
 export const getUsers = async (): Promise<User[] | null> => {
   try {
