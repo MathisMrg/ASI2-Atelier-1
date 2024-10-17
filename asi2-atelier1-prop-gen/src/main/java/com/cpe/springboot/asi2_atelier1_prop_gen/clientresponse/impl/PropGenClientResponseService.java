@@ -31,7 +31,7 @@ public class PropGenClientResponseService implements IPropGenClientResponseServi
         }
 
         RestClient client = RestClient.builder()
-                .baseUrl(url.getProtocol() + "://" + url.getHost())
+                .baseUrl(url.getProtocol() + "://" + url.getHost() + ":" + url.getPort())
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
