@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import { Card } from '../../model/cardModel';
 import { COLUMNS } from './CardListColumns';
-import { getCards } from '../../service/CardService';
+import {getCardById, getCards} from '../../service/CardService';
 import './CardList.css';
 import {
     flexRender,
@@ -19,6 +19,7 @@ import {
     Thead,
     Tr,
 } from "@chakra-ui/react";
+import {useDispatch, useSelector} from "react-redux";
 
 const CardList: React.FC = () => {
     const [data, setData] = useState<Card[]>([]);
@@ -46,6 +47,8 @@ const CardList: React.FC = () => {
         getCoreRowModel: getCoreRowModel(),
     });
 
+    const dispatch = useDispatch();
+
     // Gestion des états de chargement et d'erreur
     if (loading) {
         return <div>Loading...</div>;
@@ -56,6 +59,23 @@ const CardList: React.FC = () => {
     }
 
     const { getHeaderGroups, getRowModel, getFooterGroups } = table;
+
+
+    const selectCard = (card: Card) => {
+        dispatch({ type: "UPDATE_SELECTED_CARD", payload: card });
+    };
+
+    const handleRowClick = async (cardId: number) => {
+        console.log("Card ID:", cardId);
+
+        const card = await getCardById(cardId);
+        if (card) {
+            selectCard(card);
+            console.log(card);
+        } else {
+            setError("Failed to load the card");
+        }
+    };
 
     return (
         <TableContainer className="table-container">
@@ -73,7 +93,7 @@ const CardList: React.FC = () => {
                 </Thead>
                 <Tbody>
                     {getRowModel().rows.map((row) => (
-                        <Tr key={row.id}>
+                        <Tr key={row.id} onClick={() => handleRowClick(row.original.id)}>
                             {row.getVisibleCells().map((cell) => (
                                 <Td key={cell.id}>
                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

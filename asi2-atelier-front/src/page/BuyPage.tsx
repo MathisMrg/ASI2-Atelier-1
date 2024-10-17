@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import CardList from "../components/buy/CardList";
 import Card from  "../components/card/Card";
+import '../components/card/Card.css'
 
 interface BuyPageProps {
   setTitle: Dispatch<SetStateAction<string>>
@@ -14,7 +15,7 @@ const ShopPage: React.FC<BuyPageProps> = ({setTitle}) => {
   }, [setTitle]);
 
   return (
-    <div>
+    <div className="shop-elements">
         <CardList ></CardList>
         <Card></Card>
     </div>

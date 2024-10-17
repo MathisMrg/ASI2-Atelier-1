@@ -44,3 +44,10 @@ tr:hover {
     background-color: #333; /* Changement de couleur au survol */
     cursor: pointer;
 }
+
+.shop-elements{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
