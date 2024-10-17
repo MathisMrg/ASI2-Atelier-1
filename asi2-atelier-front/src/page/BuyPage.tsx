@@ -15,7 +15,7 @@ const ShopPage: React.FC<BuyPageProps> = ({setTitle}) => {
   }, [setTitle]);
 
   const selectedUser = useSelector((state : any) => state.userReducer.selectedUser);
-  if (selectedUser) {
+  if (!selectedUser) {
     return <Navigate to="/login" />;
   }
 

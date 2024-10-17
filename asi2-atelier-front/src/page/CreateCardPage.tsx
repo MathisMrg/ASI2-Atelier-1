@@ -16,10 +16,10 @@ const CreateCardPage: React.FC<CreateCardPageProps> = ({setTitle}) => {
   }, [setTitle]);
 
   const selectedUser = useSelector((state : any) => state.userReducer.selectedUser);
-  if (selectedUser) {
+  if (!selectedUser) {
     return <Navigate to="/login" />;
   }
-  
+
   return (
     <div>
         <CardGenerationForm/>
