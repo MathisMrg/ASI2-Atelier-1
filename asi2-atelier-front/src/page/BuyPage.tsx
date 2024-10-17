@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import CardList from "../components/buy/CardList";
-import Card from "../components/buy/Card";
 
 interface BuyPageProps {
   setTitle: Dispatch<SetStateAction<string>>
@@ -16,7 +15,6 @@ const ShopPage: React.FC<BuyPageProps> = ({setTitle}) => {
   return (
     <div>
         <CardList ></CardList>
-        <Card></Card>
     </div>
   );
 };
