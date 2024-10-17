@@ -23,7 +23,7 @@ public class ActiveMQListener {
     }
 
     @JmsListener(destination = "textgen", containerFactory = "queueConnectionFactory")
-    public void onTextGenRequest(TextGenerationRequestDTO req, Message message) {
+    public void onTextGenRequest(TextGenerationRequestDTO req) {
         log.info("request received : {}", req);
 
         try {
