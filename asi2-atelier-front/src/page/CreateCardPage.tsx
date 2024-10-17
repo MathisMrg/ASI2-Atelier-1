@@ -16,7 +16,6 @@ const CreateCardPage: React.FC<CreateCardPageProps> = ({setTitle}) => {
   return (
     <div>
         <CardGenerationForm/>
-        <Card/>
     </div>
   );
 };

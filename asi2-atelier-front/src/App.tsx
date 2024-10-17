@@ -35,7 +35,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage setTitle={setTitle} />} />
         <Route path="/" element={selectedUser ? <LoggedHome setTitle={setTitle} /> : <UserFormPage setTitle={setTitle} /> } />
-        <Route path="/shop" element={<ShopPage setTitle={setTitle}/>} />
+        <Route path="/buy" element={<ShopPage setTitle={setTitle}/>} />
         <Route path="/create" element={<CreateCardPage setTitle={setTitle}/>} />
       </Routes>
     </div>
