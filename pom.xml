@@ -9,5 +9,6 @@
     <module>asi2-atelier1-back</module>
     <module>asi2-atelier1-text-gen</module>
     <module>asi2-atelier1-common</module>
+    <module>asi2-atelier1-prop-gen</module>
   </modules>
 </project>
