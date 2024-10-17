@@ -21,7 +21,6 @@ public class ExternalTextGenService implements ITextGenService {
     public static String MODEL = "qwen2:0.5b";
     public static String OLLAMA_URL = "http://localhost:11434";
     public static String OLLAMA_API_PATH = "/api/generate";
-    private String response;
 
     @Override
     public String generateText(TextGenerationRequestDTO req) throws TextGenerationException {
@@ -65,6 +64,4 @@ public class ExternalTextGenService implements ITextGenService {
 
         return json;
     }
-
-
 }

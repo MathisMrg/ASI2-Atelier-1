@@ -5,5 +5,12 @@ services:
       - ollama:/root/.ollama
     ports:
       - '11434:11434'
+  neural:
+    image: registry.gitlab.com/js-asi2/asi2-resources/img-gene-neural-love-api:v1.1
+    environment:
+      external.iaimgapi.token: 'v1.efbf79561ed86ee2d279bc30fa72ff50b7ef25e0c879a0ffce5568f00cab6906'
+    ports:
+      - '8080:8080'
+
 volumes:
   ollama:
