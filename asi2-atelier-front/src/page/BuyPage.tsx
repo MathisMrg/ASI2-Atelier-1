@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 interface BuyPageProps {
   setTitle: Dispatch<SetStateAction<string>>
@@ -6,8 +6,10 @@ interface BuyPageProps {
 
 const ShopPage: React.FC<BuyPageProps> = ({setTitle}) => {
 
-  let title="Buy a card to complete your collection"
-  setTitle(title)
+  useEffect(() => {
+    let title="Buy a card to complete your collection"
+    setTitle(title);
+  }, [setTitle]);
 
   return (
     <div>

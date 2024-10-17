@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/header/Header";
 import LoginPage from "./page/LoginPage";
@@ -7,9 +7,24 @@ import { Routes, Route } from "react-router-dom";
 import UserFormPage from "./page/UserFormPage";
 import LoggedHome from "./page/LoggedHomePage";
 import CreateCardPage from "./page/CreateCardPage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { User } from "./model/userModel";
 
 function App() {
+
+  const dispatch = useDispatch();
+  const selectUser = (user: User) => {
+    dispatch({ type: "UPDATE_SELECTED_USER", payload: user });
+  };
+
+  useEffect(() => {
+    const userString = localStorage.getItem("user");
+    console.log(userString)
+    if (userString) {
+      const user: User = JSON.parse(userString);
+      selectUser(user);
+    }
+  }, []);
 
   const selectedUser = useSelector((state : any) => state.userReducer.selectedUser);
 

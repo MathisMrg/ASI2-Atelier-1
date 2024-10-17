@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import CardGenerationForm from '../components/card-generation-form/CardGenerationForm';
 
 interface CreateCardPageProps {
@@ -7,8 +7,10 @@ interface CreateCardPageProps {
 
 const CreateCardPage: React.FC<CreateCardPageProps> = ({setTitle}) => {
 
-  let title="Generate a card"
-  setTitle(title)
+  useEffect(() => {
+    let title="Generate a card"
+    setTitle(title);
+  }, [setTitle]);
 
   return (
     <div>
