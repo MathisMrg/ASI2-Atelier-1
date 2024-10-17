@@ -45,7 +45,7 @@ const UserCreationForm: React.FC = () => {
       lastName: formValues.lastName,
       surName: formValues.firstName,
       email: "",
-      account: 0,
+      account: 10000,
       cardList: [],
     };
 

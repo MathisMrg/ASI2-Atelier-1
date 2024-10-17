@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         <div className="user-info">
           {selectedUser ? (
             <div>
-              <p>{selectedUser.surName} {selectedUser.lastName}</p>
+              <p>{selectedUser.surName}</p>
               <p>{selectedUser.account.toString()}</p>
             </div>
           ) : (

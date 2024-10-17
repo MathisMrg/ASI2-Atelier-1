@@ -19,7 +19,6 @@ function App() {
 
   useEffect(() => {
     const userString = localStorage.getItem("user");
-    console.log(userString)
     if (userString) {
       const user: User = JSON.parse(userString);
       selectUser(user);
