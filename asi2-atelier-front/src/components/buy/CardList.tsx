@@ -58,8 +58,7 @@ const CardList: React.FC = () => {
     const { getHeaderGroups, getRowModel, getFooterGroups } = table;
 
     return (
-        <TableContainer p={8}>
-            <Heading>React Table Example</Heading>
+        <TableContainer className="table-container">
             <Table>
                 <Thead>
                     {getHeaderGroups().map((headerGroup) => (

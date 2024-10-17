@@ -3,7 +3,7 @@ import './Card.css';
 const Card: React.FC = () => {
 
     return (
-        <div>Card</div>
+        <div></div>
     );
 };
 

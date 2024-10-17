@@ -1,0 +1,46 @@
+table {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+}
+
+.table-container{
+    padding-left: 45px;
+    height: 550px;
+    overflow-y: scroll !important;
+}
+
+th {
+    padding: 20px;
+    height: 30px;
+    text-align: left;
+    background-color: #1F1F1F;
+    border-bottom: 2px solid #333;
+    font-size: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 2
+}
+
+td {
+    padding: 20px;
+    height: 52px; /* Hauteur fixe */
+    text-align: left;
+    border-bottom: 1px solid #333; /* Ligne séparatrice entre les lignes */
+    font-size: 14px;
+    max-width: 100px;
+    overflow: auto; /* Active la barre de défilement si nécessaire */
+    word-wrap: break-word; /* Permet le retour à la ligne */
+    white-space: normal;
+}
+
+/* Style pour les lignes impaires */
+tr:nth-child(odd) {
+    background-color: #1A1A1A; /* Lignes impaires avec un fond plus clair pour alternance */
+}
+
+/* Survol des lignes pour une meilleure interaction */
+tr:hover {
+    background-color: #333; /* Changement de couleur au survol */
+    cursor: pointer;
+}
