@@ -1,5 +1,6 @@
 package com.cpe.springboot.controllers;
 
+import com.cpe.springboot.common.ImageGenerationResponseDTO;
 import com.cpe.springboot.common.TextGenerationResponseDTO;
 import com.cpe.springboot.dto.GenerateCardDTO;
 import com.cpe.springboot.services.CardGeneratorService;
@@ -31,9 +32,9 @@ public class CardGeneratorController {
         return ResponseEntity.ok().build();
     }
 
-
-    @PostMapping(value = "/finish/image/{id}")
-    public ResponseEntity<Void> finishImageGeneration() {
+    @PostMapping(value = "/finish/image}")
+    public ResponseEntity<Void> finishImageGeneration(ImageGenerationResponseDTO imageGenerationResponseDTO) {
+        cardGeneratorService.finishImageGeneration(imageGenerationResponseDTO);
         return ResponseEntity.ok().build();
     }
 
@@ -43,7 +44,7 @@ public class CardGeneratorController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(value = "/finish/stats/{id}")
+    @PostMapping(value = "/finish/stats")
     public ResponseEntity<Void> finishStatsGeneration() {
         cardGeneratorService.finishStatsGeneration();
         return ResponseEntity.ok().build();
