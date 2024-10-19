@@ -22,7 +22,7 @@ import java.util.Objects;
 public class ExternalImgGenService implements IImgGenService {
 
     public static String IMG_URL = "http://localhost:8080";
-    public static String IMG_API_PATH = "/prompt/req";
+    public static String IMG_API_PATH = "/fake/prompt/req";
 
     @Override
     public String generateImage(ImageGenerationRequestDTO req) throws ImageGenerationException {
@@ -57,6 +57,11 @@ public class ExternalImgGenService implements IImgGenService {
                 )
                 .body(NeuralLoveResponseDTO.class);
 
+        assert neuralResponse != null;
+
+        if (neuralResponse.getBase64() == null || neuralResponse.getBase64().isEmpty()) {
+            neuralResponse.setBase64("dGhpcyBpbWFnZSBkaWRuJ3QgbG9hZCBmdWNr");
+        }
         return Objects.requireNonNull(neuralResponse).getBase64();
     }
 

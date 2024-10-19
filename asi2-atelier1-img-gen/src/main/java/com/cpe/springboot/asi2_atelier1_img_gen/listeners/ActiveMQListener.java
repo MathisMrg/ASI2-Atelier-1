@@ -27,7 +27,9 @@ public class ActiveMQListener {
     public void onTextGenRequest(ImageGenerationRequestDTO req)  {
         log.info("request received : {}", req);
         try {
-            clientResponseService.callbackClient(convertImageToDto(req, imgGenService.generateImage(req)), req.callbackUrl());
+            String b64 = imgGenService.generateImage(req);
+            log.info("received image from service, sending to client");
+            clientResponseService.callbackClient(convertImageToDto(req, b64), req.callbackUrl());
         } catch (ImageGenerationException e) {
             clientResponseService.callbackClient(convertImageGenerationExceptionToDto(req, e), req.callbackUrl());
         }

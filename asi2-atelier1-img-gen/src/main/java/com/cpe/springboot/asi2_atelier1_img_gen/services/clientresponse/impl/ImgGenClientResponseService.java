@@ -34,6 +34,10 @@ public class ImgGenClientResponseService implements IImgGenClientResponseService
             return;
         }
 
+        String urlStr = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
+
+        log.info("sending callback to url {}", urlStr + url.getPath());
+
         RestClient client = RestClient.builder()
                 .baseUrl(url.getProtocol() + "://" + url.getHost() + ":" + url.getPort())
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -54,9 +58,11 @@ public class ImgGenClientResponseService implements IImgGenClientResponseService
         }
 
         client.post()
-                .uri(url.getPath())
+                .uri(url.toString())
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(responseJson)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, (req, resp) -> log.debug("failed to send the response to client (status {}): {}", resp.getStatusCode(), resp.getBody()));
+                .onStatus(HttpStatusCode::isError, (req, resp) -> log.debug("failed to send the response to client (status {}): {}", resp.getStatusCode(), resp.getBody()))
+                .toBodilessEntity().getBody();
     }
 }
