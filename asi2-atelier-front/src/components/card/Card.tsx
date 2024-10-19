@@ -8,12 +8,12 @@ import {useSelector} from "react-redux";
 
 const Card: React.FC = () => {
 
-    const selectedCard = useSelector((state : any) => state.userReducer.selectedCard);
+  const selectedCard = useSelector((state : any) => state.cardReducer.selectedCard);
 
   return (
     <div className="card">
       <CardHeader />
-      <img src="/logo192.png" alt="Superhero" className="card-image" />
+      <img src={selectedCard?.imgUrl} alt="card image" className="card-image" />
       <CardDescription />
       <CardStatistics />
       <CardPrice />

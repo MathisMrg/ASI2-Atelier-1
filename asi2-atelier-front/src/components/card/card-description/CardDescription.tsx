@@ -1,12 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const CardDescription: React.FC = () => {
+
+  const selectedCard = useSelector((state : any) => state.cardReducer.selectedCard);
   return (
     <div className="card-description">
       <p>
-        Early in his childhood, he displays various superhuman abilities, which,
-        upon reaching maturity, he resolves to use for the benefit of humanity
-        through a Superman identity.
+        {selectedCard?.description}
       </p>
     </div>
   );

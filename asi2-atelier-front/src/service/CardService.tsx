@@ -1,9 +1,9 @@
-import { Card } from "../model/cardModel";
+import { CardModel } from "../model/cardModel";
 
 const API_URL = "http://localhost:8083/cards";
 const API_URL2 = "http://localhost:8083/card";
 
-export const getCards = async (): Promise<Card[] | null> => {
+export const getCards = async (): Promise<CardModel[] | null> => {
     try {
         const response = await fetch(`${API_URL}`, {
             method: "GET",
@@ -23,7 +23,7 @@ export const getCards = async (): Promise<Card[] | null> => {
     }
 };
 
-export const getCardById = async (id: number): Promise<Card | null> => {
+export const getCardById = async (id: number): Promise<CardModel | null> => {
     const vraiId = id.toString();
     try {
         const response = await fetch(`${API_URL2}/${vraiId}`, {
@@ -37,7 +37,7 @@ export const getCardById = async (id: number): Promise<Card | null> => {
             throw new Error(`Error fetching user with id ${id}: ${response.statusText}`);
         }
 
-        const data: Card = await response.json();
+        const data: CardModel = await response.json();
         return data;
     } catch (error) {
         console.error("Error fetching user:", error);

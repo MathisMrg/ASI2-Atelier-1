@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Card } from "../../model/cardModel";
+import { CardModel } from "../../model/cardModel";
 
-export const COLUMNS: ColumnDef<Card>[] = [
+export const COLUMNS: ColumnDef<CardModel>[] = [
     {
         header: "Card Name",
         accessorKey: "name",

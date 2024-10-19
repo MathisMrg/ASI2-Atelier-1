@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import { Card } from '../../model/cardModel';
+import { CardModel } from '../../model/cardModel';
 import { COLUMNS } from './CardListColumns';
 import {getCardById, getCards} from '../../service/CardService';
 import './CardList.css';
@@ -22,7 +22,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 
 const CardList: React.FC = () => {
-    const [data, setData] = useState<Card[]>([]);
+    const [data, setData] = useState<CardModel[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const columns = useMemo(() => COLUMNS, []);
@@ -61,7 +61,7 @@ const CardList: React.FC = () => {
     const { getHeaderGroups, getRowModel, getFooterGroups } = table;
 
 
-    const selectCard = (card: Card) => {
+    const selectCard = (card: CardModel) => {
         dispatch({ type: "UPDATE_SELECTED_CARD", payload: card });
     };
 
