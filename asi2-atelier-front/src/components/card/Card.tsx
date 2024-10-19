@@ -5,14 +5,22 @@ import CardStatistics from './card-statistics/CardStatistics';
 import CardPrice from './card-price/CardPrice';
 import { SellModel } from '../../model/sellModel';
 import './Card.css'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { buyCard, sellCard } from '../../service/CardService';
+import { User } from '../../model/userModel';
+import { getUsers } from '../../service/UserService';
+import { Navigate } from 'react-router-dom';
 
 interface CardProps {
   isShop: boolean;
 }
 
 const Card: React.FC<CardProps> = ({isShop}) => {
+
+  const dispatch = useDispatch();
+  const selectUser = (user: User) => {
+    dispatch({ type: "UPDATE_SELECTED_USER", payload: user });
+  };
 
   const selectedCard = useSelector((state : any) => state.cardReducer.selectedCard);
   const selectedUser = useSelector((state : any) => state.userReducer.selectedUser);
@@ -24,9 +32,14 @@ const Card: React.FC<CardProps> = ({isShop}) => {
       store_id: 0,
     }
     const isCardSold = await sellCard(cardToSell);
-    console.log(isCardSold)
-    if(isCardSold){
-      //display a popup ?
+    const users = await getUsers();
+    const foundUser = users?.find(user => 
+      user.id === selectedUser.id
+    );
+    if(isCardSold && foundUser){
+      localStorage.setItem('user', JSON.stringify(foundUser));
+      selectUser(foundUser);      //display a popup ?
+      window.location.reload();
     }
   }
 
@@ -37,8 +50,15 @@ const Card: React.FC<CardProps> = ({isShop}) => {
       store_id: 0,
     }
     const isCardbought = await buyCard(cardToBuy);
-    console.log(isCardbought)
-    if(isCardbought){
+    const users = await getUsers();
+    const foundUser = users?.find(user => 
+      user.id === selectedUser.id
+    );
+  
+    if(isCardbought && foundUser){
+      localStorage.setItem('user', JSON.stringify(foundUser));
+      selectUser(foundUser);
+      window.location.reload();
       //display a popup ?
     }
   }
