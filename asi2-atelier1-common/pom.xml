@@ -6,7 +6,6 @@
         <artifactId>asi2-atelier1</artifactId>
         <groupId>com.cpe.springboot</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -23,6 +22,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.34</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

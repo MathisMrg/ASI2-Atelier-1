@@ -1,7 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import CardList from "../components/buy/CardList";
-import Card from  "../components/card/Card";
-import '../components/card/Card.css'
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
@@ -9,10 +7,10 @@ interface BuyPageProps {
   setTitle: Dispatch<SetStateAction<string>>
 }
 
-const ShopPage: React.FC<BuyPageProps> = ({setTitle}) => {
+const SellPage: React.FC<BuyPageProps> = ({setTitle}) => {
 
   useEffect(() => {
-    let title="Buy a card to complete your collection"
+    let title="Sell your cards to get money"
     setTitle(title);
   }, [setTitle]);
 
@@ -22,11 +20,10 @@ const ShopPage: React.FC<BuyPageProps> = ({setTitle}) => {
   }
 
   return (
-    <div className="shop-elements">
+    <div>
         <CardList ></CardList>
-        <Card></Card>
     </div>
   );
 };
 
-export default ShopPage;
+export default SellPage;

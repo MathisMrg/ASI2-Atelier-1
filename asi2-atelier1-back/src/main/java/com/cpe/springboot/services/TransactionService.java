@@ -53,4 +53,9 @@ public class TransactionService {
         }
     }
 
+    public void finishStatsGeneration(TransactionModel transactionModel) {
+        transactionModel.setStatsGeneratedAt(LocalDateTime.now());
+        transactionRepository.save(transactionModel);
+        updateCardGenerationStatus(transactionModel);
+    }
 }

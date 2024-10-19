@@ -3,6 +3,8 @@ package com.cpe.springboot.dto;
 import com.cpe.springboot.bo.CardBasics;
 import com.cpe.springboot.bo.CardModel;
 
+import java.time.LocalDateTime;
+
 public class CardDTO extends CardBasics {
 	private Integer id;
 	private float energy;
@@ -11,6 +13,7 @@ public class CardDTO extends CardBasics {
 	private float attack;
 	private float price;
 	private Integer userId;
+	private LocalDateTime generatedAt;
 
 	public CardDTO() {
 
@@ -24,6 +27,7 @@ public class CardDTO extends CardBasics {
 		this.defence = cModel.getDefence();
 		this.attack = cModel.getAttack();
 		this.price = cModel.getPrice();
+		this.generatedAt = cModel.getGeneratedAt();
 		if (cModel.getUser() != null) {
 			this.userId = cModel.getUser().getId();
 		} else {
@@ -87,4 +91,11 @@ public class CardDTO extends CardBasics {
 		this.userId = userId;
 	}
 
+	public LocalDateTime getGeneratedAt() {
+		return generatedAt;
+	}
+
+	public void setGeneratedAt(LocalDateTime generatedAt) {
+		this.generatedAt = generatedAt;
+	}
 }

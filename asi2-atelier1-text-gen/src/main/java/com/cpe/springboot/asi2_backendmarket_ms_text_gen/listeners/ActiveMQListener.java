@@ -17,12 +17,13 @@ public class ActiveMQListener {
     ITextGenService textGenService;
     ITextGenClientResponseService clientResponseService;
 
-    public ActiveMQListener(ITextGenService textGenService) {
+    public ActiveMQListener(ITextGenService textGenService, ITextGenClientResponseService clientResponseService) {
         this.textGenService = textGenService;
+        this.clientResponseService = clientResponseService;
     }
 
     @JmsListener(destination = "textgen", containerFactory = "queueConnectionFactory")
-    public void onTextGenRequest(TextGenerationRequestDTO req, Message message) {
+    public void onTextGenRequest(TextGenerationRequestDTO req) {
         log.info("request received : {}", req);
 
         try {
