@@ -31,8 +31,8 @@ const SellPage: React.FC<BuyPageProps> = ({setTitle}) => {
 
   return (
     <div className="shop-elements">
-        <CardList ></CardList>
-        {selectedCard ? <Card></Card> : <span></span>}
+        <CardList isShop={false} ></CardList>
+        {selectedCard ? <Card isShop={false}></Card> : <span></span>}
     </div>
   );
 };

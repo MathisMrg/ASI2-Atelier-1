@@ -1,7 +1,7 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CardModel } from '../../model/cardModel';
 import { COLUMNS } from './CardListColumns';
-import {getCardById, getCards} from '../../service/CardService';
+import { getCardById, getCardToBuy, getCards } from '../../service/CardService';
 import './CardList.css';
 import {
     flexRender,
@@ -19,23 +19,41 @@ import {
     Thead,
     Tr,
 } from "@chakra-ui/react";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const CardList: React.FC = () => {
+interface CardListProps {
+    isShop: boolean;
+}
+
+const CardList: React.FC<CardListProps> = ({ isShop }) => {
     const [data, setData] = useState<CardModel[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const columns = useMemo(() => COLUMNS, []);
 
+    const selectedUser = useSelector((state : any) => state.userReducer.selectedUser);
+
     useEffect(() => {
         const fetchData = async () => {
-            const cards = await getCards(); // Appelez votre service pour récupérer les cartes
-            if (cards) {
-                setData(cards); // Mettre à jour l'état avec les données récupérées
-            } else {
-                setError("Failed to load cards");
+            if (isShop) {
+                const cards = await getCardToBuy(); // Appelez votre service pour récupérer les cartes
+                if (cards) {
+                    setData(cards); // Mettre à jour l'état avec les données récupérées
+                } else {
+                    setError("Failed to load cards");
+                }
+                setLoading(false); // Fin du chargement
             }
-            setLoading(false); // Fin du chargement
+            else {
+                const cards = await getCards(); // Appelez votre service pour récupérer les cartes
+                if (cards) {
+                    let userCards = cards.filter(card => card.userId === selectedUser.id);
+                    setData(userCards); // Mettre à jour l'état avec les données récupérées
+                } else {
+                    setError("Failed to load cards");
+                }
+                setLoading(false); // Fin du chargement
+            }
         };
 
         fetchData();
