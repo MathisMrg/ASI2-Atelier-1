@@ -1,5 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import CardList from "../components/buy/CardList";
+import Card from  "../components/card/Card";
+import '../components/card/Card.css'
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
@@ -20,8 +22,9 @@ const ShopPage: React.FC<BuyPageProps> = ({setTitle}) => {
   }
 
   return (
-    <div>
+    <div className="shop-elements">
         <CardList ></CardList>
+        <Card></Card>
     </div>
   );
 };
