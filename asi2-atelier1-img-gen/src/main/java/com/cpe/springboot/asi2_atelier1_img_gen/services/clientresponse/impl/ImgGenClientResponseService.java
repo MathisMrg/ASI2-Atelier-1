@@ -57,12 +57,13 @@ public class ImgGenClientResponseService implements IImgGenClientResponseService
             }
         }
 
-        client.post()
-                .uri(url.toString())
+        String result = client.post()
+                .uri(url.toString().replaceAll("/$", ""))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseJson)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, (req, resp) -> log.debug("failed to send the response to client (status {}): {}", resp.getStatusCode(), resp.getBody()))
-                .toBodilessEntity().getBody();
+                .body(String.class);
+        log.info("result : {}", result);
     }
 }

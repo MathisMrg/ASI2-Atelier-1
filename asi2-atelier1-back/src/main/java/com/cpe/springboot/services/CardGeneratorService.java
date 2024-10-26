@@ -83,7 +83,7 @@ public class CardGeneratorService {
 
     public void generateDescription(UUID transactionId, String prompt) {
 
-        TextGenerationRequestDTO textGenerationRequestDTO = new TextGenerationRequestDTO(transactionId, prompt, CallbackUrlParser.parseCallbackUrl(descriptionCallbackUrl.toString(), transactionId.toString()));
+        TextGenerationRequestDTO textGenerationRequestDTO = new TextGenerationRequestDTO(transactionId, CallbackUrlParser.parseCallbackUrl(descriptionCallbackUrl.toString(), transactionId.toString()), prompt);
         jmsTemplate.convertAndSend(descriptionQueue, textGenerationRequestDTO);
     }
 

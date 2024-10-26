@@ -41,7 +41,7 @@ public class FileService {
         } catch (Exception e) {
             log.error("Error while saving image", e);
         }
-        return "/images/" + filename;
+        return "/" + filename;
     }
 
     public String getUriPath(String filepath) {

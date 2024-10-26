@@ -60,7 +60,7 @@ public class ExternalImgGenService implements IImgGenService {
         assert neuralResponse != null;
 
         if (neuralResponse.getBase64() == null || neuralResponse.getBase64().isEmpty()) {
-            neuralResponse.setBase64("dGhpcyBpbWFnZSBkaWRuJ3QgbG9hZCBmdWNr");
+            neuralResponse.setBase64("iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII");
         }
         return Objects.requireNonNull(neuralResponse).getBase64();
     }
