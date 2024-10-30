@@ -44,9 +44,8 @@ const CardGenerationForm: React.FC = () => {
 
       const result = await createCardUsingPrompt(cardPrompt);
       
-      if (result) {
+      if (result.status == 200) {
         setSuccess(true);
-        console.log("Card successfully created:", result);
       } else {
         setError("Failed to create card.");
       }
@@ -97,7 +96,7 @@ const CardGenerationForm: React.FC = () => {
       </div>
 
       {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">Card created successfully!</p>}
+      {success && <p className="success-message">Demande de creation envoyer avec succes !</p>}
 
       <button type="submit" className="submit-btn" disabled={loading}>
         {loading ? "Generating..." : "Generate"}

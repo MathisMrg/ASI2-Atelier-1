@@ -25,7 +25,7 @@ public class CardGeneratorController {
 
 
     @PostMapping(value = "/card")
-    public ResponseEntity<String> generateCard(GenerateCardDTO generateCardDTO) {
+    public ResponseEntity<String> generateCard(@RequestBody GenerateCardDTO generateCardDTO) {
         cardModelService.generateCard(generateCardDTO);
         return ResponseEntity.ok().build();
     }
