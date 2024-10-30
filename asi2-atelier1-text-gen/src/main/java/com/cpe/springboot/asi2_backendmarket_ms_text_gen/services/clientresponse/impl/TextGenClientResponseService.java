@@ -34,7 +34,7 @@ public class TextGenClientResponseService implements ITextGenClientResponseServi
         }
 
         RestClient client = RestClient.builder()
-                .baseUrl(url.getProtocol() + "://" + url.getHost())
+                .baseUrl(url.getProtocol() + "://" + url.getHost() + ":" + url.getPort())
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
@@ -52,7 +52,7 @@ public class TextGenClientResponseService implements ITextGenClientResponseServi
             }
         }
 
-        client.post()
+        String result = client.post()
                 .uri(url.getPath())
                 .body(responseJson)
                 .retrieve()
@@ -61,7 +61,10 @@ public class TextGenClientResponseService implements ITextGenClientResponseServi
                         (req, resp) -> log.debug("failed to send the response to client (status {}): {}",
                                 resp.getStatusCode(), resp.getBody()
                         )
-                );
+                )
+                .body(String.class);
+
+        log.info("client responded : {}", result);
 
     }
 }

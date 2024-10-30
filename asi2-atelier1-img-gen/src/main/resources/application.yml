@@ -6,3 +6,10 @@ spring:
     user: asibackend1
     password: asibackend1
     mode: native
+logging:
+  level:
+    org:
+      apache:
+        hc:
+          client5:
+            http: DEBUG

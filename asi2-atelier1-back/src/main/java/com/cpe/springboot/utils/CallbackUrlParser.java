@@ -1,5 +1,4 @@
 package com.cpe.springboot.utils;
-
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

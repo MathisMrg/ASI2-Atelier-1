@@ -31,7 +31,7 @@ public class PropGenClientResponseService implements IPropGenClientResponseServi
         }
 
         RestClient client = RestClient.builder()
-                .baseUrl(url.getProtocol() + "://" + url.getHost())
+                .baseUrl(url.getProtocol() + "://" + url.getHost() + ":" + url.getPort())
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
@@ -52,8 +52,9 @@ public class PropGenClientResponseService implements IPropGenClientResponseServi
             }
         }
 
-        client.post()
+        String result = client.post()
                 .uri(url.getPath())
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(responseJson)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError,
@@ -61,6 +62,9 @@ public class PropGenClientResponseService implements IPropGenClientResponseServi
                                 resp.getStatusCode(),
                                 resp.getBody()
                         )
-                );
+                ).body(String.class);
+
+        log.info("client responded : {}", result);
+
     }
 }

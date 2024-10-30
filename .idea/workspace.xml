@@ -5,15 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f2284b2-9df4-4750-98b8-c485249e242a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_10_2024_15_10__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_10_2024_15_12__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_10_2024_15_18__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asi2-atelier-front/src/components/buy/Card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier-front/src/components/buy/Card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asi2-atelier-front/src/components/buy/CardList.css" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier-front/src/components/buy/CardList.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asi2-atelier-front/src/components/buy/CardList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier-front/src/components/buy/CardList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asi2-atelier-front/src/page/BuyPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier-front/src/page/BuyPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-back/asi2-backendmarket-monolithic-student.iml" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-back/asi2-backendmarket-monolithic-student.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-back/src/main/java/com/cpe/springboot/services/CardGeneratorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-back/src/main/java/com/cpe/springboot/services/CardGeneratorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-back/src/main/java/com/cpe/springboot/services/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-back/src/main/java/com/cpe/springboot/services/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-back/src/main/java/com/cpe/springboot/utils/CallbackUrlParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-back/src/main/java/com/cpe/springboot/utils/CallbackUrlParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-back/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-back/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-common/asi2-atelier1-common.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-common/src/main/java/com/cpe/springboot/common/PropGenerationRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-common/src/main/java/com/cpe/springboot/common/PropGenerationRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-common/src/main/java/com/cpe/springboot/common/PropGenerationValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-common/src/main/java/com/cpe/springboot/common/PropGenerationValues.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-img-gen/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-img-gen/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-img-gen/src/main/java/com/cpe/springboot/asi2_atelier1_img_gen/services/clientresponse/impl/ImgGenClientResponseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-img-gen/src/main/java/com/cpe/springboot/asi2_atelier1_img_gen/services/clientresponse/impl/ImgGenClientResponseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-img-gen/src/main/java/com/cpe/springboot/asi2_atelier1_img_gen/services/imggen/impl/ExternalImgGenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-img-gen/src/main/java/com/cpe/springboot/asi2_atelier1_img_gen/services/imggen/impl/ExternalImgGenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-img-gen/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-img-gen/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-prop-gen/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-prop-gen/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-prop-gen/src/main/java/com/cpe/springboot/asi2_atelier1_prop_gen/clientresponse/impl/PropGenClientResponseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-prop-gen/src/main/java/com/cpe/springboot/asi2_atelier1_prop_gen/clientresponse/impl/PropGenClientResponseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-text-gen/asi2-backendmarket-ms-text-gen.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-text-gen/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-text-gen/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1-text-gen/src/main/java/com/cpe/springboot/asi2_backendmarket_ms_text_gen/services/clientresponse/impl/TextGenClientResponseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-text-gen/src/main/java/com/cpe/springboot/asi2_backendmarket_ms_text_gen/services/clientresponse/impl/TextGenClientResponseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asi2-atelier1.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/colorToproperties-1.1.2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/asi2-atelier1-prop-gen/libs/colorToproperties-1.1.2.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,16 +71,22 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "Spring Boot.Asi2Atelier1ImgGenApplication.executor": "Debug",
+    "Spring Boot.Asi2Atelier1PropGenApplication.executor": "Debug",
+    "Spring Boot.Asi2BackendmarketMsTextGenApplication.executor": "Debug",
     "Spring Boot.CardMngMonolithicApplication.executor": "Debug",
     "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "docker__compose",
     "go.import.settings.migrated": "true",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -77,11 +96,78 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
     "ts.external.directory.path": "C:\\Gregory\\CPE\\5IRC\\ASI2_Framework_Front-end\\Ateliers\\Atelier_1\\ASI2-Atelier-1\\asi2-atelier-front\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
+    <layout>
+      <window_info id="Bookmarks" side_tool="true" />
+      <window_info id="ORM" side_tool="true" />
+      <window_info id="Merge Requests" />
+      <window_info id="Commit_Guest" show_stripe_button="false" />
+      <window_info id="Pull Requests" />
+      <window_info id="Learn" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3298828" />
+      <window_info id="Commit" order="1" weight="0.25" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="TypeScript" />
+      <window_info anchor="bottom" id="Profiler" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="File Transfer" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info anchor="bottom" id="Problems View" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.3301006" />
+      <window_info anchor="bottom" id="Build" order="4" weight="0.3301006" />
+      <window_info anchor="bottom" id="Network" order="5" weight="0.3301006" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.3301006" />
+      <window_info active="true" anchor="bottom" id="Services" order="7" visible="true" weight="0.3301006" />
+      <window_info anchor="right" id="Endpoints" />
+      <window_info anchor="right" id="Coverage" side_tool="true" />
+      <window_info anchor="right" id="Beans" />
+      <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
+      <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
+      <window_info anchor="right" id="Database" order="2" weight="0.25" />
+      <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.25" />
+    </layout>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/asi2-atelier1-prop-gen" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
   <component name="RunManager" selected="Spring Boot.CardMngMonolithicApplication">
+    <configuration name="Asi2Atelier1ImgGenApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="asi2-atelier1-img-gen" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.cpe.springboot.asi2_atelier1_img_gen.Asi2Atelier1ImgGenApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Asi2Atelier1PropGenApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="asi2-atelier1-prop-gen" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.cpe.springboot.asi2_atelier1_prop_gen.Asi2Atelier1PropGenApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Asi2BackendmarketMsTextGenApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="asi2-backendmarket-ms-text-gen" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.cpe.springboot.asi2_backendmarket_ms_text_gen.Asi2BackendmarketMsTextGenApplication" />
@@ -97,6 +183,40 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+      <item itemvalue="Spring Boot.Asi2Atelier1ImgGenApplication" />
+      <item itemvalue="Spring Boot.Asi2Atelier1PropGenApplication" />
+      <item itemvalue="Spring Boot.Asi2BackendmarketMsTextGenApplication" />
+      <item itemvalue="Spring Boot.CardMngMonolithicApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21155.17" />
+        <option value="bundled-js-predefined-d6986cc7102b-bed05e336f61-JavaScript-IU-243.21155.17" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -109,6 +229,9 @@
       <workItem from="1729081823267" duration="2658000" />
       <workItem from="1729084534449" duration="167000" />
       <workItem from="1729165016723" duration="4045000" />
+      <workItem from="1729871243660" duration="1190000" />
+      <workItem from="1729872886846" duration="3044000" />
+      <workItem from="1729956460036" duration="2640000" />
     </task>
     <servers />
   </component>
@@ -129,5 +252,25 @@
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/asi2-atelier1-back/src/main/java/com/cpe/springboot/services/CardGeneratorService.java</url>
+          <line>99</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/asi2-atelier1-back/src/main/java/com/cpe/springboot/controllers/CardGeneratorController.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

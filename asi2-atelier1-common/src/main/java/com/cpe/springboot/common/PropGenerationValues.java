@@ -2,27 +2,26 @@ package com.cpe.springboot.common;
 
 
 import com.cpe.springboot.common.exceptions.MissingPropertyException;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Map;
 import java.util.Objects;
 
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode
 public final class PropGenerationValues {
-    private final float hp;
-    private final float energy;
-    private final float attack;
-    private final float defence;
+    private float hp;
+    private float energy;
+    private float attack;
+    private float defence;
 
     private static String[] REQUIRED_PROP_KEYS = new String[] {
             "ATTACK",
-            "DEFENCE",
+            "DEFENSE",
             "HP",
             "ENERGY"
     };
@@ -35,7 +34,7 @@ public final class PropGenerationValues {
         }
 
         this.attack = values.get("ATTACK");
-        this.defence = values.get("DEFENCE");
+        this.defence = values.get("DEFENSE");
         this.hp = values.get("HP");
         this.energy = values.get("ENERGY");
     }
