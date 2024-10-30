@@ -35,6 +35,7 @@ public class ExternalTextGenService implements ITextGenService {
     }
 
     private String queryOllamaApiForResponse(String prompt) throws OllamaRequestFailedException {
+        prompt = wrapPrompt(prompt);
         RestClient client = RestClient.builder()
                 .baseUrl(OLLAMA_URL)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -55,6 +56,11 @@ public class ExternalTextGenService implements ITextGenService {
                 .body(OllamaResponseDto.class);
 
         return Objects.requireNonNull(ollamaResponse).getResponse();
+    }
+
+    private String wrapPrompt(String prompt) {
+        return "Tu dois générer une description pour une carte de jeu. La description ne doit pas dépasser 250 caractères. " +
+                "Voici la description souhaitée :" + prompt;
     }
 
     private JSONObject getOllamaRequestJson(String prompt) {
