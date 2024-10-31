@@ -32,6 +32,8 @@ public class DTOMapper {
 
 	public static CardModel fromGenerateCardDTOToCardModel(GenerateCardDTO gC) {
 		CardModel cm=new CardModel();
+		//TODO Ajouter un nom de carte
+		cm.setName("Nouvelle carte");
 		return cm;
 	}
 	

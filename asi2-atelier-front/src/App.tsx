@@ -10,6 +10,7 @@ import CreateCardPage from "./page/CreateCardPage";
 import { useDispatch, useSelector } from "react-redux";
 import { User } from "./model/userModel";
 import SellPage from "./page/SellPage";
+import {subscribeToNotification} from "./service/NotificationService";
 
 function App() {
 
@@ -17,6 +18,11 @@ function App() {
   const selectUser = (user: User) => {
     dispatch({ type: "UPDATE_SELECTED_USER", payload: user });
   };
+
+
+  useEffect(() => {
+    subscribeToNotification()
+  }, []);
 
   useEffect(() => {
     const userString = localStorage.getItem("user");

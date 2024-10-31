@@ -89,7 +89,6 @@ public class CardGeneratorService {
 
     public void generateImage(UUID transactionId, String prompt) {
         ImageGenerationRequestDTO imageGenerationRequestDTO = new ImageGenerationRequestDTO(transactionId, prompt, "", CallbackUrlParser.parseCallbackUrl(imageCallbackUrl.toString(), transactionId.toString()));
-
         jmsTemplate.convertAndSend(imageQueue, imageGenerationRequestDTO);
     }
 

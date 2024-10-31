@@ -14,10 +14,12 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final CardModelService cardModelService;
+    private final NotificationService notificationService;
 
-    public TransactionService(TransactionRepository transactionRepository, CardModelService cardModelService) {
+    public TransactionService(TransactionRepository transactionRepository, CardModelService cardModelService, NotificationService notificationService) {
         this.transactionRepository = transactionRepository;
         this.cardModelService = cardModelService;
+        this.notificationService = notificationService;
     }
 
     public TransactionModel createTransaction(CardModel generateCardDTO) {
@@ -32,6 +34,7 @@ public class TransactionService {
         transactionModel.setDescriptionGeneratedAt(LocalDateTime.now());
         transactionRepository.save(transactionModel);
         updateCardGenerationStatus(transactionModel);
+        notificationService.sendNotification("Description terminée");
 
     }
 
@@ -43,6 +46,7 @@ public class TransactionService {
         transactionModel.setImageGeneratedAt(LocalDateTime.now());
         transactionRepository.save(transactionModel);
         updateCardGenerationStatus(transactionModel);
+        notificationService.sendNotification("Illustration terminée");
     }
 
 
@@ -50,6 +54,7 @@ public class TransactionService {
         boolean isFinish = transactionModel.getDescriptionGeneratedAt()!=null && transactionModel.getImageGeneratedAt()!=null && transactionModel.getStatsGeneratedAt()!=null;
         if (isFinish) {
             cardModelService.setGeneratedCard(transactionModel.getCard().getId());
+            notificationService.sendNotification("Carte terminée");
         }
     }
 
@@ -57,5 +62,6 @@ public class TransactionService {
         transactionModel.setStatsGeneratedAt(LocalDateTime.now());
         transactionRepository.save(transactionModel);
         updateCardGenerationStatus(transactionModel);
+        notificationService.sendNotification("Statistiques terminée");
     }
 }
