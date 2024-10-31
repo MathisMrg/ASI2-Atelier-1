@@ -32,6 +32,10 @@ td {
     overflow: auto; /* Active la barre de défilement si nécessaire */
     word-wrap: break-word; /* Permet le retour à la ligne */
     white-space: normal;
+    max-width: 20ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* Style pour les lignes impaires */
