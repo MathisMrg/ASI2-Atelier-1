@@ -120,7 +120,7 @@ const CardList: React.FC<CardListProps> = ({ isShop }) => {
                         </Tr>
                     ))}
                 </Tbody>
-                <Tfoot>
+                {/* <Tfoot>
                     {getFooterGroups().map((footerGroup) => (
                         <Tr key={footerGroup.id}>
                             {footerGroup.headers.map((header) => (
@@ -130,7 +130,7 @@ const CardList: React.FC<CardListProps> = ({ isShop }) => {
                             ))}
                         </Tr>
                     ))}
-                </Tfoot>
+                </Tfoot> */}
             </Table>
         </TableContainer>
     );

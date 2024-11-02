@@ -103,6 +103,7 @@ public class CardGeneratorService {
             cardModel.setDefence(propGenerationResponseDTO.properties().getDefence());
             cardModel.setEnergy(propGenerationResponseDTO.properties().getEnergy());
             cardModel.setPrice(cardModel.computePrice());
+            cardModel.setFamily("Generated");
             cardModelService.updateCard(cardModel);
             transactionService.finishStatsGeneration(transactionModel);
         }
