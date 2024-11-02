@@ -18,10 +18,14 @@ function App() {
   const selectUser = (user: User) => {
     dispatch({ type: "UPDATE_SELECTED_USER", payload: user });
   };
+  let once = false;
 
 
   useEffect(() => {
-    subscribeToNotification()
+    if(!once){
+      subscribeToNotification();
+      once = true;
+    }
   }, []);
 
   useEffect(() => {
