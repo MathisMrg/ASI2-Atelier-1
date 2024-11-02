@@ -7,6 +7,7 @@ const CardGenerationForm: React.FC = () => {
   const [formValues, setFormValues] = useState({
     imagePrompt: "",
     descriptionPrompt: "",
+    cardName: "",
     agreed: false,
   });
 
@@ -38,6 +39,7 @@ const CardGenerationForm: React.FC = () => {
     try {
       let cardPrompt : CardPrompt = {
         userId: selectedUser.id,
+        cardName: formValues.cardName,
         imagePrompt: formValues.imagePrompt,
         descriptionPrompt: formValues.descriptionPrompt,
       }
@@ -58,50 +60,61 @@ const CardGenerationForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form">
-      <div>
-        <label>Image Prompt</label>
-        <input
-          type="text"
-          name="imagePrompt"
-          value={formValues.imagePrompt}
-          onChange={handleChange}
-          placeholder="Image Prompt"
-          className="input"
-        />
-      </div>
-
-      <div>
-        <label>Description Prompt</label>
-        <input
-          type="text"
-          name="descriptionPrompt"
-          value={formValues.descriptionPrompt}
-          onChange={handleChange}
-          placeholder="Description Prompt"
-          className="input"
-        />
-      </div>
-
-      <div>
-        <label>
+      <form onSubmit={handleSubmit} className="form">
+        <div>
+          <label>Card Name</label>
           <input
-            type="checkbox"
-            name="agreed"
-            checked={formValues.agreed}
-            onChange={handleChange}
+              type="text"
+              name="cardName"
+              value={formValues.cardName}
+              onChange={handleChange}
+              placeholder="Card Name"
+              className="input"
           />
-          I agree to the Terms and Conditions
-        </label>
-      </div>
+        </div>
+        <div>
+          <label>Image Prompt</label>
+          <input
+              type="text"
+              name="imagePrompt"
+              value={formValues.imagePrompt}
+              onChange={handleChange}
+              placeholder="Image Prompt"
+              className="input"
+          />
+        </div>
 
-      {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">Demande de creation envoyer avec succes !</p>}
+        <div>
+          <label>Description Prompt</label>
+          <input
+              type="text"
+              name="descriptionPrompt"
+              value={formValues.descriptionPrompt}
+              onChange={handleChange}
+              placeholder="Description Prompt"
+              className="input"
+          />
+        </div>
 
-      <button type="submit" className="submit-btn" disabled={loading}>
-        {loading ? "Generating..." : "Generate"}
-      </button>
-    </form>
+        <div>
+          <label>
+            <input
+                type="checkbox"
+                name="agreed"
+                checked={formValues.agreed}
+                onChange={handleChange}
+            />
+            I agree to the Terms and Conditions
+          </label>
+        </div>
+
+        {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">Demande de creation envoyer avec succes !</p>}
+
+        <button type="submit" className="submit-btn" disabled={loading}>
+          {loading ? "Generating..." : "Generate"}
+        </button>
+      </form>
   );
 };
 

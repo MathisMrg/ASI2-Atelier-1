@@ -48,6 +48,7 @@ public class CardModelService {
         CardModel cardModel = DTOMapper.fromGenerateCardDTOToCardModel(generateCardDTO);
         Optional<UserModel> user = userService.getUser(generateCardDTO.userId());
         if (user.isPresent()) {
+            cardModel.setName(generateCardDTO.cardName());
             cardModel.setUser(user.get());
             cardModel = cardRepository.save(cardModel);
             cardGeneratorService.generateCard(cardModel, generateCardDTO);
