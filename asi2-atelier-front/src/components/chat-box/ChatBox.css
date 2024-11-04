@@ -1,0 +1,92 @@
+/* ChatBox.css en Light Theme */
+.chat-box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 320px;
+    max-height: 400px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-top-right-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.chat-box.closed .chat-content {
+    display: none;
+}
+
+.chat-box.open {
+    transform: translateY(0);
+}
+
+.chat-box.closed {
+    transform: translateY(100%);
+}
+
+.toggle-button {
+    width: 100%;
+    padding: 8px;
+    background-color: #e0e0e0;
+    color: #333333;
+    border: none;
+    cursor: pointer;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-around;
+    background-color: #e0e0e0;
+    color: #333333;
+}
+
+.chat-header button {
+    flex: 1;
+    padding: 8px;
+    background: none;
+    color: #333333;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.chat-header button.active {
+    background-color: #cccccc;
+}
+
+.chat-messages {
+    padding: 8px;
+    overflow-y: auto;
+    max-height: 250px;
+    background-color: #f9f9f9;
+    height: 250px;
+    text-align: left;
+    word-break: break-word;
+}
+
+.chat-box input[type="text"] {
+    width: 300px;
+    padding: 8px;
+    background-color: #ffffff;
+}
+
+.chat-box button {
+    padding: 8px;
+    background-color: #e0e0e0;
+    color: #333333;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.display-button {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 20rem;
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    background-color: #e0e0e0;
+    color: #333333;
+    border: 1px solid #cccccc;
+}
