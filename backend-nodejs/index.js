@@ -14,10 +14,27 @@ app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.i
 
 app.use(express.json());
 
-io.on('connection', function(socket){
-    console.log('a user connected');
-    socket.on('send-chat', function(data) {
-        socket.emit('receive-msg', data);
+io.on('connection', function(socket) {
+    console.log('A user connected');
+
+    socket.join('global-room');
+    socket.on('send-global', (message) => {
+        io.to('global-room').emit('receive-global', message);
+    });
+
+    socket.on('join-private', (userId) => {
+        const privateRoom = `private-${userId}`;
+        socket.join(privateRoom);
+        console.log(`User joined private room: ${privateRoom}`);
+    });
+
+    socket.on('send-private', ({ toUserId, message }) => {
+        const privateRoom = `private-${toUserId}`;
+        io.to(privateRoom).emit('receive-private', message);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
     });
 });
 
