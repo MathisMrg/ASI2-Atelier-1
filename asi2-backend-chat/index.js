@@ -2,7 +2,12 @@ var express = require("express");
 var app = express();
 var path = require("path");
 let server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const io = require('socket.io')(server,{
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});
 
 app.use(express.static('public'));
 app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.io/client-dist')));
@@ -38,7 +43,7 @@ app.use(function (req, res, next) {
     res.status(404).send("Sorry, page not found");
 });
 
-server.listen(3000, function () {
+server.listen(4000, function () {
     const host = server.address().address;
     const port = server.address().port;
     console.log("Example app listening at http://%s:%s", host, port);
