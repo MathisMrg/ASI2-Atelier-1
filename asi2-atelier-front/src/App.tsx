@@ -35,9 +35,10 @@ function App() {
       const user: User = JSON.parse(userString);
       selectUser(user);
     }
+
   }, []);
 
-  const selectedUser = useSelector((state : any) => state.userReducer.selectedUser);
+  const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
 
   const [title, setTitle] = useState("Add a user");
 
