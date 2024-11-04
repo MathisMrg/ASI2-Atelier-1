@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./App.css";
 import Header from "./components/header/Header";
 import LoginPage from "./page/LoginPage";
@@ -14,21 +14,11 @@ import SellPage from "./page/SellPage";
 import { subscribeToNotification } from "./service/NotificationService";
 import GamePage from "./page/GamePage";
 import ChatBox from "./components/chat-box/ChatBox";
-
-const socket = io("http://localhost:4000");
-
-interface Message {
-  sender: string;
-  date: Date;
-  message: string;
-  gameId: string;
-}
+import { Message } from "./model/messageModel";
 
 function App() {
 
   const dispatch = useDispatch();
-  const [messageGlobal, setMessageGlobal] = useState('');
-  const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [globalMessages, setGlobalMessages] = useState<Message[]>([]);
   const gameId = 2;
@@ -36,6 +26,16 @@ function App() {
     dispatch({ type: "UPDATE_SELECTED_USER", payload: user });
   };
   let once = false;
+  const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
+  
+  let socket = useMemo(() => {
+    return io("http://localhost:4000", {
+      auth : {
+      userId: selectedUser?.id
+      } 
+    });
+  }, [selectedUser]);
+
 
 
   useEffect(() => {
@@ -50,36 +50,35 @@ function App() {
     if (userString) {
       const user: User = JSON.parse(userString);
       selectUser(user);
+
+      socket.emit('join-global');
+      socket.emit('join-private', user.id);
+
+      socket.on('receive-global', (data) => {
+        setGlobalMessages((prevMessages) => [...prevMessages, data]);
+      });
+
+      socket.on('receive-private', (data) => {
+        setMessages((prevMessages) => [...prevMessages, data]);
+      });
+
+      return () => {
+        socket.off('receive-global');
+        socket.off('receive-private');
+      };
     }
-
-    socket.emit('join-global');
-        socket.emit('join-private', { gameId });
-
-        socket.on('receive-global', (data) => {
-            setGlobalMessages((prevMessages) => [...prevMessages, data]);
-        });
-
-        socket.on('receive-private', (data) => {
-            setMessages((prevMessages) => [...prevMessages, data]);
-        });
-
-        return () => {
-            socket.off('receive-global');
-            socket.off('receive-private');
-        };
-
   }, []);
 
-  const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
 
   const [title, setTitle] = useState("Add a user");
 
-  const sendPrivateMessage = (message: string) => {
+  const sendPrivateMessage = (message: string, receiver: User) => {
     if (selectedUser && message.trim()) {
       socket.emit('send-private', {
-        sender: selectedUser.surName,
+        sender: selectedUser,
         gameId,
         message,
+        receiver: receiver,
         date: new Date()
       });
     }
@@ -89,7 +88,7 @@ function App() {
     if (message.trim()) {
       socket.emit('send-global', {
         message,
-        sender: selectedUser.surName,
+        sender: selectUser,
         date: new Date()
       });
     }

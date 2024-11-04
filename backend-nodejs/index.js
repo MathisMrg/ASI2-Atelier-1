@@ -9,6 +9,8 @@ const io = require('socket.io')(server, {
     }
 });
 
+const userList = new Set();
+
 app.use(express.static('public'));
 app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.io/client-dist')));
 
@@ -16,6 +18,7 @@ app.use(express.json());
 
 io.on('connection', function (socket) {
     console.log('A user connected');
+   // console.log(JSON.stringify(socket));
 
     socket.join('global-room');
     socket.on('send-global', (message) => {
@@ -23,7 +26,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('join-private', (obj) => {
-        const privateRoom = `private-${obj.gameId}`;
+        const privateRoom = `private-${obj.receiver?.id}`;
         socket.join(privateRoom);
         console.log(`User joined private room: ${privateRoom}`);
     });
