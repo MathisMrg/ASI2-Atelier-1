@@ -3,6 +3,7 @@ import IconButton from "../components/icon-button/IconButton";
 import { faDollar } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { faFlask } from "@fortawesome/free-solid-svg-icons";
+import { faGamepad } from "@fortawesome/free-solid-svg-icons";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { User } from "../model/userModel";
@@ -32,7 +33,7 @@ const LoggedHome: React.FC<LoggedHomePageProps> = ({ setTitle }) => {
       <IconButton title={"Sell"} iconName={faDollar} />
       <IconButton title={"Buy"} iconName={faShoppingCart} />
       <IconButton title={"Create"} iconName={faFlask} />
-      <IconButton title={"Game"} iconName={faFlask} />
+      <IconButton title={"Game"} iconName={faGamepad} />
       <button className="Icone-button" onClick={logout}> <FontAwesomeIcon
         icon={faRightFromBracket}
       /> Logout</button>

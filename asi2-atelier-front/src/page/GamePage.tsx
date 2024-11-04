@@ -18,12 +18,12 @@ const GamePage: React.FC<GamePageProps> = ({ setTitle }) => {
     useEffect(() => {
         setTitle("Game - board");
 
-        socket.on('myEvent2', (data: string) => {
+        socket.on('receive-msg', (data: string) => {
             setMessages((prevMessages) => [...prevMessages, data]);
         });
 
         return () => {
-            socket.off('myEvent2');
+            socket.off('receive-msg');
         };
     }, []);
 
@@ -35,7 +35,7 @@ const GamePage: React.FC<GamePageProps> = ({ setTitle }) => {
 
     const sendMessage = () => {
         if (message.trim()) {
-            socket.emit('myEvent1', message); // Envoie le message au backend
+            socket.emit('send-chat', message);
             setMessage('');
         }
     };

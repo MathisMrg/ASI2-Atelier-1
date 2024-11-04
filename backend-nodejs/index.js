@@ -16,8 +16,8 @@ app.use(express.json());
 
 io.on('connection', function(socket){
     console.log('a user connected');
-    socket.on('myEvent1', function(data) {
-        socket.emit('myEvent2', data);
+    socket.on('send-chat', function(data) {
+        socket.emit('receive-msg', data);
     });
 });
 
