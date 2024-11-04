@@ -3,3 +3,4 @@
 **/.idea/
 ./public/**/
 **/public/images/*
+**/node_modules/*
