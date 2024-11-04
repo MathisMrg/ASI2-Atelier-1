@@ -32,6 +32,7 @@ const LoggedHome: React.FC<LoggedHomePageProps> = ({ setTitle }) => {
       <IconButton title={"Sell"} iconName={faDollar} />
       <IconButton title={"Buy"} iconName={faShoppingCart} />
       <IconButton title={"Create"} iconName={faFlask} />
+      <IconButton title={"Game"} iconName={faFlask} />
       <button className="Icone-button" onClick={logout}> <FontAwesomeIcon
         icon={faRightFromBracket}
       /> Logout</button>
