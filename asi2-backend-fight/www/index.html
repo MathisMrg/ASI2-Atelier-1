@@ -15,7 +15,7 @@
             var prenom = document.getElementById("prenom").value;
             var data = { nom: nom, prenom: prenom };
 
-            fetch('http://localhost:3000/msg', {
+            fetch('http://localhost:4040/msg', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -43,7 +43,6 @@
 
     <div id="personnes"></div>
 
-    <!-- <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/index.js"></script> -->
+
   </body>
 </html>
