@@ -16,6 +16,7 @@ const GamePage: React.FC<GamePageProps> = ({ setTitle }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState<string[]>([]);
     const [globalMessages, setGlobalMessages] = useState<string[]>([]);
+    const gameID = 2;
 
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
 
@@ -23,6 +24,7 @@ const GamePage: React.FC<GamePageProps> = ({ setTitle }) => {
         setTitle("Game - board");
 
         socket.emit('join-global');
+        socket.emit('join-private', { gameID: gameID });
         
         socket.on('receive-global', (data: string) => {
             setGlobalMessages((prevMessages) => [...prevMessages, data]);
@@ -44,7 +46,7 @@ const GamePage: React.FC<GamePageProps> = ({ setTitle }) => {
 
     const sendPrivateMessage = () => {
         if (selectedUser && message.trim()) {
-            socket.emit('send-private', { toUserId: selectedUser.id, message });
+            socket.emit('send-private', { gameID: gameID, message });
             setMessage('');
         }
     };

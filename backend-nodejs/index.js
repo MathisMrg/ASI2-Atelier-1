@@ -22,33 +22,21 @@ io.on('connection', function(socket) {
         io.to('global-room').emit('receive-global', message);
     });
 
-    socket.on('join-private', (userId) => {
-        const privateRoom = `private-${userId}`;
+    socket.on('join-private', ({gameID}) => {
+        const privateRoom = `private-${gameID}`;
         socket.join(privateRoom);
         console.log(`User joined private room: ${privateRoom}`);
     });
 
-    socket.on('send-private', ({ toUserId, message }) => {
-        const privateRoom = `private-${toUserId}`;
+    socket.on('send-private', ({ gameID, message }) => {
+        console.log("sendedTo : " + gameID)
+        const privateRoom = `private-${gameID}`;
         io.to(privateRoom).emit('receive-private', message);
     });
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
-});
-
-app.get("/", function (req, res, next) {
-    res.sendFile(path.join(__dirname, "./www/index.html"), function (err) {
-        if (err) {
-            next(err);
-        }
-    });
-});
-
-app.post("/msg", function(req, res, next) {
-    console.log(req.body);
-    res.send("Données reçues");
 });
 
 app.use(function (err, req, res, next) {
