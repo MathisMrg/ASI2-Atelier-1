@@ -90,3 +90,35 @@
     color: #333333;
     border: 1px solid #cccccc;
 }
+
+.conversation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.conversation {
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+
+.conversation.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.back-button {
+    margin-bottom: 10px;
+    color: #007bff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}

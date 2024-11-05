@@ -21,6 +21,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, send
     const [isOpen, setIsOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
+    // Utilisateur connecté
     const selectedUserFromStore = useSelector((state: any) => state.userReducer.selectedUser);
 
     useEffect(() => {
@@ -59,44 +60,61 @@ const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, send
                             <button className={activeTab === 'global' ? 'active' : ''} onClick={() => setActiveTab('global')}>
                                 Global Chat
                             </button>
-                            <button className={activeTab === 'private' ? 'active' : ''} onClick={() => {
-                                setActiveTab('private');
-                                setSelectedUser(null); // Reset selected user when switching tabs
-                            }}>
+                            <button className={activeTab === 'private' ? 'active' : ''} onClick={() => setActiveTab('private')}>
                                 Private Chat
                             </button>
                         </div>
+
                         <div className="chat-messages">
-                            {(activeTab === 'global' ? globalMessages : privateMessages).map((msg, index) => (
+                            {activeTab === 'global' && globalMessages.map((msg, index) => (
                                 <div key={index}>
-                                    {`${new Date(msg.date).toLocaleTimeString()} ${msg.sender}: ${msg.message}`}
+                                    {`${new Date(msg.date).toLocaleTimeString()} ${msg.sender.surName}: ${msg.message}`}
                                 </div>
                             ))}
+
+                            {activeTab === 'private' && (
+                                selectedUser ? (
+                                    <div>
+                                        <button onClick={() => setSelectedUser(null)} className="back-button">
+                                            ← Back to Users
+                                        </button>
+                                        <div className="messages">
+                                            {privateMessages
+                                                .filter(msg => msg.sender.id === selectedUser.id || msg.receiver?.id === selectedUser.id)
+                                                .map((msg, index) => (
+                                                    <div key={index}>
+                                                        {`${new Date(msg.date).toLocaleTimeString()} ${msg.sender.surName}: ${msg.message}`}
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="user-list">
+                                        <label>Select a conversation:</label>
+                                        <div className="conversation-list">
+                                            {users?.filter(user => user.id !== selectedUserFromStore?.id).map(user => (
+                                                <div
+                                                    key={user.id.toString()}
+                                                    className="conversation"
+                                                    onClick={() => setSelectedUser(user)}
+                                                >
+                                                    {user.surName}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )
+                            )}
                         </div>
-                        {activeTab === 'private' && users && (
-                            <div className="user-list">
-                                <label>Select User:</label>
-                                <select onChange={(e) => {
-                                    const userId = e.target.value;
-                                    const user = users.find(user => user.id === Number(userId));
-                                    setSelectedUser(user || null);
-                                }}>
-                                    <option value="">-- Select a User --</option>
-                                    {users.map(user => (
-                                        <option key={user.id.toString()} value={user.id.toString()}>
-                                            {user.surName}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        )}
+
                         <input
                             type="text"
                             value={messageInput}
                             onChange={(e) => setMessageInput(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                            disabled={activeTab === 'private' && !selectedUser}
                         />
-                        <button onClick={handleSendMessage}>Send</button>
+                        <button onClick={handleSendMessage} disabled={activeTab === 'private' && !selectedUser}>Send</button>
                     </div>
                 )}
             </div>

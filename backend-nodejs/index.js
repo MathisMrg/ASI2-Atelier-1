@@ -26,13 +26,16 @@ io.on('connection', function (socket) {
     });
 
     socket.on('join-private', (obj) => {
-        const privateRoom = `private-${obj.receiver?.id}`;
+        const privateRoom = `private-${obj.id}`;
         socket.join(privateRoom);
         console.log(`User joined private room: ${privateRoom}`);
     });
 
     socket.on('send-private', (obj) => {
+        console.log("private room obj : " + obj)
         console.log("sendedTo : " + obj.gameId)
+        console.log("sendedTo : " + obj.sender.id)
+        console.log("sendedTo : " + obj.receiver.id)
         const privateRoom = `private-${obj.gameId}`;
         io.to(privateRoom).emit('receive-private', obj);
     });

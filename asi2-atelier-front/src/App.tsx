@@ -27,16 +27,14 @@ function App() {
   };
   let once = false;
   const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
-  
+
   let socket = useMemo(() => {
     return io("http://localhost:4000", {
-      auth : {
-      userId: selectedUser?.id
-      } 
+      auth: {
+        userId: selectedUser?.id
+      }
     });
   }, [selectedUser]);
-
-
 
   useEffect(() => {
     if (!once) {
@@ -52,7 +50,7 @@ function App() {
       selectUser(user);
 
       socket.emit('join-global');
-      socket.emit('join-private', user.id);
+      socket.emit('join-private', user);
 
       socket.on('receive-global', (data) => {
         setGlobalMessages((prevMessages) => [...prevMessages, data]);
@@ -88,7 +86,7 @@ function App() {
     if (message.trim()) {
       socket.emit('send-global', {
         message,
-        sender: selectUser,
+        sender: selectedUser,
         date: new Date()
       });
     }
@@ -105,12 +103,13 @@ function App() {
         <Route path="/create" element={<CreateCardPage setTitle={setTitle} />} />
         <Route path="/game" element={<GamePage setTitle={setTitle} />} />
       </Routes>
-      <ChatBox
+      {selectedUser ? <ChatBox
         globalMessages={globalMessages}
         privateMessages={messages}
         sendGlobalMessage={sendGlobalMessage}
         sendPrivateMessage={sendPrivateMessage}
-      />
+      /> : <span></span>}
+
     </div>
   );
 }
