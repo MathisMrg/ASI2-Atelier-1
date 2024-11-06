@@ -6,7 +6,6 @@ class CombatService {
     }
 
     createBattleRoom(data) {
-        // TODO : Ajouter condition de création battle room
         this.#validateCombatCreationRequest(data);
         let combat = new Combat(data.requesterId, data.fighterId);
         this.persistence.addCombat(combat);
@@ -18,17 +17,23 @@ class CombatService {
         this.#validateSelectionData(data);
 
         let combat = this.persistence.getCombat(data.id);
-        combat.addCard(data.userId, data.cardId)
+        this.persistence.addCombat(combat.addCard(data.userId, data.card));
+        return combat;
     }
 
     startFight(data) {
         this.#validateCombatRequest(data)
 
+        let combat = this.persistence.getCombat(data.id);
+        this.persistence.addCombat(combat.startFight());
+        return combat;
     }
 
     processMove(data) {
         this.#validateCombatRequest(data)
-
+        let combat = this.persistence.getCombat(data.id);
+        this.persistence.addCombat(combat.processMove(data))
+        return combat;
     }
 
     #validateCombatRequest(data) {
@@ -46,13 +51,18 @@ class CombatService {
             throw new Error("Identifiant utilisateur manquant")
         }
 
-        if (!data.cardId) {
+        if (!data.card.id) {
             throw new Error("Veuillez sélectionner une carte !")
         }
     }
 
     #validateCombatCreationRequest(data) {
-        return data.requesterId && data.fighterId;
+        if (!data.requesterId) {
+            throw new Error("Identifiant utilisateur manquant");
+        }
+        if (!data.fighterId) {
+            throw new Error("Aucun challenger n'a été inclus dans la requête");
+        }
     }
 }
 
