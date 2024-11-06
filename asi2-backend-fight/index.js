@@ -20,8 +20,8 @@ io.on('connection', function(socket){
 
     socket.on('create-battle-room', function(data) {
         try {
-            combatService.createBattleRoom(data)
-            socket.send('action-result', successResponse());
+            let combat = combatService.createBattleRoom(data)
+            socket.send('action-result', successResponse(combat));
         } catch (e) {
             socket.send('action-result', failedResponse(e));
         }
@@ -29,8 +29,8 @@ io.on('connection', function(socket){
 
     socket.on('select-card', function(data) {
         try {
-            combatService.selectCard(data);
-            socket.send('action-result', successResponse());
+            let combat = combatService.selectCard(data);
+            socket.send('action-result', successResponse(combat));
         } catch (e) {
             socket.send('action-result', failedResponse(e));
         }
@@ -38,8 +38,8 @@ io.on('connection', function(socket){
 
     socket.on('start-fight', function(data) {
         try {
-            combatService.startFight(data);
-            socket.send('action-result', successResponse());
+            let combat = combatService.startFight(data);
+            socket.send('action-result', successResponse(combat));
         } catch (e) {
             socket.send('action-result', failedResponse(e));
         }
@@ -47,18 +47,24 @@ io.on('connection', function(socket){
 
     socket.on('make-move', function(data) {
         try {
-            combatService.processMove(data);
-            socket.send('action-result', successResponse());
+            let combat = combatService.processMove(data);
+            socket.send('action-result', successResponse(combat));
         } catch (e) {
             socket.send('action-result', failedResponse(e));
         }
     });
 });
 
-function successResponse() {
+/**
+ *
+ * @param combat
+ * @returns {{success: boolean, messsage: string}}
+ */
+function successResponse(combat) {
     return {
         success: true,
-        messsage: ""
+        messsage: "",
+        state: combat
     };
 }
 
