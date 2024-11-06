@@ -6,6 +6,7 @@ import { User } from '../../model/userModel';
 import { Message } from '../../model/messageModel';
 import { useSelector } from "react-redux";
 import { getUsers } from '../../service/UserService';
+import MessageList from '../message-list/Message-List';
 
 interface ChatBoxProps {
     globalMessages: Message[];
@@ -15,13 +16,12 @@ interface ChatBoxProps {
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, sendGlobalMessage, sendPrivateMessage }) => {
-    const [activeTab, setActiveTab] = useState('global');
+    const [activeTab, setActiveTab] = useState<'global' | 'private'>('global');
     const [messageInput, setMessageInput] = useState('');
     const [users, setUsers] = useState<User[] | null>(null);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-    // Utilisateur connecté
     const selectedUserFromStore = useSelector((state: any) => state.userReducer.selectedUser);
 
     useEffect(() => {
@@ -65,50 +65,16 @@ const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, send
                             </button>
                         </div>
 
-                        <div className="chat-messages">
-                            {activeTab === 'global' && globalMessages.map((msg, index) => (
-                                <div key={index}>
-                                    {`${new Date(msg.date).toLocaleTimeString()} - ${msg.sender.surName}: ${msg.message}`}
-                                </div>
-                            ))}
-
-                            {activeTab === 'private' && (
-                                selectedUser ? (
-                                    <div>
-                                        <button onClick={() => setSelectedUser(null)} className="back-button">
-                                            ← Back to Users
-                                        </button>
-                                        <div className="messages">
-                                            {privateMessages
-                                                .filter(msg =>
-                                                    (msg.sender.id === selectedUserFromStore.id && msg.receiver?.id === selectedUser?.id) ||
-                                                    (msg.sender.id === selectedUser?.id && msg.receiver?.id === selectedUserFromStore.id)
-                                                )
-                                                .map((msg, index) => (
-                                                    <div key={index}>
-                                                        {`${new Date(msg.date).toLocaleTimeString()} - ${msg.sender.surName}: ${msg.message}`}
-                                                    </div>
-                                                ))}
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="user-list">
-                                        <label>Select a conversation:</label>
-                                        <div className="conversation-list">
-                                            {users?.filter(user => user.id !== selectedUserFromStore?.id).map(user => (
-                                                <div
-                                                    key={user.id.toString()}
-                                                    className="conversation"
-                                                    onClick={() => setSelectedUser(user)}
-                                                >
-                                                    {user.surName}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )
-                            )}
-                        </div>
+                        <MessageList
+                            activeTab={activeTab}
+                            globalMessages={globalMessages}
+                            privateMessages={privateMessages}
+                            selectedUser={selectedUser}
+                            selectedUserFromStore={selectedUserFromStore}
+                            onBackToUsers={() => setSelectedUser(null)}
+                            users={users?.filter(user => user.id !== selectedUserFromStore?.id) || []}
+                            onSelectUser={setSelectedUser}
+                        />
 
                         <input
                             type="text"

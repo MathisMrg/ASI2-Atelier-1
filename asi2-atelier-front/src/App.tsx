@@ -67,13 +67,12 @@ function App() {
         socket.off('receive-private');
       };
     }
-  }, [selectedUser, socket, selectUser]);
+  }, [selectedUser, socket]);
 
 
   const [title, setTitle] = useState("Add a user");
 
   const sendPrivateMessage = (message: string, receiver: User) => {
-    if (selectedUser && message.trim()) {
       socket.emit('send-private', {
         sender: selectedUser,
         gameId,
@@ -88,18 +87,15 @@ function App() {
         receiver: receiver,
         date: new Date()
       }]);
-    }
   };
 
   const sendGlobalMessage = (message: string) => {
-    if (message.trim()) {
       socket.emit('send-global', {
         message,
         sender: selectedUser,
         receiver: undefined,
         date: new Date()
       });
-    }
   };
 
   return (
