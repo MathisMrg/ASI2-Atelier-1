@@ -1,0 +1,23 @@
+.choose-opp{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style du select */
+.select-opp {
+    padding: 8px 15px;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    width: max-content;
+    transition: border-color 0.3s ease;
+}
+
+/* Effet de focus */
+.select-opp:focus {
+    border-color: #007BFF; /* Bordure bleue au focus */
+    outline: none;
+}

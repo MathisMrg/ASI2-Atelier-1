@@ -11,7 +11,8 @@ import CreateCardPage from "./page/CreateCardPage";
 import { useDispatch, useSelector } from "react-redux";
 import { User } from "./model/userModel";
 import SellPage from "./page/SellPage";
-import { subscribeToNotification } from "./service/NotificationService";
+import {subscribeToNotification} from "./service/NotificationService";
+import FightPage from "./page/FightPage";
 import GamePage from "./page/GamePage";
 import ChatBox from "./components/chat-box/ChatBox";
 import { Message } from "./model/messageModel";
@@ -145,11 +146,12 @@ function App() {
       <Header title={title}></Header>
       <Routes>
         <Route path="/login" element={<LoginPage setTitle={setTitle} />} />
-        <Route path="/" element={selectedUser ? <LoggedHome setTitle={setTitle} socket={socket} /> : <UserFormPage setTitle={setTitle} />} />
-        <Route path="/buy" element={<ShopPage setTitle={setTitle} />} />
-        <Route path="/sell" element={<SellPage setTitle={setTitle} />} />
-        <Route path="/create" element={<CreateCardPage setTitle={setTitle} />} />
-        <Route path="/game" element={<GamePage setTitle={setTitle} />} />
+        <Route path="/" element={selectedUser ? <LoggedHome setTitle={setTitle} socket={socket} /> : <UserFormPage setTitle={setTitle} /> } />
+        <Route path="/buy" element={ <ShopPage setTitle={setTitle}/> } />
+        <Route path="/sell" element={ <SellPage setTitle={setTitle}/> } />
+        <Route path="/create" element={ <CreateCardPage setTitle={setTitle}/> } />
+        <Route path="/fight" element={ <FightPage setTitle={setTitle}/> } />
+        <Route path="/game" element={ <GamePage setTitle={setTitle}/> } />
       </Routes>
       {selectedUser ? <ChatBox
         globalMessages={globalMessages}
