@@ -64,6 +64,10 @@ class CombatService {
             throw new Error("Aucun challenger n'a été inclus dans la requête");
         }
     }
+
+    getCombatOf(userId) {
+        return this.persistence.getCombatByUserId(userId);
+    }
 }
 
 module.exports = CombatService;
