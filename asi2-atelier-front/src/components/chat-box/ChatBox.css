@@ -1,6 +1,7 @@
 /* ChatBox.css en Light Theme */
 .chat-box {
     position: fixed;
+    z-index: 9;
     bottom: 0;
     left: 0;
     width: 320px;
@@ -83,7 +84,7 @@
     width: 3rem;
     height: 3rem;
     border-radius: 20rem;
-    position: absolute;
+    position: fixed;
     bottom: 2rem;
     left: 2rem;
     background-color: #e0e0e0;

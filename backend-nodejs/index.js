@@ -1,3 +1,4 @@
+// const fetch = require('node-fetch');
 var express = require("express");
 var app = express();
 var path = require("path");
@@ -16,13 +17,35 @@ app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.i
 
 app.use(express.json());
 
+async function saveMessageToBackend(message, senderId, receiverId, date) {
+    try {
+        const response = await fetch('http://localhost:8083/chat/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: message,
+                senderId: senderId,
+                receiverId: receiverId,
+                sentAt: date
+            })
+        });
+        if (!response.ok) {
+            console.error("Erreur lors de la sauvegarde du message", response.statusText);
+        }
+    } catch (error) {
+        console.error("Erreur de connexion à l'API de sauvegarde :", error);
+    }
+}
+
 io.on('connection', function (socket) {
     console.log('A user connected');
-
     socket.join('global-room');
 
     socket.on('send-global', (message) => {
         io.to('global-room').emit('receive-global', message);
+        saveMessageToBackend(message.message, message.sender.id, undefined, message.date);
     });
 
     socket.on('join-private', (obj) => {
@@ -36,6 +59,7 @@ io.on('connection', function (socket) {
         const privateRoomReceiver = `private-${obj.receiver.id}`;
         socket.to(privateRoomSender).emit('receive-private', obj);
         socket.to(privateRoomReceiver).emit('receive-private', obj);
+        saveMessageToBackend(obj.message, obj.sender.id, obj.receiver.id, obj.date);
     });
 
     socket.on('disconnect', () => {
