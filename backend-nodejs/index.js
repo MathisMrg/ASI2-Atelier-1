@@ -18,9 +18,9 @@ app.use(express.json());
 
 io.on('connection', function (socket) {
     console.log('A user connected');
-   // console.log(JSON.stringify(socket));
 
     socket.join('global-room');
+
     socket.on('send-global', (message) => {
         io.to('global-room').emit('receive-global', message);
     });
@@ -32,12 +32,10 @@ io.on('connection', function (socket) {
     });
 
     socket.on('send-private', (obj) => {
-        console.log("private room obj : " + obj)
-        console.log("sendedTo : " + obj.gameId)
-        console.log("sendedTo : " + obj.sender.id)
-        console.log("sendedTo : " + obj.receiver.id)
-        const privateRoom = `private-${obj.gameId}`;
-        io.to(privateRoom).emit('receive-private', obj);
+        const privateRoomSender = `private-${obj.sender.id}`;
+        const privateRoomReceiver = `private-${obj.receiver.id}`;
+        socket.to(privateRoomSender).emit('receive-private', obj);
+        socket.to(privateRoomReceiver).emit('receive-private', obj);
     });
 
     socket.on('disconnect', () => {

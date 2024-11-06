@@ -68,7 +68,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, send
                         <div className="chat-messages">
                             {activeTab === 'global' && globalMessages.map((msg, index) => (
                                 <div key={index}>
-                                    {`${new Date(msg.date).toLocaleTimeString()} ${msg.sender.surName}: ${msg.message}`}
+                                    {`${new Date(msg.date).toLocaleTimeString()} - ${msg.sender.surName}: ${msg.message}`}
                                 </div>
                             ))}
 
@@ -80,10 +80,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, send
                                         </button>
                                         <div className="messages">
                                             {privateMessages
-                                                .filter(msg => msg.sender.id === selectedUser.id || msg.receiver?.id === selectedUser.id)
+                                                .filter(msg =>
+                                                    (msg.sender.id === selectedUserFromStore.id && msg.receiver?.id === selectedUser?.id) ||
+                                                    (msg.sender.id === selectedUser?.id && msg.receiver?.id === selectedUserFromStore.id)
+                                                )
                                                 .map((msg, index) => (
                                                     <div key={index}>
-                                                        {`${new Date(msg.date).toLocaleTimeString()} ${msg.sender.surName}: ${msg.message}`}
+                                                        {`${new Date(msg.date).toLocaleTimeString()} - ${msg.sender.surName}: ${msg.message}`}
                                                     </div>
                                                 ))}
                                         </div>

@@ -40,17 +40,19 @@ function App() {
     if (!once) {
       subscribeToNotification();
       once = true;
+      const userString = localStorage.getItem("user");
+      if (userString) {
+        const user: User = JSON.parse(userString);
+        selectUser(user);
+      }
     }
   }, []);
 
   useEffect(() => {
-    const userString = localStorage.getItem("user");
-    if (userString) {
-      const user: User = JSON.parse(userString);
-      selectUser(user);
+    if (selectedUser) {
 
       socket.emit('join-global');
-      socket.emit('join-private', user);
+      socket.emit('join-private', selectedUser);
 
       socket.on('receive-global', (data) => {
         setGlobalMessages((prevMessages) => [...prevMessages, data]);
@@ -65,7 +67,7 @@ function App() {
         socket.off('receive-private');
       };
     }
-  }, []);
+  }, [selectedUser, socket, selectUser]);
 
 
   const [title, setTitle] = useState("Add a user");
@@ -79,6 +81,13 @@ function App() {
         receiver: receiver,
         date: new Date()
       });
+      setMessages((prevMessages) => [...prevMessages, {
+        sender: selectedUser,
+        gameId,
+        message,
+        receiver: receiver,
+        date: new Date()
+      }]);
     }
   };
 
@@ -87,6 +96,7 @@ function App() {
       socket.emit('send-global', {
         message,
         sender: selectedUser,
+        receiver: undefined,
         date: new Date()
       });
     }
