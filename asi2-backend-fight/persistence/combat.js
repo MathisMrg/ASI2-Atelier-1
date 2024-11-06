@@ -19,6 +19,11 @@ class StatelessCombatPersistence {
     removeCombat(id) {
         this.store.delete(id)
     }
+
+    getCombatByUserId(userId) {
+        return Array.of(this.store.values())
+            .filter(combat => combat.requester === userId || combat.fighter === userId);
+    }
 }
 
 module.exports = StatelessCombatPersistence;

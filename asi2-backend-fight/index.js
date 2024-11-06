@@ -9,14 +9,15 @@ app.use(express.static('public'));
 app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.io/client-dist')));
 
 app.use(express.json());
+const combatService = new CombatService(new CombatServicePersistence());
+
 
 io.on('connection', function(socket){
     let data = socket.handshake.query;
     if (! data.userId) {
+        socket.send('connect-result', { success: false, message: "Aucun userId envoyé"})
         socket.terminate();
     }
-
-    let combatService = new CombatService(new CombatServicePersistence());
 
     socket.on('create-battle-room', function(data) {
         try {
@@ -53,6 +54,9 @@ io.on('connection', function(socket){
             socket.send('action-result', failedResponse(e));
         }
     });
+
+
+    socket.send('connect-result', combatService.getCombatOf(data.userId));
 });
 
 /**
