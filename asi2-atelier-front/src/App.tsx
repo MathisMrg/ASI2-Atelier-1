@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { User } from "./model/userModel";
 import SellPage from "./page/SellPage";
 import {subscribeToNotification} from "./service/NotificationService";
+import FightPage from "./page/FightPage";
 import GamePage from "./page/GamePage";
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
         <Route path="/buy" element={ <ShopPage setTitle={setTitle}/> } />
         <Route path="/sell" element={ <SellPage setTitle={setTitle}/> } />
         <Route path="/create" element={ <CreateCardPage setTitle={setTitle}/> } />
+        <Route path="/fight" element={ <FightPage setTitle={setTitle}/> } />
         <Route path="/game" element={ <GamePage setTitle={setTitle}/> } />
       </Routes>
     </div>

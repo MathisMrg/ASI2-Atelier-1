@@ -10,6 +10,7 @@ const initialState = {
   const cardReducer = (state = initialState, action : CardAction) => {
     switch (action.type) {
       case "UPDATE_SELECTED_CARD":
+        console.log(action.payload);
         return {
           ...state,
           selectedCard: action.payload,

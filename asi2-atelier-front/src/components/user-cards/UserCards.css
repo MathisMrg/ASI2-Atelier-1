@@ -1,0 +1,42 @@
+.setup-cards{
+    display: flex;
+    flex-direction: column;
+}
+
+.user-cards-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+/* Style de base pour chaque carte */
+.card-container {
+    display: flex;
+    justify-content: center;
+    transition: transform 0.3s ease, border 0.3s ease; /* Transition douce pour les effets */
+    cursor: pointer;
+    width: calc(25% - 16px); /* 25% de la largeur du conteneur - espace entre les cartes */
+    box-sizing: border-box;
+}
+
+/* Style appliqué lorsque la carte est sélectionnée */
+.card-container.selected {
+    border: 2px solid #007bff; /* Bord bleu */
+    transform: scale(0.95); /* Réduit la taille de la carte */
+}
+
+.fight-btn-div{
+    padding: 10px;
+}
+
+.fight-btn{
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
