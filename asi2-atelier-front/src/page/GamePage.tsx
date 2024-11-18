@@ -6,6 +6,7 @@ import { Navigate } from 'react-router-dom';
 import UserCards from "../components/user-cards/UserCards";
 import OpponentChooseForm from "../components/opponent-choose-form/OpponentChooseForm";
 import { useSocket } from '../SocketContext';
+import JoinFight from "../components/join-fight/JoinFight";
 
 
 
@@ -25,14 +26,40 @@ const GamePage: React.FC<SetupFightPageProps> = ({ setTitle }) => {
         return <Navigate to="/login" />;
     }
 
+    const isFightPresent = () => {
+        let existFights = false;
+        if (socket){
+            console.log("Ya la socket");
+            socket.emit('get-rooms', {
+                userId: selectedUser.id
+            });
+
+            // Écouter la réponse de la requête
+            socket.on('action-result', (response) => {
+                if (response.success) {
+                    console.log("Récupération des combats : ", response.state);
+                    existFights = true;
+                } else {
+                    console.error("Erreur lors de la récupération des combats : ", response.message);
+                }
+            });
+        }
+        return existFights;
+    };
+
     return (
         <div className="play-screen">
-            <OpponentChooseForm />
-
-            <div className="choose-card">
-                <h2>Choose your Cards </h2>
-                <UserCards/>
-            </div>
+            {isFightPresent() ? (
+                <JoinFight />
+            ) : (
+                <div>
+                    <OpponentChooseForm />
+                    <div className="choose-card">
+                        <h2>Choose your Cards </h2>
+                        <UserCards/>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

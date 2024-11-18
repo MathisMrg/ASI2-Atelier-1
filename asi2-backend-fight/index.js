@@ -38,6 +38,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('get-rooms', function(data) {
+        console.log("Get Rooms !")
         try {
             socket.send('action-result', successResponse(combatService.getCombatOf(data.userId)));
         } catch (e) {
