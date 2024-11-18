@@ -2,27 +2,38 @@ var express = require("express");
 var app = express();
 var path = require("path");
 let server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const { Server } = require("socket.io");
+const io = new Server(server);
 const CombatService = require('./services/combat.js');
 const CombatServicePersistence = require('./persistence/combat.js')
 app.use(express.static('public'));
 app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.io/client-dist')));
-
 app.use(express.json());
+
 const combatService = new CombatService(new CombatServicePersistence());
 
 
 io.on('connection', function(socket){
     let data = socket.handshake.query;
+    console.log(data);
     if (! data.userId) {
         socket.send('connect-result', { success: false, message: "Aucun userId envoyé"})
-        socket.terminate();
+        socket.disconnect(true);
     }
+
 
     socket.on('create-battle-room', function(data) {
         try {
             let combat = combatService.createBattleRoom(data)
             socket.send('action-result', successResponse(combat));
+        } catch (e) {
+            socket.send('action-result', failedResponse(e));
+        }
+    });
+
+    socket.on('get-rooms', function(data) {
+        try {
+            socket.send('action-result', successResponse(combatService.getCombatOf(data.userId)));
         } catch (e) {
             socket.send('action-result', failedResponse(e));
         }
