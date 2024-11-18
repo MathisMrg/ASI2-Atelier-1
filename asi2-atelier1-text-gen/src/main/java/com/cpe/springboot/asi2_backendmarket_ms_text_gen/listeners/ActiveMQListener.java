@@ -5,7 +5,6 @@ import com.cpe.springboot.asi2_backendmarket_ms_text_gen.services.textgen.ITextG
 import com.cpe.springboot.asi2_backendmarket_ms_text_gen.services.textgen.exceptions.TextGenerationException;
 import com.cpe.springboot.common.TextGenerationRequestDTO;
 import com.cpe.springboot.common.TextGenerationResponseDTO;
-import jakarta.jms.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ public class ActiveMQListener {
         this.clientResponseService = clientResponseService;
     }
 
-    @JmsListener(destination = "textgen", containerFactory = "queueConnectionFactory")
+    @JmsListener(destination = "textgen")
     public void onTextGenRequest(TextGenerationRequestDTO req) {
         log.info("request received : {}", req);
 

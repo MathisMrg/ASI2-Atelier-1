@@ -1,0 +1,12 @@
+
+services:
+    proxy:
+        image: nginx:latest
+        container_name: nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        restart: always
+        volumes:
+          - ./conf/:/etc/nginx/conf.d/:ro
+          - ../asi2-atelier-front/build/:/var/www/html/:ro

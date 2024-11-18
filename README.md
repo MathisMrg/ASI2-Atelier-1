@@ -27,6 +27,19 @@ Invoke-RestMethod -Uri "http://localhost:11434/api/pull" -Method Post -Body '{"n
 
 - Aller dans le repertoir du frontend, executer ```npm i```, puis ```npm start``` (version de node v20.15.0)
 
+## Lancer le projet sous forme de docker 
+
+build tous les projets avec la commande suivante :
+```bash
+mvn clean install -DskipTests
+```
+
+lancer le docker-compose avec la commande suivante :
+```bash
+docker-compose up -d --force-recreate --build
+```
+
+
 ## Réalisation inviduel
 
 - Medhy : Diagramme d'achitecture, generation carte partie microservice ( image, stats, texte generation ), correctif backend, utilisation message broker

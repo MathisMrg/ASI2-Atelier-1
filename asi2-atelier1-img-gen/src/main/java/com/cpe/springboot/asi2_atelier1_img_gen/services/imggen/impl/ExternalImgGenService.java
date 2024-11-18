@@ -7,6 +7,7 @@ import com.cpe.springboot.asi2_atelier1_img_gen.services.imggen.impl.exceptions.
 import com.cpe.springboot.common.ImageGenerationRequestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
@@ -21,7 +22,8 @@ import java.util.Objects;
 @Slf4j
 public class ExternalImgGenService implements IImgGenService {
 
-    public static String IMG_URL = "http://localhost:8080";
+    @Value("${neural.url}")
+    public String IMG_URL;
     public static String IMG_API_PATH = "/fake/prompt/req";
 
     @Override

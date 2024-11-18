@@ -5,9 +5,11 @@ import com.cpe.springboot.asi2_backendmarket_ms_text_gen.services.textgen.except
 import com.cpe.springboot.asi2_backendmarket_ms_text_gen.services.textgen.impl.external.dto.OllamaResponseDto;
 import com.cpe.springboot.asi2_backendmarket_ms_text_gen.services.textgen.impl.external.exceptions.OllamaRequestFailedException;
 import com.cpe.springboot.common.TextGenerationRequestDTO;
+import jakarta.annotation.PostConstruct;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -21,8 +23,14 @@ public class ExternalTextGenService implements ITextGenService {
 
     private static final Logger log = LoggerFactory.getLogger(ExternalTextGenService.class);
     public static String MODEL = "qwen2:0.5b";
-    public static String OLLAMA_URL = "http://localhost:11434";
-    public static String OLLAMA_API_PATH = "/api/generate";
+    @Value("${ollama.url}")
+    public String OLLAMA_URL;
+    public String OLLAMA_API_PATH = "/api/generate";
+
+    @PostConstruct
+    public void init() {
+        log.info("Ollama URL: {}", OLLAMA_URL);
+    }
 
     @Override
     public String generateText(TextGenerationRequestDTO req) throws TextGenerationException {
@@ -35,6 +43,9 @@ public class ExternalTextGenService implements ITextGenService {
     }
 
     private String queryOllamaApiForResponse(String prompt) throws OllamaRequestFailedException {
+
+       log.info("Ollama URL: {}", OLLAMA_URL);
+
         prompt = wrapPrompt(prompt);
         RestClient client = RestClient.builder()
                 .baseUrl(OLLAMA_URL)

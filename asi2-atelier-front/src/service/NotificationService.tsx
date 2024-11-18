@@ -1,7 +1,7 @@
 import {Client} from "@stomp/stompjs";
 import {toast} from "react-toastify";
 
-const SOCKET_URL = 'ws://localhost:8083/ws';
+const SOCKET_URL = `ws://${process.env.REACT_APP_BASE_URL}/ws`;
 const TOPIC = '/topic/notification'
 
 export const subscribeToNotification = () => {

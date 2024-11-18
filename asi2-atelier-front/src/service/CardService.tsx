@@ -1,9 +1,9 @@
 import { CardModel } from "../model/cardModel";
 import { SellModel } from "../model/sellModel";
 
-const API_URL = "http://localhost:8083/cards";
-const API_URL2 = "http://localhost:8083/card";
-const STORE_URL = "http://localhost:8083/store"
+const API_URL = `http://${process.env.REACT_APP_BASE_URL}/cards`;
+const API_URL2 = `http://${process.env.REACT_APP_BASE_URL}/card`;
+const STORE_URL = `http://${process.env.REACT_APP_BASE_URL}/store`;
 
 export const getCards = async (): Promise<CardModel[] | null> => {
     try {
