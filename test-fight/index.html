@@ -6,8 +6,8 @@
     <script defer>
         var socket = io.connect('http://localhost:4040', { query: "userId=0" });
 
-        socket.on('action-result', function(data) {
-            $('#messages').append('<li>' + data.message + '</li>');
+        socket.onAny(function(event, data) {
+            $('#messages').append('<li>' + event + ':' + asString(data) + '</li>');
         });
         $(document).ready(function() {
             $("#send").click(function() {
@@ -23,6 +23,14 @@
                 socket.emit(eventName, message);
             })
         })
+
+        function asString(obj) {
+            try {
+                return JSON.stringify(obj);
+            } catch {
+                return String(obj);
+            }
+        }
     </script>
 </head>
 <body>
