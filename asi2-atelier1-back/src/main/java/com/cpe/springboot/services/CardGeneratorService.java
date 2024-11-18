@@ -79,17 +79,20 @@ public class CardGeneratorService {
     private void generateProperties(UUID uuid, CardModel cardModel) {
         PropGenerationRequestDTO propGenerationRequestDTO = new PropGenerationRequestDTO(uuid, fileService.getUriPath(cardModel.getImgUrl()), CallbackUrlParser.parseCallbackUrl(propertiesCallbackUrl.toString(), uuid.toString()));
         jmsTemplate.convertAndSend(propertiesQueue, propGenerationRequestDTO);
+        jmsTemplate.convertAndSend("logs", propGenerationRequestDTO);
     }
 
     public void generateDescription(UUID transactionId, String prompt) {
 
         TextGenerationRequestDTO textGenerationRequestDTO = new TextGenerationRequestDTO(transactionId, CallbackUrlParser.parseCallbackUrl(descriptionCallbackUrl.toString(), transactionId.toString()), prompt);
         jmsTemplate.convertAndSend(descriptionQueue, textGenerationRequestDTO);
+        jmsTemplate.convertAndSend("logs", textGenerationRequestDTO);
     }
 
     public void generateImage(UUID transactionId, String prompt) {
         ImageGenerationRequestDTO imageGenerationRequestDTO = new ImageGenerationRequestDTO(transactionId, prompt, "", CallbackUrlParser.parseCallbackUrl(imageCallbackUrl.toString(), transactionId.toString()));
         jmsTemplate.convertAndSend(imageQueue, imageGenerationRequestDTO);
+        jmsTemplate.convertAndSend("logs", imageGenerationRequestDTO);
     }
 
 

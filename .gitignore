@@ -4,3 +4,4 @@
 ./public/**/
 **/public/images/*
 **/node_modules/*
+**logfile.txt**
