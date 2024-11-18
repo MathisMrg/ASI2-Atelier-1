@@ -33,7 +33,10 @@ io.on('connection', function(socket){
         try {
             let combat = combatService.createBattleRoom(data)
             socket.emit('battle-creation-response', successResponse(combat));
-            socket.emit('combat-request', successResponse(combat));
+            let fighterSocket = socketMap.get(combat.fighter);
+            if (fighterSocket) {
+                fighterSocket.emit('combat-request', successResponse(combat));
+            }
         } catch (e) {
             socket.emit('battle-creation-response', failedResponse(e));
         }
