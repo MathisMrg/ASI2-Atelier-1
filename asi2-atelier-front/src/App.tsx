@@ -21,6 +21,7 @@ function App() {
   const dispatch = useDispatch();
   const [messages, setMessages] = useState<Message[]>([]);
   const [globalMessages, setGlobalMessages] = useState<Message[]>([]);
+  const [connectedUsersList, setConnectedUsersList] = useState<Number[]>([]);
   const gameId = 2;
   const selectUser = (user: User) => {
     dispatch({ type: "UPDATE_SELECTED_USER", payload: user });
@@ -53,6 +54,10 @@ function App() {
 
       socket.emit('join-global');
       socket.emit('join-private', selectedUser);
+
+      socket.on('connected-users', (data) => {
+        setConnectedUsersList(data)
+      });
 
       socket.on('receive-global', (data) => {
         setGlobalMessages((prevMessages) => [...prevMessages, data]);
@@ -103,7 +108,7 @@ function App() {
       <Header title={title}></Header>
       <Routes>
         <Route path="/login" element={<LoginPage setTitle={setTitle} />} />
-        <Route path="/" element={selectedUser ? <LoggedHome setTitle={setTitle} /> : <UserFormPage setTitle={setTitle} />} />
+        <Route path="/" element={selectedUser ? <LoggedHome setTitle={setTitle} socket={socket} /> : <UserFormPage setTitle={setTitle} />} />
         <Route path="/buy" element={<ShopPage setTitle={setTitle} />} />
         <Route path="/sell" element={<SellPage setTitle={setTitle} />} />
         <Route path="/create" element={<CreateCardPage setTitle={setTitle} />} />
@@ -112,6 +117,7 @@ function App() {
       {selectedUser ? <ChatBox
         globalMessages={globalMessages}
         privateMessages={messages}
+        connectedUsersList={connectedUsersList}
         sendGlobalMessage={sendGlobalMessage}
         sendPrivateMessage={sendPrivateMessage}
       /> : <span></span>}

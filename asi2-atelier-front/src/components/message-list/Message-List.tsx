@@ -5,6 +5,7 @@ import { User } from '../../model/userModel';
 
 interface MessageListProps {
     activeTab: 'global' | 'private';
+    connectedUsersList: Number[],
     globalMessages: Message[];
     privateMessages: Message[];
     selectedUser: User | null;
@@ -23,7 +24,16 @@ const MessageList: React.FC<MessageListProps> = ({
     onBackToUsers,
     users,
     onSelectUser,
+    connectedUsersList,
 }) => {
+    const isUserConnected = (userId: Number) => connectedUsersList.includes(userId);
+
+    const sortedUsers = [...users].sort((a, b) => {
+        const aConnected = isUserConnected(a.id) ? 1 : 0;
+        const bConnected = isUserConnected(b.id) ? 1 : 0;
+        return bConnected - aConnected;
+    });
+
     return (
         <div className="chat-messages">
             {activeTab === 'global' && globalMessages.map((msg, index) => (
@@ -55,12 +65,13 @@ const MessageList: React.FC<MessageListProps> = ({
                     <div className="user-list">
                         <label>Select a conversation:</label>
                         <div className="conversation-list">
-                            {users.map(user => (
+                            {sortedUsers.map(user => (
                                 <div
                                     key={user.id.toString()}
                                     className="conversation"
                                     onClick={() => onSelectUser(user)}
                                 >
+                                    <span className={`status-indicator ${isUserConnected(user.id) ? 'online' : 'offline'}`} />
                                     {user.surName}
                                 </div>
                             ))}

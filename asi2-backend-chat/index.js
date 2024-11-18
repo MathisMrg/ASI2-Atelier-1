@@ -1,21 +1,22 @@
-// const fetch = require('node-fetch');
-var express = require("express");
-var app = express();
-var path = require("path");
-let server = require('http').createServer(app);
-const io = require('socket.io')(server, {
+const express = require("express");
+const path = require("path");
+const http = require('http');
+const socketIo = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
     cors: {
         origin: "*",
         methods: ["GET", "POST"]
     }
 });
 
-const userList = new Set();
-
 app.use(express.static('public'));
 app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.io/client-dist')));
-
 app.use(express.json());
+
+const connectedUsers = new Set();
 
 async function saveMessageToBackend(message, senderId, receiverId, date) {
     try {
@@ -39,8 +40,17 @@ async function saveMessageToBackend(message, senderId, receiverId, date) {
     }
 }
 
-io.on('connection', function (socket) {
-    console.log('A user connected');
+io.on('connection', (socket) => {
+    const userId = socket.handshake.auth?.userId;
+
+    if (userId) {
+        if (!connectedUsers.has(userId)) {
+            connectedUsers.add(userId);
+            console.log('User connected with userId:', userId);
+            io.emit('connected-users', Array.from(connectedUsers));
+        }
+    }
+
     socket.join('global-room');
 
     socket.on('send-global', (message) => {
@@ -52,6 +62,7 @@ io.on('connection', function (socket) {
         const privateRoom = `private-${obj.id}`;
         socket.join(privateRoom);
         console.log(`User joined private room: ${privateRoom}`);
+        io.emit('connected-users', Array.from(connectedUsers));
     });
 
     socket.on('send-private', (obj) => {
@@ -63,7 +74,9 @@ io.on('connection', function (socket) {
     });
 
     socket.on('disconnect', () => {
-        console.log('User disconnected');
+        connectedUsers.delete(socket.handshake.auth?.userId);
+        console.log(Array.from(connectedUsers));
+        io.emit('connected-users', Array.from(connectedUsers));
     });
 });
 

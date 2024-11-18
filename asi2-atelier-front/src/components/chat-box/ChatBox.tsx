@@ -11,11 +11,12 @@ import MessageList from '../message-list/Message-List';
 interface ChatBoxProps {
     globalMessages: Message[];
     privateMessages: Message[];
+    connectedUsersList: Number[];
     sendGlobalMessage: (message: string) => void;
     sendPrivateMessage: (message: string, receiver: User) => void;
 }
 
-const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, sendGlobalMessage, sendPrivateMessage }) => {
+const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, sendGlobalMessage, sendPrivateMessage, connectedUsersList }) => {
     const [activeTab, setActiveTab] = useState<'global' | 'private'>('global');
     const [messageInput, setMessageInput] = useState('');
     const [users, setUsers] = useState<User[] | null>(null);
@@ -28,6 +29,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, send
         getUsers().then(users => {
             setUsers(users);
         });
+        console.log(connectedUsersList)
     }, []);
 
     const handleSendMessage = () => {
@@ -67,6 +69,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, send
 
                         <MessageList
                             activeTab={activeTab}
+                            connectedUsersList={connectedUsersList}
                             globalMessages={globalMessages}
                             privateMessages={privateMessages}
                             selectedUser={selectedUser}

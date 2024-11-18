@@ -6,14 +6,16 @@ import { faFlask } from "@fortawesome/free-solid-svg-icons";
 import { faGamepad } from "@fortawesome/free-solid-svg-icons";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
+import { Socket, io } from "socket.io-client";
 import { User } from "../model/userModel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface LoggedHomePageProps {
   setTitle: Dispatch<SetStateAction<string>>;
+  socket: Socket;
 }
 
-const LoggedHome: React.FC<LoggedHomePageProps> = ({ setTitle }) => {
+const LoggedHome: React.FC<LoggedHomePageProps> = ({ setTitle, socket }) => {
   useEffect(() => {
     let title = "Select your action";
     setTitle(title);
@@ -24,6 +26,9 @@ const LoggedHome: React.FC<LoggedHomePageProps> = ({ setTitle }) => {
     dispatch({ type: "UPDATE_SELECTED_USER", payload: user });
   };
   function logout() {
+    if (socket) {
+      socket.disconnect();
+    }
     selectUser(null);
     localStorage.removeItem('user');
   }
