@@ -21,7 +21,7 @@ const socketMap = new Map();
 
 io.on('connection', function(socket){
     let data = socket.handshake.query;
-    console.log(data);
+    //console.log(data);
     if (! data.userId) {
         socket.send('connect-result', { success: false, message: "Aucun userId envoyé"})
         socket.disconnect(true);
@@ -33,9 +33,11 @@ io.on('connection', function(socket){
     socket.on('create-battle-room', function(data) {
         try {
             let combat = combatService.createBattleRoom(data)
+            console.log(combat);
             socket.emit('battle-creation-response', successResponse(combat));
             let fighterSocket = socketMap.get(combat.fighter);
             if (fighterSocket) {
+                console.log("On a la socket");
                 fighterSocket.emit('combat-request', successResponse(combat));
             }
         } catch (e) {
@@ -45,6 +47,7 @@ io.on('connection', function(socket){
 
     socket.on('get-rooms', function(data) {
         try {
+            console.log("Get rooms !");
             socket.emit('result-rooms', successResponse(combatService.getCombatOf(data.userId)));
         } catch (e) {
             socket.emit('result-rooms', failedResponse(e));

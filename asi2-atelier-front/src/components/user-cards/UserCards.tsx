@@ -13,7 +13,7 @@ const UserCards: React.FC = () => {
     const [userCards, setUserCards] = useState<CardModel[]>([]);
     const [selectedCardIds, setSelectedCardIds] = useState<number[]>([]);
 
-    const socket = useSocket();
+    const { socket, userId } = useSocket();
 
     useEffect(() => {
         const fetchData = async () => {

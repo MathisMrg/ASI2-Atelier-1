@@ -14,7 +14,8 @@ const GamePage: React.FC<SetupFightPageProps> = ({ setTitle }) => {
     setTitle("Setup - Game");
 
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
-    const socket = useSocket();
+
+    const { socket, userId } = useSocket();
     const selectedOpponent = useSelector((state: any) => state.opponentReducer.selectedOpponent);
 
     const [existFights, setExistFights] = useState<boolean>(false);
