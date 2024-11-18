@@ -14,6 +14,7 @@ import SellPage from "./page/SellPage";
 import {subscribeToNotification} from "./service/NotificationService";
 import FightPage from "./page/FightPage";
 import GamePage from "./page/GamePage";
+import { SocketProvider } from "./SocketContext";
 import ChatBox from "./components/chat-box/ChatBox";
 import { Message } from "./model/messageModel";
 import { getUsers } from "./service/UserService";

@@ -4,12 +4,16 @@ import './UserCards.css';
 import {getCards} from "../../service/CardService";
 import {CardModel} from "../../model/cardModel";
 import FightingCard from "../card/fighting-card/FightingCard";
+import { useSocket } from '../../SocketContext';
 
 const UserCards: React.FC = () => {
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
+    const selectedOpponent = useSelector((state: any) => state.opponentReducer.selectedOpponent);
     const [error, setError] = useState<string | null>(null);
     const [userCards, setUserCards] = useState<CardModel[]>([]);
     const [selectedCardIds, setSelectedCardIds] = useState<number[]>([]);
+
+    const socket = useSocket();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,8 +41,23 @@ const UserCards: React.FC = () => {
     };
 
     const handleFightClick = () => {
-        console.log("Cartes sélectionnées pour le Fight!", selectedCardIds);
-        // Vous pouvez gérer les cartes sélectionnées ici, par exemple envoyer cette liste au backend ou déclencher une autre action
+
+        if (selectedCardIds.length == 0){
+            console.log("Pas de cartes ! ");
+        }
+        else if (selectedOpponent == undefined){
+            console.log("Pas d'opposent", selectedOpponent);
+        }
+        else{
+            console.log("Envoie requete");
+            if (socket){
+                socket.emit('create-battle-room', {
+                    requesterId: selectedUser.id,
+                    fighterId: selectedOpponent.id
+                } );
+            }
+        }
+
     };
 
     if (userCards && userCards.length === 0) {

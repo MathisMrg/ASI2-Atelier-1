@@ -2,14 +2,20 @@ var express = require("express");
 var app = express();
 var path = require("path");
 let server = require('http').createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+const io = require('socket.io')(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+        allowedHeaders: ["Content-Type"],
+        credentials: true
+    }
+});
 const CombatService = require('./services/combat.js');
 const CombatServicePersistence = require('./persistence/combat.js')
 app.use(express.static('public'));
 app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.io/client-dist')));
-app.use(express.json());
 
+app.use(express.json());
 const combatService = new CombatService(new CombatServicePersistence());
 
 
@@ -21,9 +27,9 @@ io.on('connection', function(socket){
         socket.disconnect(true);
     }
 
-
     socket.on('create-battle-room', function(data) {
         try {
+            console.log("Room : ", data);
             let combat = combatService.createBattleRoom(data)
             socket.send('action-result', successResponse(combat));
         } catch (e) {

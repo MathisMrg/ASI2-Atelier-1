@@ -6,7 +6,6 @@ import "./OpponentChooseForm.css"
 
 const OpponentChooseForm: React.FC = () => {
     const dispatch = useDispatch();
-    const [opponentId, setOpponent] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [users, setUsers] = useState<User[]>([]);
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
@@ -31,10 +30,12 @@ const OpponentChooseForm: React.FC = () => {
     };
 
     const chooseOpponent = (opp : string) => {
-        setOpponent(opp);
+        console.log("Choix de l'opposant d'id : "+opp);
         const foundOpponent = users?.find(user =>
-            user.id === Number(opponentId)
+            user.id === Number(opp)
         );
+        console.log(foundOpponent);
+
         if(foundOpponent){
             selectOpponent(foundOpponent);
         }
@@ -47,7 +48,6 @@ const OpponentChooseForm: React.FC = () => {
 
             <div>
                 <select
-                    value={opponentId}
                     className="select-opp"
                     onChange={(e) => chooseOpponent(e.target.value)}>
                     <option value="">-- Select an opponent --</option>
