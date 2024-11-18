@@ -34,6 +34,7 @@ class Combat {
         userCards.set(card.id, card);
         this.userCards.set(userId, userCards);
         this.isCombatReady = this.#allUserSelectedCards();
+        return this;
     }
 
     processMove(move) {
@@ -75,3 +76,5 @@ class Combat {
         return Array.from(this.userCards.values()).every((v) => v.length === this.#maxCardsPerFighter);
     }
 }
+
+module.exports = Combat;

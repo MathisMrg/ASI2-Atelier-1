@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <script src='http://code.jquery.com/jquery-1.7.2.min.js'></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+    <script defer>
+        var socket = io.connect('http://localhost:4040', { query: "userId=0" });
+
+        socket.on('action-result', function(data) {
+            $('#messages').append('<li>' + data.message + '</li>');
+        });
+        $(document).ready(function() {
+            $("#send").click(function() {
+                let message = $("#message").val();
+                let eventName = $("#event-name").val();
+
+                try {
+                    message = JSON.parse(message);
+                } catch {
+                    // On envoie juste le message en string :)
+                }
+
+                socket.emit(eventName, message);
+            })
+        })
+    </script>
+</head>
+<body>
+<div id="input">
+    <input type="text" id="event-name" placeholder="Event name"/>
+    <textarea name="message" id="message" cols="40" rows="5"></textarea>
+    <button id="send">Send</button>
+</div>
+<ul id="messages"></ul>
+</body>
+</html>

@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const Combat = require("../models/combat.js")
 
 class CombatService {
     constructor(combatPersistence) {
@@ -17,7 +18,8 @@ class CombatService {
         this.#validateSelectionData(data);
 
         let combat = this.persistence.getCombat(data.id);
-        this.persistence.addCombat(combat.addCard(data.userId, data.card));
+        combat.addCard(data.userId, data.card)
+        this.persistence.addCombat(combat);
         return combat;
     }
 

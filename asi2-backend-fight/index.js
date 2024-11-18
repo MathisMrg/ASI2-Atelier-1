@@ -4,19 +4,18 @@ var path = require("path");
 let server = require('http').createServer(app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"],
-        allowedHeaders: ["Content-Type"],
-        credentials: true
+        origin: "*",
+        methods: ["GET", "POST"]
     }
 });
 const CombatService = require('./services/combat.js');
 const CombatServicePersistence = require('./persistence/combat.js')
 app.use(express.static('public'));
 app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.io/client-dist')));
-
 app.use(express.json());
+
 const combatService = new CombatService(new CombatServicePersistence());
+const socketMap = new Map();
 
 
 io.on('connection', function(socket){
@@ -27,54 +26,61 @@ io.on('connection', function(socket){
         socket.disconnect(true);
     }
 
+    socketMap.set(data.userId, socket);
+    console.log(socketMap);
+
     socket.on('create-battle-room', function(data) {
         try {
-            console.log("Room : ", data);
             let combat = combatService.createBattleRoom(data)
-            socket.send('action-result', successResponse(combat));
+            socket.emit('action-result', successResponse(combat));
         } catch (e) {
-            socket.send('action-result', failedResponse(e));
+            socket.emit('action-result', failedResponse(e));
         }
     });
 
     socket.on('get-rooms', function(data) {
-        console.log("Get Rooms !")
         try {
-            socket.send('action-result', successResponse(combatService.getCombatOf(data.userId)));
+            socket.emit('action-result', successResponse(combatService.getCombatOf(data.userId)));
         } catch (e) {
-            socket.send('action-result', failedResponse(e));
+            socket.emit('action-result', failedResponse(e));
         }
     });
 
     socket.on('select-card', function(data) {
         try {
             let combat = combatService.selectCard(data);
-            socket.send('action-result', successResponse(combat));
+            socket.emit('action-result', successResponse(combat));
         } catch (e) {
-            socket.send('action-result', failedResponse(e));
+            socket.emit('action-result', failedResponse(e));
         }
     });
 
     socket.on('start-fight', function(data) {
         try {
             let combat = combatService.startFight(data);
-            socket.send('action-result', successResponse(combat));
+            socket.emit('action-result', successResponse(combat));
         } catch (e) {
-            socket.send('action-result', failedResponse(e));
+            socket.emit('action-result', failedResponse(e));
         }
     });
 
     socket.on('make-move', function(data) {
         try {
             let combat = combatService.processMove(data);
-            socket.send('action-result', successResponse(combat));
+            socket.emit('action-result', successResponse(combat));
         } catch (e) {
-            socket.send('action-result', failedResponse(e));
+            socket.emit('action-result', failedResponse(e));
         }
     });
 
 
     socket.send('connect-result', combatService.getCombatOf(data.userId));
+
+    socket.on('disconnect', function() {
+        if (socketMap.has(data.userId)) {
+            socketMap.delete(data.userId);
+        }
+    })
 });
 
 /**
