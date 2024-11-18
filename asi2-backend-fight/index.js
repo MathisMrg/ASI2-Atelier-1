@@ -32,45 +32,45 @@ io.on('connection', function(socket){
     socket.on('create-battle-room', function(data) {
         try {
             let combat = combatService.createBattleRoom(data)
-            socket.emit('action-result', successResponse(combat));
+            socket.emit('battle-creation-response', successResponse(combat));
             socket.emit('combat-request', successResponse(combat));
         } catch (e) {
-            socket.emit('action-result', failedResponse(e));
+            socket.emit('battle-creation-response', failedResponse(e));
         }
     });
 
     socket.on('get-rooms', function(data) {
         try {
-            socket.emit('action-result', successResponse(combatService.getCombatOf(data.userId)));
+            socket.emit('result-rooms', successResponse(combatService.getCombatOf(data.userId)));
         } catch (e) {
-            socket.emit('action-result', failedResponse(e));
+            socket.emit('result-rooms', failedResponse(e));
         }
     });
 
     socket.on('select-card', function(data) {
         try {
             let combat = combatService.selectCard(data);
-            dispatchCombatEvent(successResponse(combat), combat.fighter, combat.requester);
+            dispatchEvent("update-battle", successResponse(combat), combat.fighter, combat.requester);
         } catch (e) {
-            socket.emit('action-result', failedResponse(e));
+            socket.emit('update-battle', failedResponse(e));
         }
     });
 
     socket.on('start-fight', function(data) {
         try {
             let combat = combatService.startFight(data);
-            dispatchCombatEvent(successResponse(combat), combat.fighter, combat.requester);
+            dispatchEvent("update-battle", successResponse(combat), combat.fighter, combat.requester);
         } catch (e) {
-            socket.emit('action-result', failedResponse(e));
+            socket.emit('update-battle', failedResponse(e));
         }
     });
 
     socket.on('make-move', function(data) {
         try {
             let combat = combatService.processMove(data);
-            dispatchCombatEvent(successResponse(combat), combat.fighter, combat.requester);
+            dispatchEvent("update-battle", successResponse(combat), combat.fighter, combat.requester);
         } catch (e) {
-            socket.emit('action-result', failedResponse(e));
+            socket.emit('update-battle', failedResponse(e));
         }
     });
 
@@ -107,11 +107,11 @@ function failedResponse(e) {
 
 /**
  *
+ * @param {string} eventName
  * @param {Object} data
  * @param {...string} receivers
  */
-function dispatchCombatEvent(data, ...receivers) {
-    const eventName = "action-result";
+function dispatchEvent(eventName, data, ...receivers) {
 
     receivers.forEach((r) => {
         let socket = socketMap.get(r);
