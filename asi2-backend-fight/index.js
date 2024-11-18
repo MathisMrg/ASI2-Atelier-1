@@ -33,6 +33,7 @@ io.on('connection', function(socket){
         try {
             let combat = combatService.createBattleRoom(data)
             socket.emit('action-result', successResponse(combat));
+            socket.emit('combat-request', successResponse(combat));
         } catch (e) {
             socket.emit('action-result', failedResponse(e));
         }
@@ -49,7 +50,7 @@ io.on('connection', function(socket){
     socket.on('select-card', function(data) {
         try {
             let combat = combatService.selectCard(data);
-            socket.emit('action-result', successResponse(combat));
+            dispatchCombatEvent(successResponse(combat), combat.fighter, combat.requester);
         } catch (e) {
             socket.emit('action-result', failedResponse(e));
         }
@@ -58,7 +59,7 @@ io.on('connection', function(socket){
     socket.on('start-fight', function(data) {
         try {
             let combat = combatService.startFight(data);
-            socket.emit('action-result', successResponse(combat));
+            dispatchCombatEvent(successResponse(combat), combat.fighter, combat.requester);
         } catch (e) {
             socket.emit('action-result', failedResponse(e));
         }
@@ -67,7 +68,7 @@ io.on('connection', function(socket){
     socket.on('make-move', function(data) {
         try {
             let combat = combatService.processMove(data);
-            socket.emit('action-result', successResponse(combat));
+            dispatchCombatEvent(successResponse(combat), combat.fighter, combat.requester);
         } catch (e) {
             socket.emit('action-result', failedResponse(e));
         }
@@ -101,6 +102,24 @@ function failedResponse(e) {
         success: false,
         message: e.message
     };
+}
+
+
+/**
+ *
+ * @param {Object} data
+ * @param {...string} receivers
+ */
+function dispatchCombatEvent(data, ...receivers) {
+    const eventName = "action-result";
+
+    receivers.forEach((r) => {
+        let socket = socketMap.get(r);
+
+        if (r) {
+            socket.emit(eventName, data)
+        }
+    })
 }
 
 app.get("/", function (req, res, next) {
