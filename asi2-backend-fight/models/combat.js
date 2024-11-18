@@ -8,6 +8,7 @@ class Combat {
         this.nextTurn = (Math.random() % 2) === 1 ? requesterId : fighterId;
         this.started = false;
         this.userCards = new Map();
+        this.isCombatReady = false;
 
         this.userCards.set(requesterId, new Map());
         this.userCards.set(fighterId, new Map());
@@ -32,6 +33,7 @@ class Combat {
 
         userCards.set(card.id, card);
         this.userCards.set(userId, userCards);
+        this.isCombatReady = this.#allUserSelectedCards();
     }
 
     processMove(move) {
