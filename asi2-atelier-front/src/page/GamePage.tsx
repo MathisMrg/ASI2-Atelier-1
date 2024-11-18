@@ -1,6 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import io from 'socket.io-client';
-import '../components/card/Card.css';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import UserCards from "../components/user-cards/UserCards";
@@ -8,48 +6,47 @@ import OpponentChooseForm from "../components/opponent-choose-form/OpponentChoos
 import { useSocket } from '../SocketContext';
 import JoinFight from "../components/join-fight/JoinFight";
 
-
-
 interface SetupFightPageProps {
     setTitle: Dispatch<SetStateAction<string>>
 }
 
 const GamePage: React.FC<SetupFightPageProps> = ({ setTitle }) => {
-
     setTitle("Setup - Game");
 
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
-    const socket= useSocket();
+    const socket = useSocket();
     const selectedOpponent = useSelector((state: any) => state.opponentReducer.selectedOpponent);
+
+    const [existFights, setExistFights] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (socket) {
+            const fetchFights = async () => {
+                socket.emit('get-rooms', { userId: selectedUser.id });
+
+                socket.on('action-result', (response) => {
+                    if (response.success) {
+                        console.log("Récupération des combats : ", response.state);
+                        setExistFights(true);
+                    } else {
+                        console.log("Ya rien");
+                        console.error("Erreur lors de la récupération des combats : ", response.message);
+                        setExistFights(false);
+                    }
+                });
+            };
+
+            fetchFights();
+        }
+    }, [socket, selectedUser.id]);
 
     if (!selectedUser) {
         return <Navigate to="/login" />;
     }
 
-    const isFightPresent = () => {
-        let existFights = false;
-        if (socket){
-            console.log("Ya la socket");
-            socket.emit('get-rooms', {
-                userId: selectedUser.id
-            });
-
-            // Écouter la réponse de la requête
-            socket.on('action-result', (response) => {
-                if (response.success) {
-                    console.log("Récupération des combats : ", response.state);
-                    existFights = true;
-                } else {
-                    console.error("Erreur lors de la récupération des combats : ", response.message);
-                }
-            });
-        }
-        return existFights;
-    };
-
     return (
         <div className="play-screen">
-            {isFightPresent() ? (
+            {existFights ? (
                 <JoinFight />
             ) : (
                 <div>
