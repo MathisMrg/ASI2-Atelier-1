@@ -29,7 +29,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({ globalMessages, privateMessages, send
         getUsers().then(users => {
             setUsers(users);
         });
-        console.log(connectedUsersList)
     }, []);
 
     const handleSendMessage = () => {

@@ -38,7 +38,7 @@ const MessageList: React.FC<MessageListProps> = ({
         <div className="chat-messages">
             {activeTab === 'global' && globalMessages.map((msg, index) => (
                 <div key={index}>
-                    {`${new Date(msg.date).toLocaleTimeString()} - ${msg.sender.surName}: ${msg.message}`}
+                    {`${new Date(msg.date).toLocaleDateString('fr-FR')} - ${new Date(msg.date).toLocaleTimeString('fr-FR')} ${msg.sender.surName}: ${msg.message}`}
                 </div>
             ))}
 

@@ -15,6 +15,8 @@ import { subscribeToNotification } from "./service/NotificationService";
 import GamePage from "./page/GamePage";
 import ChatBox from "./components/chat-box/ChatBox";
 import { Message } from "./model/messageModel";
+import { getUsers } from "./service/UserService";
+import { getMessagesHistory } from "./service/ChatService";
 
 function App() {
 
@@ -22,6 +24,7 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [globalMessages, setGlobalMessages] = useState<Message[]>([]);
   const [connectedUsersList, setConnectedUsersList] = useState<Number[]>([]);
+  const [users, setUsers] = useState<User[] | null>(null);
   const gameId = 2;
   const selectUser = (user: User) => {
     dispatch({ type: "UPDATE_SELECTED_USER", payload: user });
@@ -42,6 +45,7 @@ function App() {
       subscribeToNotification();
       once = true;
       const userString = localStorage.getItem("user");
+      updateHistory();
       if (userString) {
         const user: User = JSON.parse(userString);
         selectUser(user);
@@ -74,33 +78,65 @@ function App() {
     }
   }, [selectedUser, socket]);
 
+  const updateHistory = () => {
+    console.log("updated")
+    getUsers().then(users => {
+      setUsers(users);
+      getMessagesHistory().then(messagesHistory => {
+        if (messagesHistory) {
+
+          for (const messageDTO of messagesHistory) {
+            const receiver = users?.find(user => user.id === Number(messageDTO.receiverId));
+            const sender = users?.find(user => user.id === Number(messageDTO.senderId));
+            if (sender) {
+              let message: Message = {
+                message: messageDTO.message,
+                sender: sender,
+                date: messageDTO.sentAt,
+                receiver: receiver,
+              }
+              if (messageDTO.receiverId === null) {
+                globalMessages.push(message);
+              } else {
+                messages.push(message);
+              }
+            }
+          }
+        }
+        console.log(globalMessages)
+        console.log(messages)
+      });
+    });
+
+  }
+
 
   const [title, setTitle] = useState("Add a user");
 
   const sendPrivateMessage = (message: string, receiver: User) => {
-      socket.emit('send-private', {
-        sender: selectedUser,
-        gameId,
-        message,
-        receiver: receiver,
-        date: new Date()
-      });
-      setMessages((prevMessages) => [...prevMessages, {
-        sender: selectedUser,
-        gameId,
-        message,
-        receiver: receiver,
-        date: new Date()
-      }]);
+    socket.emit('send-private', {
+      sender: selectedUser,
+      gameId,
+      message,
+      receiver: receiver,
+      date: new Date()
+    });
+    setMessages((prevMessages) => [...prevMessages, {
+      sender: selectedUser,
+      gameId,
+      message,
+      receiver: receiver,
+      date: new Date()
+    }]);
   };
 
   const sendGlobalMessage = (message: string) => {
-      socket.emit('send-global', {
-        message,
-        sender: selectedUser,
-        receiver: undefined,
-        date: new Date()
-      });
+    socket.emit('send-global', {
+      message,
+      sender: selectedUser,
+      receiver: undefined,
+      date: new Date()
+    });
   };
 
   return (

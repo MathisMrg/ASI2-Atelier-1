@@ -26,4 +26,8 @@ public class ChatHistoryService {
         chatHistoryRepository.saveAll(chatHistories);
     }
 
+    public List<ChatHistory> getChatHistory() {
+        return chatHistoryRepository.findAll();
+    }
+
 }

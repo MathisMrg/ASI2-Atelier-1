@@ -1,6 +1,8 @@
 package com.cpe.springboot.controllers;
 
+import com.cpe.springboot.bo.ChatHistory;
 import com.cpe.springboot.dto.ChatDTO;
+import com.cpe.springboot.mappers.ChatMapper;
 import com.cpe.springboot.services.ChatHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,14 @@ public class ChatHistoryController {
     public ResponseEntity<Void> saveMessages(@RequestBody List<ChatDTO> chatDTOs) {
         chatHistoryService.saveChatHistories(chatDTOs);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/get-all")
+    public List<ChatDTO> getMessages() {
+        List<ChatHistory> chatMessages = chatHistoryService.getChatHistory();
+        List<ChatDTO> chatMessagesDTO = chatMessages.stream().map(ChatMapper::fromChatModelToChatDto).toList();
+
+        return chatMessagesDTO;
     }
 
 }

@@ -18,4 +18,15 @@ public class ChatMapper {
         cm.setSender(new UserModel(cD.getSenderId()));
         return cm;
     }
+
+    public static ChatDTO fromChatModelToChatDto(ChatHistory cH) {
+        ChatDTO cd = new ChatDTO();
+        cd.setMessage(cH.getMessage());
+        cd.setSentAt(cH.getSentAt());
+        if (cH.getReceiver() !=null) {
+            cd.setReceiverId(cH.getReceiver().getId());
+        }
+        cd.setSenderId(cH.getSender().getId());
+        return cd;
+    }
 }
