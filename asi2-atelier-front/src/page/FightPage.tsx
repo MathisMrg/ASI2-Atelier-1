@@ -1,116 +1,77 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import io from 'socket.io-client';
 import '../components/card/Card.css';
-import { useDispatch, useSelector } from 'react-redux';
+// import '../components/user-cards/removeHeader.css';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import {User} from "../model/userModel";
-import { getUsers } from '../service/UserService';
+import SelectedCardsToFight from '../components/user-cards/SelectedCardsToFight';
+import { getCards } from '../service/CardService';
+import { CardModel } from '../model/cardModel';
+import FightingCard from '../components/card/fighting-card/FightingCard';
 
-//const socket = io("http://localhost:4040");
 
 interface GamePageProps {
     setTitle: Dispatch<SetStateAction<string>>
 }
 
 const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
-    const dispatch = useDispatch();
-    const [message, setMessage] = useState('');
-    const [opponentId, setOpponent] = useState('');
-    const [messages, setMessages] = useState<string[]>([]);
-    const [error, setError] = useState<string | null>(null);
-    const [users, setUsers] = useState<User[]>([]);
+
+    const [userCards, setUserCards] = useState<CardModel[]>([]);
+    const [oppenentsCards, setOppenentsCards] = useState<CardModel[]>([]);
+    const [selectedOpponentCard, setSelectedOpponentCard] = useState<CardModel | null>(null);
+    const [selectedUserCard, setSelectedUserCard] = useState<CardModel | null>(null);
+
+    const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
 
     useEffect(() => {
-        setTitle("Game - board");
+        let title = "Fight !"
+        setTitle(title);
+    }, [setTitle]);
 
+    /** ==========================================A remplacer par les cards des personnes en combat ==============================================**/
+    useEffect(() => {
         const fetchData = async () => {
-            const userList = await getUsers(); // Appelez du service pour récupérer les utilisateurs
-            if (userList) {
-                setUsers(userList); // Mettre à jour l'état avec les données récupérées
+            const cards = await getCards();
+            if (cards && cards.length > 0) {
+                const firstFourCards = cards.slice(0, 4);
+                setUserCards(firstFourCards);
+                const lastFourCards = cards.slice(-4);
+                setOppenentsCards(lastFourCards);
             } else {
-                setError("Failed to load users");
+                setUserCards([]);
+                setOppenentsCards([]);
             }
         };
         fetchData();
-
-        /*socket.on('myEvent2', (data: string) => {
-            setMessages((prevMessages) => [...prevMessages, data]);
-        });*/
-
-        return () => {
-            //socket.off('myEvent2');
-        };
     }, []);
-
-    const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
-    const selectedOpponent = useSelector((state: any) => state.opponentReducer.selectedOpponent);
-    const selectOpponent = (opponent: User) => {
-        console.log("oui");
-        dispatch({ type: "UPDATE_SELECTED_OPPONENT", payload: opponent });
-    };
+    /** ==========================================A remplacer par les cards des personnes en combat ==============================================**/
 
     if (!selectedUser) {
-        return <Navigate to="/login" />;
-    }
-
-    const sendMessage = () => {
-        if (message.trim()) {
-            //socket.emit('myEvent1', message); // Envoie le message au backend
-            setMessage('');
-        }
-    };
-
-    const chooseOpponent = () => {
-
-        const foundOpponent = users?.find(user =>
-            user.id === Number(opponentId)
-        );
-
-        if(foundOpponent){
-            selectOpponent(foundOpponent);
-        }
+        console.log(selectedUser)
+        // return <Navigate to="/login" />;
     }
 
     return (
         <div className="play-screen">
-            <div>
-                    <label>Select Opponent</label>
-                    <select
-                        value={opponentId}
-                        onChange={(e) => setOpponent(e.target.value)}>
-                        <option value="">-- Select an opponent --</option>
-                        {users.map((user) => (
-                            <option key={user.id as React.Key} value={String(user.id)}>
-                                {user.lastName}
-                            </option>
-                        ))}
-                    </select>
-                    <button onClick={chooseOpponent}>Select</button>
-            </div>
-
-
-            <div>
-                <h2>Chat</h2>
-                <div className="chat-messages">
-                    {messages.map((msg, index) => (
-                        <div key={index}>{msg}</div>
-                    ))}
+            <h2>Board</h2>
+            <div className='full-container-game'>
+                <div className='left-button-game'><button className='game-button'>End turn</button></div>
+                <div className='game-container-without-selected-card'>
+                    <div>
+                        <SelectedCardsToFight cards={oppenentsCards} selectCard={setSelectedOpponentCard}></SelectedCardsToFight>
+                    </div>
+                    <div className='fight-separtor-button-container'>
+                        <span className='separator'></span>
+                    </div>
+                    <div>
+                        <SelectedCardsToFight cards={userCards} selectCard={setSelectedUserCard}></SelectedCardsToFight>
+                    </div>
                 </div>
-                <input
-                    type='text'
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                />
-                <button onClick={sendMessage}>Send</button>
-            </div>
-            <div>
-                <h2>Board</h2>
-                <div>side enemy
-
-                </div>
-                <div>your side
-
+                <div className='selected-fight-cards-1-v-1'>
+                    {/* component pour afficher une carte selecitonner dans oppenentsCards*/}
+                    {selectedOpponentCard ? <FightingCard card={selectedOpponentCard} isShop={false} selectCard={setSelectedOpponentCard} /> : <span></span>}
+                    <button className='game-button'> Attack</button>
+                    {selectedUserCard ? <FightingCard card={selectedUserCard} isShop={false} selectCard={setSelectedUserCard} /> : <span></span>}
+                    {/* component pour afficher une carte selecitonner dans userCards*/}
                 </div>
             </div>
         </div>
@@ -118,3 +79,4 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
 };
 
 export default FightPage;
+

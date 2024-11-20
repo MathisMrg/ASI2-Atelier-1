@@ -82,7 +82,7 @@ const UserCards: React.FC = () => {
                         onClick={() => handleCardClick(card.id)}
                         className={`card-container ${selectedCardIds.includes(card.id) ? 'selected' : ''}`} // Classe conditionnelle
                     >
-                        <FightingCard card={card} isShop={false}/>
+                        <FightingCard card={card} isShop={false} selectCard={null}/>
                     </div>
                 ))}
             </div>
