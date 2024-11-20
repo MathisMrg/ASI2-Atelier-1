@@ -13,6 +13,8 @@ services:
       POSTGRES_USER: 'asibackend1'
       POSTGRES_PASSWORD: 'asibackend1'
       POSTGRES_DB: 'asibackend1'
+    ports:
+      - '5432:5432'
 
   ollama:
     image: ollama/ollama:0.3.13
