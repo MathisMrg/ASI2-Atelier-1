@@ -126,6 +126,7 @@ function successResponse(combat) {
 }
 
 function failedResponse(e) {
+    console.error(e);
     return  {
         success: false,
         message: e.message
