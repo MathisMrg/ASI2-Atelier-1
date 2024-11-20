@@ -3,7 +3,7 @@
 FROM node:lts-alpine AS build
 WORKDIR /app
 COPY ../asi2-atelier-front/package*.json ./
-RUN npm ci
+RUN npm i
 COPY ../asi2-atelier-front/. .
 ENV NODE_ENV=production
 RUN npm run build

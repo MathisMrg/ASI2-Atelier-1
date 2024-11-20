@@ -32,6 +32,8 @@ class Combat {
         if (!this.participants.has(userId)) throw new Error("Cet utilisateur ne fait pas partie du combat")
         if (this.userCards[userId].keys().size === this.#maxCardsPerFighter) throw new Error("Nombre maximal de cartes atteinte !")
 
+        if (!userCards) throw new Error("Cet utilisateur ne fait pas partie du combat")
+        if (userCards.size === this.#maxCardsPerFighter) throw new Error("Nombre maximal de cartes atteinte !")
 
         this.userCards[userId][card.id] = card;
         this.isCombatReady = this.#allUserSelectedCards();
