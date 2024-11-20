@@ -33,7 +33,6 @@ const socketMap = new Map();
 
 io.on('connection', function(socket){
     let data = socket.handshake.query;
-    //console.log(data);
     if (! data.userId) {
         socket.send('connect-result', { success: false, message: "Aucun userId envoyé"})
         socket.disconnect(true);
@@ -145,7 +144,10 @@ function dispatchEvent(eventName, data, ...receivers) {
         let socket = socketMap.get(r);
         if (socket) {
             socket.emit(eventName, data)
+            console.log(`Evenement envoyé à la socket ${r}`);
+            return;
         }
+        console.log(`Socket introuvable pour l'utilisateur ${r}`)
     })
 }
 
