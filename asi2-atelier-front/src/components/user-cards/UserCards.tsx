@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './UserCards.css';
 import {getCards} from "../../service/CardService";
 import {CardModel} from "../../model/cardModel";
 import FightingCard from "../card/fighting-card/FightingCard";
 import { useSocket } from '../../SocketContext';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const UserCards: React.FC = () => {
+    const navigate = useNavigate();
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
     const selectedOpponent = useSelector((state: any) => state.opponentReducer.selectedOpponent);
     const [error, setError] = useState<string | null>(null);
@@ -49,12 +51,19 @@ const UserCards: React.FC = () => {
             console.log("Pas d'opposent", selectedOpponent);
         }
         else{
-            console.log("Envoie requete");
             if (socket){
+                console.log("Envoie requete");
                 socket.emit('create-battle-room', {
                     requesterId: selectedUser.id,
                     fighterId: selectedOpponent.id
                 } );
+                socket.emit('select-card', {
+                    combatId: 1,
+                    userId: 1,
+                    card: 1
+                } );
+                navigate('/game');
+
             }
         }
 

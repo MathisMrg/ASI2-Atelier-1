@@ -1,45 +1,48 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import UserCards from "../components/user-cards/UserCards";
-import OpponentChooseForm from "../components/opponent-choose-form/OpponentChooseForm";
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useSocket } from '../SocketContext';
-import JoinFight from "../components/join-fight/JoinFight";
 
 interface SetupFightPageProps {
     setTitle: Dispatch<SetStateAction<string>>
 }
 
 const GamePage: React.FC<SetupFightPageProps> = ({ setTitle }) => {
-    setTitle("Setup - Game");
-
+    const navigate = useNavigate();
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
 
     const { socket, userId } = useSocket();
-    const selectedOpponent = useSelector((state: any) => state.opponentReducer.selectedOpponent);
-
-    const [existFights, setExistFights] = useState<boolean>(false);
+    const [roomsData, setRoomsData] = useState<any[]>([]);
 
     useEffect(() => {
-        if (socket) {
-            const fetchFights = async () => {
-                socket.emit('get-rooms', { userId: selectedUser.id });
+        setTitle("All Games");
+    }, [setTitle]);
 
-                socket.on('action-result', (response) => {
-                    if (response.success) {
-                        console.log("Récupération des combats : ", response.state);
-                        setExistFights(true);
-                    } else {
-                        console.log("Ya rien");
-                        console.error("Erreur lors de la récupération des combats : ", response.message);
-                        setExistFights(false);
-                    }
-                });
+    useEffect(() => {
+        if (socket && selectedUser) {
+            console.log('Socket initialisée avec ID :', socket.id);
+
+            // Émettre l'événement get-rooms
+            socket.emit('get-rooms', {
+                userId: selectedUser.id
+            });
+
+            // Écouter la réponse result-rooms
+            socket.on('result-rooms', (data: any) => {
+                console.log("Données reçues :", data);
+                setRoomsData(data); // Stocker les données des rooms si nécessaire
+            });
+
+            // Nettoyage de l'événement lors du démontage du composant
+            return () => {
+                socket.off('result-rooms');
             };
-
-            fetchFights();
         }
-    }, [socket, selectedUser.id]);
+    }, [socket, selectedUser]);
+
+    const handleCreateCombatClick = () => {
+        navigate('/create-combat');
+    };
 
     if (!selectedUser) {
         return <Navigate to="/login" />;
@@ -47,17 +50,16 @@ const GamePage: React.FC<SetupFightPageProps> = ({ setTitle }) => {
 
     return (
         <div className="play-screen">
-            {existFights ? (
-                <JoinFight />
-            ) : (
-                <div>
-                    <OpponentChooseForm />
-                    <div className="choose-card">
-                        <h2>Choose your Cards </h2>
-                        <UserCards/>
-                    </div>
-                </div>
-            )}
+            <h1>Vos combats</h1>
+
+            <div className="">
+
+            </div>
+
+
+            <button onClick={handleCreateCombatClick} className="create-combat-button">
+                Create Combat
+            </button>
         </div>
     );
 };

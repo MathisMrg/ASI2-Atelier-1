@@ -1,11 +1,23 @@
 var express = require("express");
 var app = express();
 var path = require("path");
+const cors = require('cors');
 let server = require('http').createServer(app);
+
+// Configuration CORS
+app.use(cors({
+    origin: "http://localhost:3000", // L'origine de votre application client
+    methods: ["GET", "POST"],         // Les méthodes HTTP que vous souhaitez autoriser
+    allowedHeaders: ["Content-Type", "Authorization"], // En-têtes autorisés
+    credentials: true // Autorise les cookies et les en-têtes d'autorisation
+}));
+
 const io = require('socket.io')(server, {
     cors: {
         origin: "*",
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST"],
+        allowedHeaders: ["*"], // Vous pouvez ajouter des en-têtes spécifiques ici
+        credentials: true
     },
     path: "/fight-socket.io"
 });
@@ -35,9 +47,10 @@ io.on('connection', function(socket){
             let combat = combatService.createBattleRoom(data)
             console.log(combat);
             socket.emit('battle-creation-response', successResponse(combat));
-            let fighterSocket = socketMap.get(combat.fighter);
+
+            let fighterSocket = socketMap.get(String(combat.fighter));
             if (fighterSocket) {
-                console.log("On a la socket");
+                console.log("On envoie a la socket d'id : "+fighterSocket.id);
                 fighterSocket.emit('combat-request', successResponse(combat));
             }
         } catch (e) {
@@ -47,7 +60,6 @@ io.on('connection', function(socket){
 
     socket.on('get-rooms', function(data) {
         try {
-            console.log("Get rooms !");
             socket.emit('result-rooms', successResponse(combatService.getCombatOf(data.userId)));
         } catch (e) {
             socket.emit('result-rooms', failedResponse(e));

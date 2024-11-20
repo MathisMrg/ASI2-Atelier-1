@@ -19,6 +19,7 @@ import ChatBox from "./components/chat-box/ChatBox";
 import { Message } from "./model/messageModel";
 import { getUsers } from "./service/UserService";
 import { getMessagesHistory } from "./service/ChatService";
+import CreateCombatPage from "./page/CreateCombatPage";
 
 function App() {
 

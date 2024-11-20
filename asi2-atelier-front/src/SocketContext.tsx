@@ -16,18 +16,11 @@ export const SocketProvider: React.FC<{ userId: string; children: React.ReactNod
             // Connexion au backend
             const newSocket = io('http://localhost:4040', {
                 query: { userId },
+                transports: ['websocket'],
+                path: "/fight-socket.io"
             });
 
-            // Erreurs de connexion
-            newSocket.on('connect_error', (err) => {
-                console.error('Erreur de connexion :', err);
-            });
-
-            // Résultat de la connexion
-            newSocket.on('connect-result', () => {
-                console.log(`Utilisateur avec ID ${userId} connecté`);
-                setSocket(newSocket);
-            });
+            setSocket(newSocket);
 
             // Déconnexion et nettoyage des ressources lorsque le composant est démonté ou que l'userId change
             return () => {

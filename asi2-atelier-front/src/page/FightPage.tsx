@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom';
 import {User} from "../model/userModel";
 import { getUsers } from '../service/UserService';
 
-const socket = io("http://localhost:4000");
+//const socket = io("http://localhost:4040");
 
 interface GamePageProps {
     setTitle: Dispatch<SetStateAction<string>>
@@ -33,12 +33,12 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
         };
         fetchData();
 
-        socket.on('myEvent2', (data: string) => {
+        /*socket.on('myEvent2', (data: string) => {
             setMessages((prevMessages) => [...prevMessages, data]);
-        });
+        });*/
 
         return () => {
-            socket.off('myEvent2');
+            //socket.off('myEvent2');
         };
     }, []);
 
@@ -55,7 +55,7 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
 
     const sendMessage = () => {
         if (message.trim()) {
-            socket.emit('myEvent1', message); // Envoie le message au backend
+            //socket.emit('myEvent1', message); // Envoie le message au backend
             setMessage('');
         }
     };
