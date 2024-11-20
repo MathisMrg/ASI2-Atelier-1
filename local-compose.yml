@@ -29,11 +29,10 @@ services:
       - -c
       - |
         ollama serve & 
-        serve_pid=$!
+        pid=$$!
         ollama pull qwen2:0.5b
-        wait $serve_pid
-        exit_code=$?
-        exit $$exit_code
+        wait $$pid
+        exit $$?
     ports:
       - '11434:11434'
 
