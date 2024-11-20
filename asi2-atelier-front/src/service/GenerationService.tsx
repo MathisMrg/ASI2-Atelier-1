@@ -1,6 +1,6 @@
 import { CardPrompt } from "../model/cardPromptModel";
 
-const API_URL = "http://localhost:8083/generator/card";
+const API_URL = `http://${process.env.REACT_APP_BASE_URL}/generator/card`;
 
 export const createCardUsingPrompt = async (cardPrompt: CardPrompt): Promise<{ status: number | null }> => {
   try {

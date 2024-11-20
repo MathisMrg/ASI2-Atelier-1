@@ -1,0 +1,122 @@
+services:
+  amq:
+    image: apache/activemq-artemis:2.37.0
+    container_name: amq
+    environment:
+      ARTEMIS_USER: 'asibackend1'
+      ARTEMIS_PASSWORD: 'asibackend1'
+    ports:
+      - '61616:61616'
+      - '8161:8161'
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: 'asibackend1'
+      POSTGRES_PASSWORD: 'asibackend1'
+      POSTGRES_DB: 'asibackend1'
+    ports:
+      - '5432:5432'
+
+  ollama:
+    image: ollama/ollama:0.3.13
+    container_name: ollama
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - '11434:11434'
+
+  neural:
+    image: registry.gitlab.com/js-asi2/asi2-resources/img-gene-neural-love-api:v1.1
+    container_name: neural
+    environment:
+      external.iaimgapi.token: 'v1.efbf79561ed86ee2d279bc30fa72ff50b7ef25e0c879a0ffce5568f00cab6906'
+    ports:
+      - '8080:8080'
+
+  spring-mono:
+    container_name: spring-mono
+    build:
+      context: asi2-atelier1-back
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+      - amq
+    ports:
+      - '8081:8080'
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/asibackend1'
+      SPRING_DATASOURCE_USERNAME: 'asibackend1'
+      SPRING_DATASOURCE_PASSWORD: 'asibackend1'
+      SPRING_ARTEMIS_BROKERURL: 'tcp://amq:61616'
+      CALLBACK_DESCRIPTION_URL: 'http://spring-mono:8080/generator/finish/description'
+      CALLBACK_IMAGE_URL: 'http://spring-mono:8080/generator/finish/image'
+      CALLBACK_PROPERTIES_URL: 'http://spring-mono:8080/generator/finish/properties'
+      PUBLICADDRESS: 'spring-mono:8080'
+
+  spring-img-gen:
+    build:
+      context: asi2-atelier1-img-gen
+      dockerfile: Dockerfile
+    depends_on:
+      - amq
+    environment:
+      SPRING_ARTEMIS_BROKERURL: 'tcp://amq:61616'
+      SPRING_ARTEMIS_USER: 'asibackend1'
+      SPRING_ARTEMIS_PASSWORD: 'asibackend1'
+      NEURAL_URL: 'http://neural:8080'
+
+
+  spring-text-gen:
+    build:
+      context: asi2-atelier1-text-gen
+      dockerfile: Dockerfile
+    depends_on:
+      - amq
+    environment:
+      SPRING_ARTEMIS_BROKERURL: 'tcp://amq:61616'
+      SPRING_ARTEMIS_USER: 'asibackend1'
+      SPRING_ARTEMIS_PASSWORD: 'asibackend1'
+      OLLAMA_URL: 'http://ollama:11434'
+
+  spring-prop-gen:
+    build:
+      context: asi2-atelier1-prop-gen
+      dockerfile: Dockerfile
+    depends_on:
+      - amq
+    environment:
+      SPRING_ARTEMIS_BROKERURL: 'tcp://amq:61616'
+      SPRING_ARTEMIS_USER: 'asibackend1'
+      SPRING_ARTEMIS_PASSWORD: 'asibackend1'
+
+  spring-queue-logger:
+    build:
+      context: asi2-atelier2-queue-logger
+      dockerfile: Dockerfile
+    depends_on:
+      - amq
+    environment:
+      SPRING_ARTEMIS_BROKERURL: 'tcp://amq:61616'
+      SPRING_ARTEMIS_USER: 'asibackend1'
+      SPRING_ARTEMIS_PASSWORD: 'asibackend1'
+
+  node-chat-back:
+    container_name: node-chat-back
+    build:
+      context: asi2-backend-chat
+      dockerfile: Dockerfile
+    environment:
+      BACKEND_URL: 'http://spring-mono/api/'
+
+  nginx:
+    build:
+        context: ./
+        dockerfile: proxy/Dockerfile
+    ports:
+        - '80:80'
+        - '443:443'
+
+volumes:
+  ollama:

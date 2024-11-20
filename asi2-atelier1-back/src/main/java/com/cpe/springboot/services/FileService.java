@@ -22,11 +22,8 @@ public class FileService {
     @Value("${img.path}")
     private Path imgPath;
 
-    @Value("${server.address}")
+    @Value("${public.address}")
     private String serverAddress;
-
-    @Value("${server.port}")
-    private Integer serverPort;
 
     public String saveImage(String filename, String base64Image) {
 
@@ -45,7 +42,7 @@ public class FileService {
     }
 
     public String getUriPath(String filepath) {
-        String url = "http://" + serverAddress + ":" + serverPort + filepath;
+        String url = "http://" + serverAddress  + filepath;
         try {
             new URL(url);
         } catch (MalformedURLException e) {

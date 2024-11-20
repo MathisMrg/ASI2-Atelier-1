@@ -6,6 +6,8 @@ spring:
     user: asibackend1
     password: asibackend1
     mode: native
+neural:
+  url: "http://localhost:8080"
 logging:
   level:
     org:

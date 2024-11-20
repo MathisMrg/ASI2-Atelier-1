@@ -3,9 +3,12 @@ const path = require("path");
 const http = require('http');
 const socketIo = require('socket.io');
 
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8083';
+
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
+    path: "/chat.io/",
     cors: {
         origin: "*",
         methods: ["GET", "POST"]
@@ -20,7 +23,7 @@ const connectedUsers = new Set();
 
 async function saveMessageToBackend(message, senderId, receiverId, date) {
     try {
-        const response = await fetch('http://localhost:8083/chat/save', {
+        const response = await fetch(`${BACKEND_URL}/chat/save`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

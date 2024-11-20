@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import com.cpe.springboot.IMessageLoggerDTO;
 public class QueueLoggerService {
 
     private static final String LOG_FILE_PATH = "./logfile.txt";
+    private static final Logger log = LoggerFactory.getLogger(QueueLoggerService.class);
 
     @JmsListener(destination = "logs", containerFactory = "jmsListenerContainerFactory")
     public void logTextgenMessage(IMessageLoggerDTO message) {
@@ -25,7 +28,7 @@ public class QueueLoggerService {
                 true))) {
             writer.write(queueLogEntry);
             writer.newLine();
-            System.out.println("Logged message: " + queueLogEntry);
+            log.info("Logged message: {}", queueLogEntry);
         } catch (IOException e) {
             e.printStackTrace();
         }

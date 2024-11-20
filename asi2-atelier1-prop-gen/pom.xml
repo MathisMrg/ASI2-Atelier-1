@@ -29,6 +29,13 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>project-lib</id>
+			<name>Project lib directory</name>
+			<url>file://${project.basedir}/lib</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -49,8 +56,8 @@
 			<groupId>de.androidpit</groupId>
 			<artifactId>colorToproperties</artifactId>
 			<version>1.1.2</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/colorToproperties-1.1.2.jar</systemPath>
+<!--			<scope>system</scope>-->
+<!--			<systemPath>${project.basedir}/libs/colorToproperties-1.1.2.jar</systemPath>-->
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
