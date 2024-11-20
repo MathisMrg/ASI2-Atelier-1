@@ -29,11 +29,13 @@ class Combat {
         let userCards = this.userCards.get(userId);
 
         if (!userCards) throw new Error("Cet utilisateur ne fait pas partie du combat")
-        if (userCards.entries().length === this.#maxCardsPerFighter) throw new Error("Nombre maximal de cartes atteinte !")
+        if (userCards.size === this.#maxCardsPerFighter) throw new Error("Nombre maximal de cartes atteinte !")
 
         userCards.set(card.id, card);
-        console.log(JSON.stringify(this.userCards));
+        console.log("Cartes après ajout :", Array.from(userCards.entries()));
+
         this.userCards.set(userId, userCards);
+        console.log("Cartes après set de la Map :", Array.from(userCards.entries()));
         this.isCombatReady = this.#allUserSelectedCards();
     }
 

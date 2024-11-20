@@ -29,8 +29,8 @@ const GamePage: React.FC<SetupFightPageProps> = ({ setTitle }) => {
 
             // Écouter la réponse result-rooms
             socket.on('result-rooms', (data: any) => {
-                console.log("Données reçues :", data.state[0]);
-                setRoomsData(data); // Stocker les données des rooms si nécessaire
+                console.log("Données reçues :", data.state);
+                setRoomsData(data.state); // Stocker les données des rooms si nécessaire
             });
 
             // Nettoyage de l'événement lors du démontage du composant
@@ -52,10 +52,18 @@ const GamePage: React.FC<SetupFightPageProps> = ({ setTitle }) => {
         <div className="play-screen">
             <h1>Vos combats</h1>
 
-            <div className="">
-
+            {/* Affichage des rooms et des IDs des combats */}
+            <div className="combat-list">
+                {roomsData.length === 0 ? (
+                    <p>Aucun combat disponible</p>
+                ) : (
+                    roomsData.map((room, index) => (
+                        <div key={index} className="combat-item">
+                            <p>Combat ID: {room.id}</p>
+                        </div>
+                    ))
+                )}
             </div>
-
 
             <button onClick={handleCreateCombatClick} className="create-combat-button">
                 Create Combat

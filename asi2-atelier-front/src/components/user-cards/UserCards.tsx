@@ -76,7 +76,7 @@ const UserCards: React.FC = () => {
                 });
 
                 socket.on('update-battle', (data) => {
-                    console.log('Update:', data);
+                    console.log('Update:', data.combat);
                 });
 
 

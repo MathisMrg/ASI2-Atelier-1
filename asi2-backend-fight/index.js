@@ -39,7 +39,7 @@ io.on('connection', function(socket){
     }
 
     socketMap.set(data.userId, socket);
-    console.log(socketMap);
+    console.log("Connecté !");
 
     socket.on('create-battle-room', function(data) {
         try {
