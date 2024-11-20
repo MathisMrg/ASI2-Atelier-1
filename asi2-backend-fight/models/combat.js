@@ -7,11 +7,14 @@ class Combat {
         this.fighter = fighterId;
         this.nextTurn = (Math.random() % 2) === 1 ? requesterId : fighterId;
         this.started = false;
-        this.userCards = new Map();
+        this.userCards = {};
         this.isCombatReady = false;
+        this.participants = new Set();
+        this.participants.add(requesterId);
+        this.participants.add(fighterId);
 
-        this.userCards.set(requesterId, new Map());
-        this.userCards.set(fighterId, new Map());
+        this.userCards[requesterId] = new Map();
+        this.userCards[fighterId] = new Map();
     }
 
     startFight() {
@@ -26,16 +29,11 @@ class Combat {
     }
 
     addCard(userId, card) {
-        let userCards = this.userCards.get(userId);
+        if (!this.participants.has(userId)) throw new Error("Cet utilisateur ne fait pas partie du combat")
+        if (this.userCards[userId].keys().size === this.#maxCardsPerFighter) throw new Error("Nombre maximal de cartes atteinte !")
 
-        if (!userCards) throw new Error("Cet utilisateur ne fait pas partie du combat")
-        if (userCards.size === this.#maxCardsPerFighter) throw new Error("Nombre maximal de cartes atteinte !")
 
-        userCards.set(card.id, card);
-        console.log("Cartes après ajout :", Array.from(userCards.entries()));
-
-        this.userCards.set(userId, userCards);
-        console.log("Cartes après set de la Map :", Array.from(userCards.entries()));
+        this.userCards[userId][card.id] = card;
         this.isCombatReady = this.#allUserSelectedCards();
     }
 
@@ -46,10 +44,10 @@ class Combat {
     }
 
     #processAttack(attackerId, attackedId, move) {
-        let cardsAttacker = this.userCards.get(attackerId);
-        let cardsAttacked = this.userCards.get(attackedId);
-        let cardAttacker = cardsAttacker.get(move.attackerCardId);
-        let cardAttacked = cardsAttacked.get(move.attackedCardId);
+        let cardsAttacker = this.userCards[attackerId];
+        let cardsAttacked = this.userCards[attackedId];
+        let cardAttacker = cardsAttacker[move.attackerCardId];
+        let cardAttacked = cardsAttacked[move.attackedCardId];
 
         if (! cardAttacker || ! cardAttacked) {
             throw new Error("Cette carte n'est pas présente sur le terrain!")
@@ -75,7 +73,7 @@ class Combat {
     }
 
     #allUserSelectedCards() {
-        return Array.from(this.userCards.values()).every((v) => v.length === this.#maxCardsPerFighter);
+        return Array.from(Object.values(this.userCards)).every((v) => Object.keys(v).length === this.#maxCardsPerFighter);
     }
 }
 
