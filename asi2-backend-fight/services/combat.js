@@ -50,7 +50,7 @@ class CombatService {
             throw new Error("Identifiant utilisateur manquant")
         }
 
-        if (!data.card.id) {
+        if (!data.card) {
             throw new Error("Veuillez sélectionner une carte !")
         }
     }

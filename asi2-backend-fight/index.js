@@ -6,7 +6,8 @@ const io = require('socket.io')(server, {
     cors: {
         origin: "*",
         methods: ["GET", "POST"]
-    }
+    },
+    path: "/fight-socket.io"
 });
 const CombatService = require('./services/combat.js');
 const CombatServicePersistence = require('./persistence/combat.js')
