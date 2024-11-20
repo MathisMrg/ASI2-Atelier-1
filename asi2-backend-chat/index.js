@@ -38,6 +38,7 @@ async function saveMessageToBackend(message, senderId, receiverId, date) {
         if (!response.ok) {
             console.error("Erreur lors de la sauvegarde du message", response.statusText);
         }
+        console.info("Message sauvegardé avec succès");
     } catch (error) {
         console.error("Erreur de connexion à l'API de sauvegarde :", error);
     }

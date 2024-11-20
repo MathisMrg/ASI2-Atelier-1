@@ -17,6 +17,16 @@ services:
   ollama:
     image: ollama/ollama:0.3.13
     container_name: ollama
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        ollama serve & 
+        serve_pid=$!
+        ollama pull qwen2:0.5b
+        wait $serve_pid
+        exit_code=$?
+        exit $$exit_code
     volumes:
       - ollama:/root/.ollama
 

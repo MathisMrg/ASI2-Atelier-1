@@ -24,6 +24,16 @@ services:
     container_name: ollama
     volumes:
       - ollama:/root/.ollama
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        ollama serve & 
+        serve_pid=$!
+        ollama pull qwen2:0.5b
+        wait $serve_pid
+        exit_code=$?
+        exit $$exit_code
     ports:
       - '11434:11434'
 
@@ -108,7 +118,7 @@ services:
       context: asi2-backend-chat
       dockerfile: Dockerfile
     environment:
-      BACKEND_URL: 'http://spring-mono/api/'
+      BACKEND_URL: 'http://spring-mono:8080'
 
   nginx:
     build:
