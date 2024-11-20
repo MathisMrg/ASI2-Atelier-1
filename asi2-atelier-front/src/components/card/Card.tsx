@@ -66,7 +66,9 @@ const Card: React.FC<CardProps> = ({isShop}) => {
   return (
     <div className="card">
       <CardHeader />
-      <img   src={`${selectedCard?.imgUrl.startsWith('/') ? 'http://localhost:8083' : ''}${selectedCard?.imgUrl}`} alt="card image" className="card-image" />
+      {selectedCard?.imgUrl &&
+      <img   src={`${selectedCard?.imgUrl.startsWith('/') ? `http://${process.env.REACT_APP_BASE_URL}` : ''}${selectedCard?.imgUrl}`} alt="card image" className="card-image" />
+      }
       <CardDescription />
       <CardStatistics />
       <CardPrice />

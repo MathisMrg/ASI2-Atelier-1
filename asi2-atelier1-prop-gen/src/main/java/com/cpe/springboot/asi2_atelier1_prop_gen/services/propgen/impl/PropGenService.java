@@ -16,6 +16,7 @@ import java.util.Map;
 public class PropGenService implements IPropGenService {
     @Override
     public PropGenerationValues generateProperties(PropGenerationRequestDTO req) throws MissingPropertyException {
+      log.info("Generating properties from image: {}", req.imgUrl());
         Map<String, Float> result = ImgToProperties.getPropertiesFromImg(req.imgUrl(),
                 100f,
                 4,

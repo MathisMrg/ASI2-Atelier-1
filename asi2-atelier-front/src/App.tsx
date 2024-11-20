@@ -33,7 +33,8 @@ function App() {
   const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
 
   let socket = useMemo(() => {
-    return io("http://localhost:4000", {
+    return io(process.env.REACT_APP_CHAT_URL, {
+      path: "/chat.io",
       auth: {
         userId: selectedUser?.id
       }

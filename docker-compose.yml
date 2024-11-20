@@ -53,7 +53,7 @@ services:
       CALLBACK_DESCRIPTION_URL: 'http://spring-mono:8080/generator/finish/description'
       CALLBACK_IMAGE_URL: 'http://spring-mono:8080/generator/finish/image'
       CALLBACK_PROPERTIES_URL: 'http://spring-mono:8080/generator/finish/properties'
-      PUBLICADDRESS: 'localhost:80/api'
+      PUBLICADDRESS: 'spring-mono:8080'
 
   spring-img-gen:
     build:
@@ -84,6 +84,23 @@ services:
       - amq
     environment:
       SPRING_ARTEMIS_BROKERURL: 'tcp://amq:61616'
+
+  spring-queue-logger:
+    build:
+      context: asi2-atelier2-queue-logger
+      dockerfile: Dockerfile
+    depends_on:
+      - amq
+    environment:
+      SPRING_ARTEMIS_BROKERURL: 'tcp://amq:61616'
+
+  node-chat-back:
+    container_name: node-chat-back
+    build:
+      context: asi2-backend-chat
+      dockerfile: Dockerfile
+    environment:
+      BACKEND_URL: 'http://spring-mono/api/'
 
   nginx:
     build:
