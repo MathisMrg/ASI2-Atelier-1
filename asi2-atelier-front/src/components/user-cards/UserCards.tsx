@@ -6,6 +6,7 @@ import {CardModel} from "../../model/cardModel";
 import FightingCard from "../card/fighting-card/FightingCard";
 import { useSocket } from '../../SocketContext';
 import { Navigate, useNavigate } from 'react-router-dom';
+import {wait} from "@testing-library/user-event/dist/utils";
 
 const UserCards: React.FC = () => {
     const navigate = useNavigate();
@@ -64,7 +65,6 @@ const UserCards: React.FC = () => {
 
                     selectedCardIds.forEach(cardId => {
                         const cardToAdd =  userCards.find(card => card.id === cardId);
-                        console.log('Card:', cardToAdd);
 
                         socket.emit('select-card', {
                             combatId: combat.state.id,

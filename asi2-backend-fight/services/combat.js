@@ -20,6 +20,7 @@ class CombatService {
         let combat = this.fetchCombat(data.combatId);
         combat.addCard(data.userId, data.card);
         this.persistence.addCombat(combat);
+        console.log(JSON.stringify(combat));
         return combat;
     }
 

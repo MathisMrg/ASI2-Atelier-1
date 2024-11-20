@@ -32,6 +32,7 @@ class Combat {
         if (userCards.entries().length === this.#maxCardsPerFighter) throw new Error("Nombre maximal de cartes atteinte !")
 
         userCards.set(card.id, card);
+        console.log(JSON.stringify(this.userCards));
         this.userCards.set(userId, userCards);
         this.isCombatReady = this.#allUserSelectedCards();
     }
