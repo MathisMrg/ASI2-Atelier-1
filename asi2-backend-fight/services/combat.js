@@ -26,7 +26,7 @@ class CombatService {
     startFight(data) {
         this.#validateCombatRequest(data)
 
-        let combat = this.fetchCombat(data.id);
+        let combat = this.fetchCombat(data.combatId);
         combat.startFight();
         this.persistence.addCombat(combat);
         return combat;
@@ -34,7 +34,7 @@ class CombatService {
 
     processMove(data) {
         this.#validateCombatRequest(data)
-        let combat = this.fetchCombat(data.id);
+        let combat = this.fetchCombat(data.combatId);
         this.persistence.addCombat(combat.processMove(data))
         return combat;
     }
