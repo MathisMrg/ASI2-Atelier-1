@@ -52,16 +52,34 @@ const UserCards: React.FC = () => {
         }
         else{
             if (socket){
-                console.log("Envoie requete");
                 socket.emit('create-battle-room', {
                     requesterId: selectedUser.id,
                     fighterId: selectedOpponent.id
                 } );
-                socket.emit('select-card', {
-                    combatId: 1,
-                    userId: 1,
-                    card: 1
-                } );
+
+                socket.on('battle-creation-response', (combat) => {
+                    console.log('Combat reçu:', combat.state.id);
+                    console.log('UserId:', selectedUser.id);
+
+
+                    selectedCardIds.forEach(cardId => {
+                        const cardToAdd =  userCards.find(card => card.id === cardId);
+                        console.log('Card:', cardToAdd);
+
+                        socket.emit('select-card', {
+                            combatId: combat.state.id,
+                            userId: selectedUser.id,
+                            card: cardToAdd
+                        } );
+                    });
+
+                });
+
+                socket.on('update-battle', (data) => {
+                    console.log('Update:', data);
+                });
+
+
                 navigate('/game');
 
             }

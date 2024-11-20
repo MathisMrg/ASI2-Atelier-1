@@ -29,7 +29,7 @@ const GamePage: React.FC<SetupFightPageProps> = ({ setTitle }) => {
 
             // Écouter la réponse result-rooms
             socket.on('result-rooms', (data: any) => {
-                console.log("Données reçues :", data);
+                console.log("Données reçues :", data.state[0]);
                 setRoomsData(data); // Stocker les données des rooms si nécessaire
             });
 

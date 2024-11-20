@@ -67,6 +67,7 @@ io.on('connection', function(socket){
 
     socket.on('select-card', function(data) {
         try {
+            console.log("Carte à select");
             let combat = combatService.selectCard(data);
             dispatchEvent("update-battle", successResponse(combat), combat.fighter, combat.requester);
         } catch (e) {
