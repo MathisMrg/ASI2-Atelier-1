@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>asi2-backendmarket-text-gen</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>asi2-backendmarket-text-gen</name>
+	<name>asi2-atelier1-text-gen</name>
 	<description>Microservice de génération de texte pour cartes</description>
 	<url/>
 	<licenses>

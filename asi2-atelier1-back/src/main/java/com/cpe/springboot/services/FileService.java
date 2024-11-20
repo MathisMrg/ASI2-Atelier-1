@@ -1,7 +1,8 @@
 package com.cpe.springboot.services;
 
+import com.cpe.springboot.configurations.PathConfig;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedOutputStream;
@@ -11,24 +12,21 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class FileService {
 
-    @Value("${img.path}")
-    private Path imgPath;
 
-    @Value("${public.address}")
-    private String serverAddress;
+    private final PathConfig pathConfig;
 
     public String saveImage(String filename, String base64Image) {
 
-        String fullPath = Paths.get(String.valueOf(imgPath), filename).toString();
-        File directory = imgPath.toFile();
+        String fullPath = Paths.get(String.valueOf(pathConfig.getImgPath()), filename).toString();
+        File directory = pathConfig.getImgPath().toFile();
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -42,7 +40,7 @@ public class FileService {
     }
 
     public String getUriPath(String filepath) {
-        String url = "http://" + serverAddress  + filepath;
+        String url = "http://" + pathConfig.getLocalAddress()  + filepath;
         try {
             new URL(url);
         } catch (MalformedURLException e) {

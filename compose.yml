@@ -43,7 +43,7 @@ services:
       CALLBACK_DESCRIPTION_URL: 'http://spring-mono:8080/generator/finish/description'
       CALLBACK_IMAGE_URL: 'http://spring-mono:8080/generator/finish/image'
       CALLBACK_PROPERTIES_URL: 'http://spring-mono:8080/generator/finish/properties'
-      PUBLICADDRESS: 'spring-mono:8080'
+      IMG_LOCALADDRESS: 'spring-mono:8080'
 
   spring-img-gen:
     image: ghcr.io/mathismrg/asi2-atelier-1/spring-img-gen:latest
