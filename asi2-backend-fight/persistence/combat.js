@@ -21,8 +21,11 @@ class StatelessCombatPersistence {
     }
 
     getCombatByUserId(userId) {
-        return Array.of(this.store.values())
-            .filter(combat => combat.requester !== userId && combat.fighter !== userId);
+        return Array.from(this.store.values())
+            .filter(combat => {
+                console.log(combat);
+                return combat.requester === userId || combat.fighter === userId
+            });
     }
 }
 
