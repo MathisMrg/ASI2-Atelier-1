@@ -141,11 +141,9 @@ function failedResponse(e) {
  * @param {...string} receivers
  */
 function dispatchEvent(eventName, data, ...receivers) {
-
     receivers.forEach((r) => {
         let socket = socketMap.get(r);
-
-        if (r) {
+        if (socket) {
             socket.emit(eventName, data)
         }
     })
