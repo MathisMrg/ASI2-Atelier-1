@@ -77,6 +77,15 @@ io.on('connection', function(socket){
         }
     });
 
+    socket.on('room-details', function(data) {
+        try {
+            // TODO : Refactoring de ouf à faire (sécu)
+            socket.emit("room-result", combatService.fetchCombat(data.combatId))
+        } catch (e) {
+            socket.emit("room-result", failedResponse(e))
+        }
+    })
+
 
     socket.send('connect-result', combatService.getCombatOf(data.userId));
 

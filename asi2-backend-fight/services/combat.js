@@ -17,7 +17,7 @@ class CombatService {
         this.#validateCombatRequest(data);
         this.#validateSelectionData(data);
 
-        let combat = this.persistence.getCombat(data.id);
+        let combat = this.fetchCombat(data.id);
         combat.addCard(data.userId, data.card)
         this.persistence.addCombat(combat);
         return combat;
@@ -26,14 +26,15 @@ class CombatService {
     startFight(data) {
         this.#validateCombatRequest(data)
 
-        let combat = this.persistence.getCombat(data.id);
-        this.persistence.addCombat(combat.startFight());
+        let combat = this.fetchCombat(data.id);
+        combat.startFight();
+        this.persistence.addCombat(combat);
         return combat;
     }
 
     processMove(data) {
         this.#validateCombatRequest(data)
-        let combat = this.persistence.getCombat(data.id);
+        let combat = this.fetchCombat(data.id);
         this.persistence.addCombat(combat.processMove(data))
         return combat;
     }
@@ -41,10 +42,6 @@ class CombatService {
     #validateCombatRequest(data) {
         if (!data.combatId) {
             throw new Error("L'id de combat n'a pas été renseigné");
-        }
-
-        if (!this.persistence.getCombat(data.combatId)) {
-            throw new Error("Le combat n'existe pas")
         }
     }
 
@@ -69,6 +66,14 @@ class CombatService {
 
     getCombatOf(userId) {
         return this.persistence.getCombatByUserId(userId);
+    }
+
+    fetchCombat(id) {
+        let result = this.persistence.getCombat(id);
+        if (!result) {
+            throw new Error("Ce combat n'existe pas");
+        }
+        return result;
     }
 }
 
