@@ -1,0 +1,122 @@
+name: Build and Publish Docker Images
+
+on:
+  push:
+#    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_TAG: ${{ github.sha }}
+  REPO_LOWER: ${{ format('{0}/{1}', github.repository_owner, github.event.repository.name) }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+            java-version: '17'
+            distribution: 'temurin'
+            cache: maven
+
+      - name: Install local dependency
+        run: mvn install:install-file -Dfile=asi2-atelier1-prop-gen/libs/colorToproperties-1.1.2.jar -DgroupId=de.androidpit -DartifactId=colorToproperties -Dversion=1.1.2 -Dpackaging=jar
+
+
+          # Build all Java projects at once from root
+      - name: Build all Java projects
+        run: mvn install -DskipTests
+
+      - name: Convert repository name to lowercase
+        run: echo "REPO_NAME=${REPO_LOWER,,}" >> $GITHUB_ENV
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Spring Mono
+      - name: Build and push spring-mono
+        uses: docker/build-push-action@v5
+        with:
+          context: ./asi2-atelier1-back
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/spring-mono:latest
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/spring-mono:${{ env.IMAGE_TAG }}
+
+      # Spring Image Generator
+      - name: Build and push spring-img-gen
+        uses: docker/build-push-action@v5
+        with:
+          context: ./asi2-atelier1-img-gen
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/spring-img-gen:latest
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/spring-img-gen:${{ env.IMAGE_TAG }}
+
+      # Spring Text Generator
+      - name: Build and push spring-text-gen
+        uses: docker/build-push-action@v5
+        with:
+          context: ./asi2-atelier1-text-gen
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/spring-text-gen:latest
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/spring-text-gen:${{ env.IMAGE_TAG }}
+
+      # Spring Properties Generator
+      - name: Build and push spring-prop-gen
+        uses: docker/build-push-action@v5
+        with:
+          context: ./asi2-atelier1-prop-gen
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/spring-prop-gen:latest
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/spring-prop-gen:${{ env.IMAGE_TAG }}
+
+      # Spring Queue Logger
+      - name: Build and push spring-queue-logger
+        uses: docker/build-push-action@v5
+        with:
+          context: ./asi2-atelier2-queue-logger
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/spring-queue-logger:latest
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/spring-queue-logger:${{ env.IMAGE_TAG }}
+
+      # Node Chat Backend
+      - name: Build and push node-chat-back
+        uses: docker/build-push-action@v5
+        with:
+          context: ./asi2-backend-chat
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/node-chat-back:latest
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/node-chat-back:${{ env.IMAGE_TAG }}
+
+      # Nginx Proxy
+      - name: Build and push nginx
+        uses: docker/build-push-action@v5
+        with:
+          context: ./
+          file: ./proxy/Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/nginx:latest
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/nginx:${{ env.IMAGE_TAG }}
