@@ -17,7 +17,7 @@ class CombatService {
         this.#validateCombatRequest(data);
         this.#validateSelectionData(data);
 
-        let combat = this.fetchCombat(data.id);
+        let combat = this.fetchCombat(data.combatId);
         combat.addCard(data.userId, data.card)
         this.persistence.addCombat(combat);
         return combat;
