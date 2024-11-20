@@ -141,7 +141,7 @@ function failedResponse(e) {
  */
 function dispatchEvent(eventName, data, ...receivers) {
     receivers.forEach((r) => {
-        let socket = socketMap.get(r);
+        let socket = socketMap.get(String(r));
         if (socket) {
             socket.emit(eventName, data)
             console.log(`Evenement envoyé à la socket ${r}`);
