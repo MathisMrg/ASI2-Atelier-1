@@ -1,13 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
-import './UserCards.css';
-import {getCards} from "../../service/CardService";
-import {CardModel} from "../../model/cardModel";
-import FightingCard from "../card/fighting-card/FightingCard";
-import { useSocket } from '../../SocketContext';
-import {useNavigate} from 'react-router-dom';
+import {Navigate, useLocation, useNavigate} from 'react-router-dom';
+import {useSocket} from "../SocketContext";
+import {CardModel} from "../model/cardModel";
+import FightingCard from "../components/card/fighting-card/FightingCard";
+import {getCards} from "../service/CardService";
 
-const UserCards: React.FC = () => {
+interface SelectFightCardsPageProps {
+    setTitle: Dispatch<SetStateAction<string>>
+}
+
+const CreateCombatPage: React.FC<SelectFightCardsPageProps> = ({ setTitle }) => {
+    const location = useLocation();
+    const combat = location.state?.combat;
     const navigate = useNavigate();
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
     const selectedOpponent = useSelector((state: any) => state.opponentReducer.selectedOpponent);
@@ -16,6 +21,11 @@ const UserCards: React.FC = () => {
     const [selectedCardIds, setSelectedCardIds] = useState<number[]>([]);
 
     const { socket, userId } = useSocket();
+
+    useEffect(() => {
+        let title = "Select Fight Cards";
+        setTitle(title);
+    }, [setTitle]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,40 +57,25 @@ const UserCards: React.FC = () => {
         if (selectedCardIds.length == 0){
             console.log("Pas de cartes ! ");
         }
-        else if (selectedOpponent == undefined){
-            console.log("Pas d'opposent", selectedOpponent);
-        }
         else{
             if (socket){
-                socket.emit('create-battle-room', {
-                    requesterId: selectedUser.id,
-                    fighterId: selectedOpponent.id
-                } );
+                console.log("Cartes sélectionnées : "+selectedCardIds);
+                console.log("Combat : "+combat.state.id);
+                selectedCardIds.forEach(cardId => {
+                    const cardToAdd =  userCards.find(card => card.id === cardId);
+                    console.log("Carte : "+cardToAdd?.name);
 
-                socket.on('battle-creation-response', (combat) => {
-                    console.log('Combat reçu:', combat.state.id);
-                    console.log('UserId:', selectedUser.id);
-
-
-                    selectedCardIds.forEach(cardId => {
-                        const cardToAdd =  userCards.find(card => card.id === cardId);
-
-                        socket.emit('select-card', {
-                            combatId: combat.state.id,
-                            userId: selectedUser.id,
-                            card: cardToAdd
-                        } );
-                    });
-
+                    socket.emit('select-card', {
+                        combatId: combat.state.id,
+                        userId: selectedUser.id,
+                        card: cardToAdd
+                    } );
                 });
+
 
                 socket.on('update-battle', (data) => {
                     console.log('Update:', data.combat);
                 });
-
-
-                navigate('/game');
-
             }
         }
 
@@ -111,4 +106,4 @@ const UserCards: React.FC = () => {
     );
 };
 
-export default UserCards;
+export default CreateCombatPage;

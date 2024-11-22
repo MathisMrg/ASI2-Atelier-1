@@ -20,6 +20,7 @@ import { Message } from "./model/messageModel";
 import { getUsers } from "./service/UserService";
 import { getMessagesHistory } from "./service/ChatService";
 import CreateCombatPage from "./page/CreateCombatPage";
+import SelectFightCardsPage from "./page/SelectFightCardsPage";
 
 function App() {
 
@@ -157,6 +158,7 @@ function App() {
             <Route path="/fight" element={<FightPage setTitle={setTitle}/>}/>
             <Route path="/game" element={<GamePage setTitle={setTitle}/>}/>
             <Route path="/create-combat" element={<CreateCombatPage setTitle={setTitle}/>}/>
+            <Route path="/select-fight-cards" element={<SelectFightCardsPage setTitle={setTitle}/>}/>
           </Routes>
         </SocketProvider>
         {

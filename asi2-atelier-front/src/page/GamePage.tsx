@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSocket } from '../SocketContext';
+import CombatCard from "../components/combat-card/CombatCard";
 
 interface SetupFightPageProps {
     setTitle: Dispatch<SetStateAction<string>>
@@ -58,9 +59,7 @@ const GamePage: React.FC<SetupFightPageProps> = ({ setTitle }) => {
                     <p>Aucun combat disponible</p>
                 ) : (
                     roomsData.map((room, index) => (
-                        <div key={index} className="combat-item">
-                            <p>Combat ID: {room.id}</p>
-                        </div>
+                        <CombatCard key={index} room={room} />
                     ))
                 )}
             </div>
