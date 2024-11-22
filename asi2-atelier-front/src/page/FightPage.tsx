@@ -2,11 +2,12 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import '../components/card/Card.css';
 // import '../components/user-cards/removeHeader.css';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import {Navigate, useLocation} from 'react-router-dom';
 import SelectedCardsToFight from '../components/user-cards/SelectedCardsToFight';
 import { getCards } from '../service/CardService';
 import { CardModel } from '../model/cardModel';
 import FightingCard from '../components/card/fighting-card/FightingCard';
+import {useSocket} from "../SocketContext";
 
 
 interface GamePageProps {
@@ -14,12 +15,14 @@ interface GamePageProps {
 }
 
 const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
-
+    const location = useLocation();
+    const combatId = location.state?.combatId;
+    const [allCards, setAllCards] = useState<CardModel[]>([]);
     const [userCards, setUserCards] = useState<CardModel[]>([]);
     const [oppenentsCards, setOppenentsCards] = useState<CardModel[]>([]);
     const [selectedOpponentCard, setSelectedOpponentCard] = useState<CardModel | null>(null);
     const [selectedUserCard, setSelectedUserCard] = useState<CardModel | null>(null);
-
+    const { socket, userId } = useSocket();
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
 
     useEffect(() => {
@@ -27,23 +30,70 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
         setTitle(title);
     }, [setTitle]);
 
-    /** ==========================================A remplacer par les cards des personnes en combat ==============================================**/
     useEffect(() => {
         const fetchData = async () => {
             const cards = await getCards();
-            if (cards && cards.length > 0) {
-                const firstFourCards = cards.slice(0, 4);
-                setUserCards(firstFourCards);
-                const lastFourCards = cards.slice(-4);
-                setOppenentsCards(lastFourCards);
-            } else {
-                setUserCards([]);
-                setOppenentsCards([]);
+            if (cards) {
+                setAllCards(cards);
             }
         };
         fetchData();
     }, []);
-    /** ==========================================A remplacer par les cards des personnes en combat ==============================================**/
+
+    useEffect(() => {
+        console.log("Id du combat"+combatId);
+        socket?.emit('room-details', {
+            combatId: combatId
+        } );
+    }, []);
+
+    useEffect(() => {
+        socket?.on('room-result', (data) => {
+            console.log('Get du Combat :', JSON.stringify(data.userCards));
+            const userCardsData = data.userCards;
+            const requesterCardIds = [];
+            const fighterCardIds = [];
+            const requesterCards: CardModel[] = [];
+            const fighterCards : CardModel[] = [];
+
+            for (const userId in userCardsData) {
+                const cards = userCardsData[userId];
+                const cardIds = Object.keys(cards).map(id => parseInt(id)); // Récupérer les IDs des cartes
+
+                // Ajouter les IDs des cartes dans les tableaux correspondants
+                if (parseInt(userId) === data.requester) {
+                    requesterCardIds.push(...cardIds);
+                    console.log("Ids des carte du requester : "+JSON.stringify(requesterCardIds));
+                } else {
+                    fighterCardIds.push(...cardIds);
+                    console.log("Ids des carte du fighter : "+JSON.stringify(fighterCardIds));
+                }
+            }
+
+            requesterCardIds.forEach(cardId => {
+                const cardToAdd =  allCards.find(card => card.id === cardId);
+                if (cardToAdd){
+                    requesterCards.push(cardToAdd);
+                    console.log("Carte : "+cardToAdd?.id);
+                }
+            });
+
+            fighterCardIds.forEach(cardId => {
+                const cardToAdd =  allCards.find(card => card.id === cardId);
+                if (cardToAdd){
+                    fighterCards.push(cardToAdd);
+                    console.log("Carte : "+cardToAdd?.id);
+                }
+            });
+
+            console.log("User Cards : ", requesterCards);
+            console.log("Opponent Cards : ", fighterCards);
+            setUserCards(requesterCards);
+            setOppenentsCards(fighterCards);
+        });
+
+
+    }, []);
 
     if (!selectedUser) {
         console.log(selectedUser)

@@ -12,7 +12,7 @@ interface SelectFightCardsPageProps {
 
 const CreateCombatPage: React.FC<SelectFightCardsPageProps> = ({ setTitle }) => {
     const location = useLocation();
-    const combat = location.state?.combat;
+    const combatId = location.state?.combatId;
     const navigate = useNavigate();
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
     const selectedOpponent = useSelector((state: any) => state.opponentReducer.selectedOpponent);
@@ -59,14 +59,12 @@ const CreateCombatPage: React.FC<SelectFightCardsPageProps> = ({ setTitle }) => 
         }
         else{
             if (socket){
-                console.log("Cartes sélectionnées : "+selectedCardIds);
-                console.log("Combat : "+combat.state.id);
                 selectedCardIds.forEach(cardId => {
                     const cardToAdd =  userCards.find(card => card.id === cardId);
                     console.log("Carte : "+cardToAdd?.name);
 
                     socket.emit('select-card', {
-                        combatId: combat.state.id,
+                        combatId: combatId,
                         userId: selectedUser.id,
                         card: cardToAdd
                     } );
@@ -74,7 +72,8 @@ const CreateCombatPage: React.FC<SelectFightCardsPageProps> = ({ setTitle }) => 
 
 
                 socket.on('update-battle', (data) => {
-                    console.log('Update:', data.combat);
+                    console.log('Update:', JSON.stringify(data));
+                    navigate('/fight', { state: { combatId } });
                 });
             }
         }

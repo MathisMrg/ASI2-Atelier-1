@@ -3,14 +3,17 @@ import "./CombatCard.css";
 import { useSelector } from 'react-redux';
 import {getUsers} from "../../service/UserService";
 import {User} from "../../model/userModel";
+import {useNavigate} from "react-router-dom";
 
 
 interface CombatCardProps {
     room: any;
 }
 const CombatCard: React.FC<CombatCardProps> = ({ room }) => {
+    const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
     const selectedCard = useSelector((state : any) => state.cardReducer.selectedCard);
     const [users, setUsers] = useState<User[] | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getUsers().then(users => {
@@ -18,10 +21,16 @@ const CombatCard: React.FC<CombatCardProps> = ({ room }) => {
         });
     }, []);
 
-    const opponent = users?.find(user => user.id !== room.fighter);
+    const opponent = users && selectedUser
+        ? selectedUser.id === room.fighter
+            ? users.find(user => user.id === room.requester)
+            : users.find(user => user.id === room.fighter)
+        : null;
 
     const joinCombat = () => {
-        console.log("On rejoint le combat");
+        console.log("On rejoint le combat : "+JSON.stringify(room));
+        const combatId = room.id;
+        navigate('/select-fight-cards', { state: {combatId} });
 
     };
 

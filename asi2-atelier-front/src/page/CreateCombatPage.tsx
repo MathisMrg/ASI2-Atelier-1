@@ -32,8 +32,9 @@ const CreateCombatPage: React.FC<CreateCombatPageProps> = ({ setTitle }) => {
 
                 socket.on('battle-creation-response', (combat) => {
                     console.log('Combat reçu:', combat.state.id);
+                    const combatId = combat.state.id;
 
-                    navigate('/select-fight-cards', { state: { combat } });
+                    navigate('/select-fight-cards', { state: { combatId } });
                 });
             }
         }
