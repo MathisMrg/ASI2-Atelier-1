@@ -17,7 +17,6 @@ interface GamePageProps {
 const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
     const location = useLocation();
     const combatId = location.state?.combatId;
-    const [allCards, setAllCards] = useState<CardModel[]>([]);
     const [userCards, setUserCards] = useState<CardModel[]>([]);
     const [oppenentsCards, setOppenentsCards] = useState<CardModel[]>([]);
     const [selectedOpponentCard, setSelectedOpponentCard] = useState<CardModel | null>(null);
@@ -31,16 +30,6 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
     }, [setTitle]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const cards = await getCards();
-            if (cards) {
-                setAllCards(cards);
-            }
-        };
-        fetchData();
-    }, []);
-
-    useEffect(() => {
         console.log("Id du combat"+combatId);
         socket?.emit('room-details', {
             combatId: combatId
@@ -49,47 +38,24 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
 
     useEffect(() => {
         socket?.on('room-result', (data) => {
-            console.log('Get du Combat :', JSON.stringify(data.userCards));
-            const userCardsData = data.userCards;
-            const requesterCardIds = [];
-            const fighterCardIds = [];
-            const requesterCards: CardModel[] = [];
-            const fighterCards : CardModel[] = [];
+            const fighterId = data.fighter;
+            const requesterId = data.requester;
 
-            for (const userId in userCardsData) {
-                const cards = userCardsData[userId];
-                const cardIds = Object.keys(cards).map(id => parseInt(id)); // Récupérer les IDs des cartes
+            const userCards = data.userCards[selectedUser.id];
 
-                // Ajouter les IDs des cartes dans les tableaux correspondants
-                if (parseInt(userId) === data.requester) {
-                    requesterCardIds.push(...cardIds);
-                    console.log("Ids des carte du requester : "+JSON.stringify(requesterCardIds));
-                } else {
-                    fighterCardIds.push(...cardIds);
-                    console.log("Ids des carte du fighter : "+JSON.stringify(fighterCardIds));
-                }
+            let opponentCards = data.userCards[requesterId]; // Valeur par défaut
+            if (selectedUser.id === requesterId) {
+                opponentCards = data.userCards[fighterId];
             }
 
-            requesterCardIds.forEach(cardId => {
-                const cardToAdd =  allCards.find(card => card.id === cardId);
-                if (cardToAdd){
-                    requesterCards.push(cardToAdd);
-                    console.log("Carte : "+cardToAdd?.id);
-                }
-            });
+            const userCardArray = Object.values(userCards) as CardModel[];
+            const opponentCardArray = Object.values(opponentCards) as CardModel[];
 
-            fighterCardIds.forEach(cardId => {
-                const cardToAdd =  allCards.find(card => card.id === cardId);
-                if (cardToAdd){
-                    fighterCards.push(cardToAdd);
-                    console.log("Carte : "+cardToAdd?.id);
-                }
-            });
+            console.log("User : "+JSON.stringify(userCardArray));
+            console.log("Opp : "+JSON.stringify(opponentCardArray));
 
-            console.log("User Cards : ", requesterCards);
-            console.log("Opponent Cards : ", fighterCards);
-            setUserCards(requesterCards);
-            setOppenentsCards(fighterCards);
+            setUserCards(userCardArray);
+            setOppenentsCards(opponentCardArray);
         });
 
 
@@ -97,7 +63,7 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
 
     if (!selectedUser) {
         console.log(selectedUser)
-        // return <Navigate to="/login" />;
+        return <Navigate to="/login" />;
     }
 
     return (
