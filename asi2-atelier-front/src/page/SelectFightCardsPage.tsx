@@ -19,6 +19,7 @@ const CreateCombatPage: React.FC<SelectFightCardsPageProps> = ({ setTitle }) => 
     const [error, setError] = useState<string | null>(null);
     const [userCards, setUserCards] = useState<CardModel[]>([]);
     const [selectedCardIds, setSelectedCardIds] = useState<number[]>([]);
+    const [waitingForOpponent, setWaitingForOpponent] = useState<boolean>(false);
 
     const { socket, userId } = useSocket();
 
@@ -72,8 +73,31 @@ const CreateCombatPage: React.FC<SelectFightCardsPageProps> = ({ setTitle }) => 
 
 
                 socket.on('update-battle', (data) => {
+                    const requesterCardsCount = Object.keys(data.state.userCards[data.state.requester]).length;
+                    const fighterCardsCount = Object.keys(data.state.userCards[data.state.fighter]).length;
+                    if (data.state.isCombatReady){
+                        console.log("Le combat est prêt");
+                        navigate('/fight', { state: { combatId } });
+                    }
+                    else{
+                        console.log("Le combat n'est pas prêt");
+                        setWaitingForOpponent(true);
+                    }
+
+                    if (requesterCardsCount > 0 && fighterCardsCount > 0 && requesterCardsCount === fighterCardsCount){
+                        console.log("Le fight peut commencer, tous le monde a un nombre égal de carte cartes");
+                        console.log("Cartes de requester : "+requesterCardsCount);
+                        console.log("Cartes de fighter : "+fighterCardsCount);
+                        if (data.state.requester == selectedUser.id && data.state.started == false){
+                            console.log("On envoie le requete de démarrage de combat");
+                            socket.emit('start-fight', {
+                                combatId: data.state.id,
+                                requesterId: selectedUser.id
+                            });
+                        }
+                    }
+
                     console.log('Update:', JSON.stringify(data));
-                    navigate('/fight', { state: { combatId } });
                 });
             }
         }
@@ -82,6 +106,10 @@ const CreateCombatPage: React.FC<SelectFightCardsPageProps> = ({ setTitle }) => 
 
     if (userCards && userCards.length === 0) {
         return <p>Aucune carte disponible pour cet utilisateur.</p>;
+    }
+
+    if (waitingForOpponent) {
+        return <p>En attente de l'adversaire...</p>;
     }
 
     return (

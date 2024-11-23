@@ -28,6 +28,7 @@ class CombatService {
         this.#validateCombatRequest(data)
 
         let combat = this.fetchCombat(data.combatId);
+        console.log("Combat à démarré : "+JSON.stringify(combat));
         combat.startFight();
         this.persistence.addCombat(combat);
         return combat;

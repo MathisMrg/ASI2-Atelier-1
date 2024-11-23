@@ -76,6 +76,7 @@ io.on('connection', function(socket){
 
     socket.on('start-fight', function(data) {
         try {
+            console.log("Démarrage combat : "+JSON.stringify(data));
             let combat = combatService.startFight(data);
             dispatchEvent("update-battle", successResponse(combat), combat.fighter, combat.requester);
         } catch (e) {
