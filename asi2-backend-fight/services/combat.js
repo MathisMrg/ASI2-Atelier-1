@@ -37,6 +37,7 @@ class CombatService {
     processMove(data) {
         this.#validateCombatRequest(data)
         let combat = this.fetchCombat(data.combatId);
+        console.log("Le combat de l'attaque : "+JSON.stringify(combat));
         this.persistence.addCombat(combat.processMove(data))
         return combat;
     }

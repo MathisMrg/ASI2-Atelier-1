@@ -45,8 +45,9 @@ class Combat {
     #processAttack(attackerId, attackedId, move) {
         let cardsAttacker = this.userCards[attackerId];
         let cardsAttacked = this.userCards[attackedId];
-        let cardAttacker = cardsAttacker[move.attackerCardId];
-        let cardAttacked = cardsAttacked[move.attackedCardId];
+
+        let cardAttacker = cardsAttacker[move.action.attackerCardId];
+        let cardAttacked = cardsAttacked[move.action.attackedCardId];
 
         if (! cardAttacker || ! cardAttacked) {
             throw new Error("Cette carte n'est pas présente sur le terrain!")

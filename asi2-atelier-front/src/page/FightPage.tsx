@@ -18,6 +18,7 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
     const location = useLocation();
     const combatId = location.state?.combatId;
     const [userCards, setUserCards] = useState<CardModel[]>([]);
+    const [playerTurnId, setPlayerTurnId] = useState<number>(0);
     const [oppenentsCards, setOppenentsCards] = useState<CardModel[]>([]);
     const [selectedOpponentCard, setSelectedOpponentCard] = useState<CardModel | null>(null);
     const [selectedUserCard, setSelectedUserCard] = useState<CardModel | null>(null);
@@ -53,13 +54,57 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
 
             console.log("User : "+JSON.stringify(userCardArray));
             console.log("Opp : "+JSON.stringify(opponentCardArray));
+            console.log("Combat : "+JSON.stringify(data));
 
             setUserCards(userCardArray);
             setOppenentsCards(opponentCardArray);
+            setPlayerTurnId(data.nextTurn);
         });
 
 
     }, []);
+
+    const attack = () => {
+
+        if (selectedUser.id === playerTurnId){
+
+            console.log("Attaquant : "+selectedUser.id);
+
+            socket?.emit("make-move", {
+                combatId: combatId,
+                userId: selectedUser.id,
+                action: {
+                    attackerCardId: selectedUserCard?.id,
+                    attackedCardId: selectedOpponentCard?.id
+                }
+            });
+        }
+    };
+
+    socket?.on('update-battle', (data) => {
+        const fighterId = data.state.fighter;
+        const requesterId = data.state.requester;
+
+        const userCards = data.state.userCards[selectedUser.id];
+
+        let opponentCards = data.state.userCards[requesterId]; // Valeur par défaut
+        if (selectedUser.id === requesterId) {
+            opponentCards = data.state.userCards[fighterId];
+        }
+
+        const userCardArray = Object.values(userCards) as CardModel[];
+        const opponentCardArray = Object.values(opponentCards) as CardModel[];
+
+        console.log("User : "+JSON.stringify(userCardArray));
+        console.log("Opp : "+JSON.stringify(opponentCardArray));
+        console.log("Combat : "+JSON.stringify(data));
+
+        setUserCards(userCardArray);
+        setOppenentsCards(opponentCardArray);
+        setPlayerTurnId(data.state.nextTurn);
+        setSelectedOpponentCard(null);
+        setSelectedUserCard(null);
+    });
 
     if (!selectedUser) {
         console.log(selectedUser)
@@ -69,6 +114,12 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
     return (
         <div className="play-screen">
             <h2>Board</h2>
+            <h3>
+                {playerTurnId === selectedUser.id
+                    ? `A votre tour ! `
+                    : `Au tour de l'adversaire...`
+                }
+            </h3>
             <div className='full-container-game'>
                 <div className='left-button-game'><button className='game-button'>End turn</button></div>
                 <div className='game-container-without-selected-card'>
@@ -85,7 +136,7 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
                 <div className='selected-fight-cards-1-v-1'>
                     {/* component pour afficher une carte selecitonner dans oppenentsCards*/}
                     {selectedOpponentCard ? <FightingCard card={selectedOpponentCard} isShop={false} selectCard={setSelectedOpponentCard} /> : <span></span>}
-                    <button className='game-button'> Attack</button>
+                    <button className='game-button' onClick={attack}> Attack</button>
                     {selectedUserCard ? <FightingCard card={selectedUserCard} isShop={false} selectCard={setSelectedUserCard} /> : <span></span>}
                     {/* component pour afficher une carte selecitonner dans userCards*/}
                 </div>
