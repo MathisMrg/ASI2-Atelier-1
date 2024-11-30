@@ -156,6 +156,13 @@
 .left-button-game {
     display: flex;
     align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.cards-owner{
+    font-size: small;
+    font-weight: bold;
 }
 
 .game-container-without-selected-card {

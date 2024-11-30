@@ -121,7 +121,12 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
                 }
             </h3>
             <div className='full-container-game'>
-                <div className='left-button-game'><button className='game-button'>End turn</button></div>
+                <div className='left-button-game'>
+                    <p className="cards-owner">Opponents Cards</p>
+                    <button className='game-button'>End turn</button>
+                    <p className="cards-owner">Your Cards</p>
+
+                </div>
                 <div className='game-container-without-selected-card'>
                     <div>
                         <SelectedCardsToFight cards={oppenentsCards} selectCard={setSelectedOpponentCard}></SelectedCardsToFight>
