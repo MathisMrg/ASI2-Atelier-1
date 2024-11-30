@@ -11,12 +11,16 @@ import CreateCardPage from "./page/CreateCardPage";
 import { useDispatch, useSelector } from "react-redux";
 import { User } from "./model/userModel";
 import SellPage from "./page/SellPage";
-import { subscribeToNotification } from "./service/NotificationService";
+import {subscribeToNotification} from "./service/NotificationService";
+import FightPage from "./page/FightPage";
 import GamePage from "./page/GamePage";
+import { SocketProvider } from "./SocketContext";
 import ChatBox from "./components/chat-box/ChatBox";
 import { Message } from "./model/messageModel";
 import { getUsers } from "./service/UserService";
 import { getMessagesHistory } from "./service/ChatService";
+import CreateCombatPage from "./page/CreateCombatPage";
+import SelectFightCardsPage from "./page/SelectFightCardsPage";
 
 function App() {
 
@@ -141,26 +145,34 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Header title={title}></Header>
-      <Routes>
-        <Route path="/login" element={<LoginPage setTitle={setTitle} />} />
-        <Route path="/" element={selectedUser ? <LoggedHome setTitle={setTitle} socket={socket} /> : <UserFormPage setTitle={setTitle} />} />
-        <Route path="/buy" element={<ShopPage setTitle={setTitle} />} />
-        <Route path="/sell" element={<SellPage setTitle={setTitle} />} />
-        <Route path="/create" element={<CreateCardPage setTitle={setTitle} />} />
-        <Route path="/game" element={<GamePage setTitle={setTitle} />} />
-      </Routes>
-      {selectedUser ? <ChatBox
-        globalMessages={globalMessages}
-        privateMessages={messages}
-        connectedUsersList={connectedUsersList}
-        sendGlobalMessage={sendGlobalMessage}
-        sendPrivateMessage={sendPrivateMessage}
-      /> : <span></span>}
-
-    </div>
-  );
+      <div className="App">
+        <Header title={title}></Header>
+        <SocketProvider userId={selectedUser ? selectedUser.id : undefined}>
+          <Routes>
+            <Route path="/login" element={<LoginPage setTitle={setTitle}/>}/>
+            <Route path="/"
+                   element={selectedUser ? <LoggedHome setTitle={setTitle} socket={socket}/> : <UserFormPage setTitle={setTitle}/>}/>
+            <Route path="/buy" element={<ShopPage setTitle={setTitle}/>}/>
+            <Route path="/sell" element={<SellPage setTitle={setTitle}/>}/>
+            <Route path="/create" element={<CreateCardPage setTitle={setTitle}/>}/>
+            <Route path="/fight" element={<FightPage setTitle={setTitle}/>}/>
+            <Route path="/game" element={<GamePage setTitle={setTitle}/>}/>
+            <Route path="/create-combat" element={<CreateCombatPage setTitle={setTitle}/>}/>
+            <Route path="/select-fight-cards" element={<SelectFightCardsPage setTitle={setTitle}/>}/>
+          </Routes>
+        </SocketProvider>
+        {
+          selectedUser ? <ChatBox
+              globalMessages={globalMessages}
+              privateMessages={messages}
+              connectedUsersList={connectedUsersList}
+              sendGlobalMessage={sendGlobalMessage}
+              sendPrivateMessage={sendPrivateMessage}
+          /> : <span></span>
+        }
+      </div>
+)
+  ;
 }
 
 export default App;
