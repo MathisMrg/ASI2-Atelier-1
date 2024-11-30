@@ -41,6 +41,32 @@ const CreateCombatPage: React.FC<SelectFightCardsPageProps> = ({ setTitle }) => 
         fetchData();
     }, []);
 
+    useEffect(() => {
+        if (socket){
+            socket.emit('room-details', {
+                combatId: combatId
+            } );
+
+            socket.on('room-result', (data) => {
+                const fighterId = data.fighter;
+                const requesterId = data.requester;
+                const userCards = data.userCards[selectedUser.id];
+                let opponentCards = data.userCards[fighterId];
+
+                if (selectedUser.id === fighterId){
+                    opponentCards = data.userCards[requesterId];
+                }
+
+                const userCardArray = Object.values(userCards) as CardModel[];
+                const opponentCardArray = Object.values(opponentCards) as CardModel[];
+
+                if (userCardArray.length != 0 && opponentCardArray.length == 0){
+                    setWaitingForOpponent(true);
+                }
+            });
+        }
+    }, []);
+
     const handleCardClick = (cardId: number) => {
         setSelectedCardIds(prevIds => {
             // Si la carte est déjà sélectionnée, la désélectionner (la retirer)
@@ -54,62 +80,82 @@ const CreateCombatPage: React.FC<SelectFightCardsPageProps> = ({ setTitle }) => 
     };
 
     const handleFightClick = () => {
-
-        if (selectedCardIds.length == 0){
-            console.log("Pas de cartes ! ");
+        if (!socket) {
+            console.error("Socket non initialisé.");
+            return;
         }
-        else{
-            if (socket){
-                selectedCardIds.forEach(cardId => {
-                    const cardToAdd =  userCards.find(card => card.id === cardId);
-                    console.log("Carte : "+cardToAdd?.name);
 
-                    socket.emit('select-card', {
-                        combatId: combatId,
-                        userId: selectedUser.id,
-                        card: cardToAdd
-                    } );
+        if (selectedCardIds.length === 0) {
+            console.log("Pas de cartes !");
+            return;
+        }
+
+        // Envoi des cartes sélectionnées au serveur
+        selectedCardIds.forEach((cardId) => {
+            const cardToAdd = userCards.find((card) => card.id === cardId);
+
+            if (cardToAdd) {
+                console.log("Carte : " + cardToAdd.name);
+
+                socket.emit('select-card', {
+                    combatId: combatId,
+                    userId: selectedUser.id,
+                    card: cardToAdd,
                 });
-
-
-                socket.on('update-battle', (data) => {
-                    const requesterCardsCount = Object.keys(data.state.userCards[data.state.requester]).length;
-                    const fighterCardsCount = Object.keys(data.state.userCards[data.state.fighter]).length;
-                    if (data.state.isCombatReady){
-                        console.log("Le combat est prêt");
-                        navigate('/fight', { state: { combatId } });
-                    }
-                    else{
-                        console.log("Le combat n'est pas prêt");
-                        setWaitingForOpponent(true);
-                    }
-
-                    if (requesterCardsCount > 0 && fighterCardsCount > 0 && requesterCardsCount === fighterCardsCount){
-                        console.log("Le fight peut commencer, tous le monde a un nombre égal de carte cartes");
-                        console.log("Cartes de requester : "+requesterCardsCount);
-                        console.log("Cartes de fighter : "+fighterCardsCount);
-                        if (data.state.requester == selectedUser.id && data.state.started == false){
-                            console.log("On envoie le requete de démarrage de combat");
-                            socket.emit('start-fight', {
-                                combatId: data.state.id,
-                                requesterId: selectedUser.id
-                            });
-                        }
-                    }
-
-                    console.log('Update:', JSON.stringify(data));
-                });
+            } else {
+                console.error("Carte non trouvée pour l'ID : " + cardId);
             }
-        }
+        });
 
+        // Gérer la mise à jour de l'état du combat
+        const handleBattleUpdate = (data: any) => {
+            const { userCards, isCombatReady, requester, fighter, started, id } = data.state;
+            const requesterCardsCount = Object.keys(userCards[requester] || {}).length;
+            const fighterCardsCount = Object.keys(userCards[fighter] || {}).length;
+
+            console.log("Mise à jour reçue:", JSON.stringify(data));
+
+            setWaitingForOpponent(true);
+            console.log("Le combat n'est pas prêt");
+
+            if (requesterCardsCount > 0 &&
+                fighterCardsCount > 0 &&
+                requesterCardsCount === fighterCardsCount) {
+                console.log("Tous les joueurs ont un nombre égal de cartes : Fight possible !");
+                console.log(`Cartes de requester : ${requesterCardsCount}`);
+                console.log(`Cartes de fighter : ${fighterCardsCount}`);
+                setWaitingForOpponent(false);
+
+                if (requester === selectedUser.id && !started) {
+                    console.log("Envoi de la requête de démarrage de combat");
+                    socket.emit('start-fight', { combatId: id, requesterId: selectedUser.id });
+                }
+            }
+
+            if (isCombatReady) {
+                console.log("Le combat est prêt");
+                navigate('/fight', { state: { combatId } });
+                return;
+            }
+        };
+
+        // Écouteur de l'événement `update-battle`
+        socket.off('update-battle'); // Éviter de multiples écoutes
+        socket.on('update-battle', handleBattleUpdate);
     };
+
 
     if (userCards && userCards.length === 0) {
         return <p>Aucune carte disponible pour cet utilisateur.</p>;
     }
 
     if (waitingForOpponent) {
-        return <p>En attente de l'adversaire...</p>;
+        return (
+            <div className="search-opp">
+                <div className="spinner"></div>
+                <h2>En attente de l'adversaire...</h2>
+            </div>
+        );
     }
 
     return (

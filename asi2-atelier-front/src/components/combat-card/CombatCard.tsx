@@ -30,8 +30,12 @@ const CombatCard: React.FC<CombatCardProps> = ({ room }) => {
     const joinCombat = () => {
         console.log("On rejoint le combat : "+JSON.stringify(room));
         const combatId = room.id;
-        navigate('/select-fight-cards', { state: {combatId} });
-
+        if (room.started === true){
+            navigate('/fight', { state: { combatId } });
+        }
+        else {
+            navigate('/select-fight-cards', { state: {combatId} });
+        }
     };
 
     return (
