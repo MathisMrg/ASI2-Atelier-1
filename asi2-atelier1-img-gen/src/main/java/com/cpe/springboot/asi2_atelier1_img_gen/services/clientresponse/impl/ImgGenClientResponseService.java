@@ -57,6 +57,8 @@ public class ImgGenClientResponseService implements IImgGenClientResponseService
             }
         }
 
+        log.info("sending response to client : {}", responseJson);
+
         String result = client.post()
                 .uri(url.toString().replaceAll("/$", ""))
                 .contentType(MediaType.APPLICATION_JSON)
