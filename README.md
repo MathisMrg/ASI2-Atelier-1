@@ -12,7 +12,7 @@
 ### Depuis Github Container Registry
 1. Il suffit de lancer le docker-compose avec la commande suivante :
 ```bash
-docker compose up -d --force-recreate
+docker compose up -d --pull always --force-recreate
 ```
 2. Puis se rendre sur: `http://localhost:80/`
 
