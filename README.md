@@ -1,4 +1,7 @@
 # ASI2 - ATELIER 1
+[![Build and Publish Docker Images](https://github.com/MathisMrg/ASI2-Atelier-1/actions/workflows/ci.yml/badge.svg)](https://github.com/MathisMrg/ASI2-Atelier-1/actions/workflows/ci.yml)
+
+_[Hub des images dockers](https://github.com/MathisMrg?tab=packages&repo_name=ASI2-Atelier-1)_
 
 ## Membres du groupe
 - CHEVEREAU Lazare
