@@ -25,6 +25,7 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
     const [selectedUserCard, setSelectedUserCard] = useState<CardModel | null>(null);
     const { socket, userId } = useSocket();
     const selectedUser = useSelector((state: any) => state.userReducer.selectedUser);
+    let once = true;
 
     useEffect(() => {
         let title = "Fight !"
@@ -83,12 +84,13 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
     };
 
     socket?.on('update-battle', (data) => {
-        if(data.state.isCombatDone){
+        if(data.state.isCombatDone && once){
             if(data.state.winner == selectedUser.id){
                 toast.info("Combat fini vous avez gagner ! ", {autoClose: 3000})
             } else {
                 toast.info("Combat fini vous avez perdu !", {autoClose: 3000})
             }
+            once = false;
             return <Navigate to="/" />;
         }
         const fighterId = data.state.fighter;
