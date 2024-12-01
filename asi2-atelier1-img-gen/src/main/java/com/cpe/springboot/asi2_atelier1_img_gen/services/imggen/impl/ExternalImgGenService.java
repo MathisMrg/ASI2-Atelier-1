@@ -24,7 +24,7 @@ public class ExternalImgGenService implements IImgGenService {
 
     @Value("${neural.url}")
     public String IMG_URL;
-    public static String IMG_API_PATH = "/fake/prompt/req";
+    public static String IMG_API_PATH = "/prompt/req";
 
     @Override
     public String generateImage(ImageGenerationRequestDTO req) throws ImageGenerationException {
@@ -62,6 +62,7 @@ public class ExternalImgGenService implements IImgGenService {
         assert neuralResponse != null;
 
         if (neuralResponse.getBase64() == null || neuralResponse.getBase64().isEmpty()) {
+            log.info("Could not get image from generation service : {}", neuralResponse);
             neuralResponse.setBase64("iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII");
         }
         return Objects.requireNonNull(neuralResponse).getBase64();
