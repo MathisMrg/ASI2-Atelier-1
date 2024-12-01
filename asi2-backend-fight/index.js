@@ -6,7 +6,7 @@ let server = require('http').createServer(app);
 
 // Configuration CORS
 app.use(cors({
-    origin: "http://localhost:3000", // L'origine de votre application client
+    origin: "*", // L'origine de votre application client
     methods: ["GET", "POST"],         // Les méthodes HTTP que vous souhaitez autoriser
     allowedHeaders: ["Content-Type", "Authorization"], // En-têtes autorisés
     credentials: true // Autorise les cookies et les en-têtes d'autorisation

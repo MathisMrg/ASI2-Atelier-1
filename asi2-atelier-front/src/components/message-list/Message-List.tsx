@@ -63,7 +63,7 @@ const MessageList: React.FC<MessageListProps> = ({
                     </div>
                 ) : (
                     <div className="user-list">
-                        <label>Select a conversation:</label>
+                        {sortedUsers.length > 0 ? <label>Select a conversation:</label> : <label>Il n'y a pas d'utilisateur avec qui converser</label> }
                         <div className="conversation-list">
                             {sortedUsers.map(user => (
                                 <div

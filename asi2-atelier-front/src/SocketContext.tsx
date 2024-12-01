@@ -14,7 +14,7 @@ export const SocketProvider: React.FC<{ userId: string; children: React.ReactNod
     useEffect(() => {
         if (userId) {
             // Connexion au backend
-            const newSocket = io('http://localhost:4040', {
+            const newSocket = io(process.env.REACT_APP_FIGHT_URL, {
                 query: { userId },
                 transports: ['websocket'],
                 path: "/fight-socket.io"

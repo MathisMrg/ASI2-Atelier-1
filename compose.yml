@@ -98,6 +98,10 @@ services:
     container_name: node-chat-back
     environment:
       BACKEND_URL: 'http://spring-mono/api/'
+  
+  node-fight-back:
+    image: ghcr.io/mathismrg/asi2-atelier-1/node-fight-back:latest
+    container_name: node-fight-back
 
   nginx:
     image: ghcr.io/mathismrg/asi2-atelier-1/nginx:latest

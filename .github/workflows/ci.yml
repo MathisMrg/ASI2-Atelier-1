@@ -107,6 +107,16 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/node-chat-back:latest
             ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/node-chat-back:${{ env.IMAGE_TAG }}
+      
+      # Node Fight Backend
+      - name: Build and push node-fight-back
+        uses: docker/build-push-action@v5
+        with:
+          context: ./asi2-backend-fight
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/node-fight-back:latest
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/node-fight-back:${{ env.IMAGE_TAG }}
 
       # Nginx Proxy
       - name: Build and push nginx

@@ -119,6 +119,12 @@ services:
     environment:
       BACKEND_URL: 'http://spring-mono:8080'
 
+  node-fight-back:
+    container_name: node-fight-back
+    build:
+      context: asi2-backend-fight
+      dockerfile: Dockerfile
+   
   nginx:
     build:
         context: ./
