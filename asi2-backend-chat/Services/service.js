@@ -1,5 +1,3 @@
-const fetch = require("node-fetch");
-
 const connectedUsers = new Set();
 
 async function saveMessageToBackend(message, senderId, receiverId, date, backendUrl) {
