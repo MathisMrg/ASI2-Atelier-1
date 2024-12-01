@@ -8,6 +8,7 @@ import { getCards } from '../service/CardService';
 import { CardModel } from '../model/cardModel';
 import FightingCard from '../components/card/fighting-card/FightingCard';
 import {useSocket} from "../SocketContext";
+import { toast } from 'react-toastify';
 
 
 interface GamePageProps {
@@ -82,6 +83,14 @@ const FightPage: React.FC<GamePageProps> = ({ setTitle }) => {
     };
 
     socket?.on('update-battle', (data) => {
+        if(data.state.isCombatDone){
+            if(data.state.winner == selectedUser.id){
+                toast.info("Combat fini vous avez gagner ! ", {autoClose: 3000})
+            } else {
+                toast.info("Combat fini vous avez perdu !", {autoClose: 3000})
+            }
+            return <Navigate to="/" />;
+        }
         const fighterId = data.state.fighter;
         const requesterId = data.state.requester;
 

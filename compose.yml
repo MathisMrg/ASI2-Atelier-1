@@ -36,14 +36,13 @@ services:
       external.iaimgapi.token: 'v1.efbf79561ed86ee2d279bc30fa72ff50b7ef25e0c879a0ffce5568f00cab6906'
 
   spring-mono:
-    container_name: spring-mono
+    # container_name: spring-mono
     image: ghcr.io/mathismrg/asi2-atelier-1/spring-mono:latest
-    build:
-      context: asi2-atelier1-back
-      dockerfile: Dockerfile
     depends_on:
       - postgres
       - amq
+    deploy:
+      replicas: 2
     environment:
       SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/asibackend1'
       SPRING_DATASOURCE_USERNAME: 'asibackend1'
@@ -97,7 +96,7 @@ services:
     image: ghcr.io/mathismrg/asi2-atelier-1/node-chat-back:latest
     container_name: node-chat-back
     environment:
-      BACKEND_URL: 'http://spring-mono/api/'
+      BACKEND_URL: 'http://spring-mono:8080'
   
   node-fight-back:
     image: ghcr.io/mathismrg/asi2-atelier-1/node-fight-back:latest
