@@ -65,6 +65,8 @@ public class ExternalImgGenService implements IImgGenService {
             log.info("Could not get image from generation service : {}", neuralResponse);
             neuralResponse.setBase64("iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII");
         }
+
+        log.info("Generated base64 {} for request {}", neuralResponse.getBase64(), request);
         return Objects.requireNonNull(neuralResponse).getBase64();
     }
 
