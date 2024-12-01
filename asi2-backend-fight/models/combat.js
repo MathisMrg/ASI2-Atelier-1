@@ -9,6 +9,8 @@ class Combat {
         this.started = false;
         this.userCards = {};
         this.isCombatReady = false;
+        this.isCombatDone = false;
+        this.winner = null;
         this.participants = new Set();
         this.participants.add(requesterId);
         this.participants.add(fighterId);
@@ -69,11 +71,19 @@ class Combat {
 
         this.nextTurn = attackedId;
 
+        if (this.#userLost()) {
+            this.isCombatDone = true;
+            this.winner = attackerId;
+        }
+
         return this;
     }
 
     #allUserSelectedCards() {
         return Array.from(Object.values(this.userCards)).every((v) => Object.keys(v).length === this.#maxCardsPerFighter);
+    }
+    #userLost() {
+        return Array.from(Object.values(this.userCards)).some((v) => Object.values(v).every(c => c.hp === 0));
     }
 }
 
