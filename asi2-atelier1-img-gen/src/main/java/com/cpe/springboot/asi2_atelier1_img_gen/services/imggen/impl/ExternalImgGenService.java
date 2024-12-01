@@ -24,7 +24,7 @@ public class ExternalImgGenService implements IImgGenService {
 
     @Value("${neural.url}")
     public String IMG_URL;
-    public static String IMG_API_PATH = "/prompt/req";
+    public static String IMG_API_PATH = "/fake/prompt/req";
 
     @Override
     public String generateImage(ImageGenerationRequestDTO req) throws ImageGenerationException {
